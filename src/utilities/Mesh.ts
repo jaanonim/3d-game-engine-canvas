@@ -1,9 +1,8 @@
+import Camera from "../classes/Camera";
+import { Sphere } from "./Math";
+import Transform from "./Transform";
+import Triangle from "./Triangle";
 import Vector3 from "./Vector3";
-
-interface Sphere {
-    center: Vector3;
-    radius: number;
-}
 
 export default class Mesh {
     vertices: Array<Vector3>;
@@ -16,11 +15,6 @@ export default class Mesh {
     ) {
         this.triangles = triangles;
         this.vertices = vertices;
-        this.process();
-    }
-
-    process() {
-        this.calculateBoundingSphere();
     }
 
     calculateBoundingSphere() {
@@ -34,6 +28,7 @@ export default class Mesh {
                 radius = x;
             }
         });
+        radius = Math.sqrt(radius);
         this.boundingSphere = { center, radius };
     }
 
@@ -49,5 +44,31 @@ export default class Mesh {
             return false;
         }
         return true;
+    }
+
+    copy() {
+        return new Mesh(this.vertices, this.triangles);
+    }
+
+    project(camera: Camera, transform: Transform) {
+        const copy = this.copy();
+        copy.vertices = copy.vertices.map((v) =>
+            camera.transformToCamera(transform.apply(v))
+        );
+        copy.calculateBoundingSphere();
+        return copy;
+    }
+
+    toArrayOfTriangles() {
+        return this.triangles.map(
+            (t) =>
+                new Triangle(
+                    t.map((i) => this.vertices[i]) as [
+                        Vector3,
+                        Vector3,
+                        Vector3
+                    ]
+                )
+        );
     }
 }

@@ -49,4 +49,8 @@ export default class Vector3 {
     squareLength() {
         return this.x * this.x + this.y * this.y + this.z * this.z;
     }
+
+    dotProduct(v: Vector3) {
+        return v.x * this.x + v.y * this.y + v.z * this.z;
+    }
 }

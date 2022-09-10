@@ -97,12 +97,12 @@ const scene = Importer.scene(data);
 const canvas = document.getElementById("root") as HTMLCanvasElement;
 
 const cam = new GameObject("cam");
-//cam.transform = new Transform(new Vector3(10, 10, 17));
 cam.addComponent(new Rotate(new Vector3(0, 0.1, 0)));
 scene.addChildren(cam);
 
 const r = new Renderer(canvas);
-r.setCamera(cam.addComponent(new Camera(75, r.canvasRatio)) as Camera);
+r.setCamera(cam.addComponent(new Camera(90, 1, r.canvasRatio)) as Camera);
 r.setScene(scene);
 
+//r.render();
 r.startGameLoop();
