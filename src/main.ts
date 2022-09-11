@@ -54,11 +54,6 @@ const mesh = new Mesh(
     ]
 );
 
-const mesh2 = new Mesh(
-    [new Vector3(0, 0, 0), new Vector3(0, 1, 0), new Vector3(1, 1, 0)],
-    [[0, 1, 2]]
-);
-
 const data = {
     name: "scene",
     children: [

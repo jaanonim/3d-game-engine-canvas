@@ -1,4 +1,3 @@
-import Color from "../utilities/Color";
 import Mesh from "../utilities/Mesh";
 import Transform from "../utilities/Transform";
 import { Triangle2D } from "../utilities/Triangle";
