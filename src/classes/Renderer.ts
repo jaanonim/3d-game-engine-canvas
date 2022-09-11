@@ -107,31 +107,36 @@ export default class Renderer {
         color: string
     ) {
         this.ctx.strokeStyle = color;
+        this.ctx.beginPath();
         this.ctx.moveTo(p1.x, p1.y);
         this.ctx.lineTo(p2.x, p2.y);
         this.ctx.lineTo(p3.x, p3.y);
         this.ctx.lineTo(p1.x, p1.y);
+        this.ctx.closePath();
+        this.ctx.stroke();
     }
 
     renderTriangle(triangle: Triangle2D) {
+        console.log(triangle);
         this.drawTriangleWireframe(
             triangle.vertices[0],
             triangle.vertices[1],
             triangle.vertices[2],
-            Color.blue.getHex()
+            triangle.color.getHex()
         );
     }
 
     renderMesh(mesh: Mesh, transform: Transform) {
         if (this.camera) {
-            const clippedMesh = this.camera.clipObject(
-                mesh.project(this.camera, transform)
+            const projectedMesh = mesh.project(this.camera, transform);
+            const triangles = projectedMesh.toArrayOfTriangles();
+            const clippedTriangles = this.camera.clipObject(
+                triangles,
+                projectedMesh.boundingSphere
             );
-            console.log(clippedMesh);
-            if (!clippedMesh) return;
-            const triangles = clippedMesh.toArrayOfTriangles();
+            if (!clippedTriangles) return;
 
-            const triangles2d = triangles.map(
+            const triangles2d = clippedTriangles.map(
                 (t) =>
                     new Triangle2D(
                         t.vertices.map((v) => {

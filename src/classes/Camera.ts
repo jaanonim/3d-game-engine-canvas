@@ -1,6 +1,6 @@
 import ClippingPlane from "../utilities/ClippingPlane";
-import { degToRad } from "../utilities/Math";
-import Mesh from "../utilities/Mesh";
+import { degToRad, Sphere } from "../utilities/Math";
+import Triangle from "../utilities/Triangle";
 import Vector2 from "../utilities/Vector2";
 import Vector3 from "../utilities/Vector3";
 import Component from "./Component";
@@ -81,23 +81,28 @@ export default class Camera extends Component {
 
         const x = Math.cos(angle);
         const y = Math.sin(angle);
+        const a = this._viewportSize.y / 2;
+        const z = a / Math.sqrt(a * a + this.near * this.near);
+        const z2 = this.near / Math.sqrt(a * a + this.near * this.near);
+        console.log(x, y, z, z2);
 
         this.clippingPlanes[1] = new ClippingPlane(new Vector3(x, 0, y));
         this.clippingPlanes[2] = new ClippingPlane(new Vector3(-x, 0, y));
-        this.clippingPlanes[3] = new ClippingPlane(new Vector3(0, x, y));
-        this.clippingPlanes[4] = new ClippingPlane(new Vector3(0, -x, y));
+        this.clippingPlanes[3] = new ClippingPlane(new Vector3(0, z2, z));
+        this.clippingPlanes[4] = new ClippingPlane(new Vector3(0, -z2, z));
     }
 
-    clipObject(mesh: Mesh) {
-        let resMesh: Mesh | null = mesh;
+    clipObject(triangles: Array<Triangle>, boundingSphere: Sphere) {
+        let resTriangles: Array<Triangle> | null = triangles;
         for (let i = 0; i < this.clippingPlanes.length; i++) {
             const p = this.clippingPlanes[i];
-            resMesh = p.clipObject(mesh);
-            if (resMesh == null) {
+            resTriangles = p.clipObject(resTriangles, boundingSphere);
+            console.log(i, resTriangles);
+            if (resTriangles == null) {
                 break;
             }
         }
-        return resMesh;
+        return resTriangles;
     }
 
     transformToCamera(vertex: Vector3) {

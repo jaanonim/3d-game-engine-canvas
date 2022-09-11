@@ -54,6 +54,11 @@ const mesh = new Mesh(
     ]
 );
 
+const mesh2 = new Mesh(
+    [new Vector3(0, 0, 0), new Vector3(0, 1, 0), new Vector3(1, 1, 0)],
+    [[0, 1, 2]]
+);
+
 const data = {
     name: "scene",
     children: [
@@ -106,7 +111,8 @@ r.setCamera(cam.addComponent(new Camera(90, 1, r.canvasRatio)) as Camera);
 r.setScene(scene);
 
 const fps = new FPSCounter(document.getElementById("fps") as HTMLElement);
-//r.render();
+// r.render();
+
 let t = 0;
 r.startGameLoop(() => {
     if (t > 0.2) {

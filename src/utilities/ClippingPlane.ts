@@ -1,4 +1,5 @@
-import Mesh from "./Mesh";
+import { Sphere } from "./Math";
+import Triangle from "./Triangle";
 import Vector3 from "./Vector3";
 
 export default class ClippingPlane {
@@ -24,39 +25,106 @@ export default class ClippingPlane {
             .add(a);
     }
 
-    clipObject(mesh: Mesh) {
-        const d = this.distance(mesh.boundingSphere.center);
-        if (mesh.boundingSphere.radius < d) {
-            return mesh;
-        } else if (-mesh.boundingSphere.radius > d) {
+    clipObject(triangles: Array<Triangle>, boundingSphere: Sphere) {
+        const d = this.distance(boundingSphere.center);
+        if (boundingSphere.radius < d) {
+            return triangles;
+        } else if (-boundingSphere.radius > d) {
             return null;
         } else {
-            return this.clipTriangles(mesh);
+            return this.clipTriangles(triangles.map((t) => t.copy()));
         }
     }
 
-    clipTriangles(mesh: Mesh) {
-        return mesh;
-        const m = mesh.copy();
-        m.triangles.forEach((_t, i) => {
-            this.clipTriangle(i, m);
+    clipTriangles(triangles: Array<Triangle>) {
+        triangles.forEach((_t, i) => {
+            this.clipTriangle(i, triangles);
         });
-        return m;
+        return triangles;
     }
 
-    clipTriangle(i: number, mesh: Mesh) {
-        const d0 = this.distance(mesh.vertices[mesh.triangles[i][0]]);
-        const d1 = this.distance(mesh.vertices[mesh.triangles[i][1]]);
-        const d2 = this.distance(mesh.vertices[mesh.triangles[i][2]]);
+    clipTriangle(i: number, triangles: Array<Triangle>) {
+        const d0 = this.distance(triangles[i].vertices[0]);
+        const d1 = this.distance(triangles[i].vertices[1]);
+        const d2 = this.distance(triangles[i].vertices[2]);
+
         if (d0 >= 0 && d1 >= 0 && d2 >= 0) {
-            return mesh;
+            return;
         } else if (d0 <= 0 && d1 <= 0 && d2 <= 0) {
-            mesh.triangles.splice(i);
-            return mesh;
+            triangles = triangles.filter((_e, x) => x !== i);
+            return;
         } else if (d0 > 0 && d1 < 0 && d2 < 0) {
-            mesh.vertices[mesh.triangles[i][1]];
-            mesh.vertices[mesh.triangles[i][2]];
+            triangles[i].vertices[1] = this.intersection(
+                triangles[i].vertices[1],
+                triangles[i].vertices[0]
+            );
+            triangles[i].vertices[2] = this.intersection(
+                triangles[i].vertices[2],
+                triangles[i].vertices[0]
+            );
+        } else if (d0 < 0 && d1 > 0 && d2 < 0) {
+            triangles[i].vertices[0] = this.intersection(
+                triangles[i].vertices[0],
+                triangles[i].vertices[1]
+            );
+            triangles[i].vertices[2] = this.intersection(
+                triangles[i].vertices[2],
+                triangles[i].vertices[1]
+            );
+        } else if (d0 < 0 && d1 < 0 && d2 > 0) {
+            triangles[i].vertices[0] = this.intersection(
+                triangles[i].vertices[0],
+                triangles[i].vertices[2]
+            );
+            triangles[i].vertices[1] = this.intersection(
+                triangles[i].vertices[1],
+                triangles[i].vertices[2]
+            );
+        } else if (d0 > 0 && d1 > 0 && d2 < 0) {
+            const _02 = this.intersection(
+                triangles[i].vertices[0],
+                triangles[i].vertices[2]
+            );
+            const _12 = this.intersection(
+                triangles[i].vertices[1],
+                triangles[i].vertices[2]
+            );
+            triangles[i] = new Triangle([
+                triangles[i].vertices[0],
+                triangles[i].vertices[1],
+                _02,
+            ]);
+            triangles.push(new Triangle([triangles[i].vertices[1], _02, _12]));
+        } else if (d0 > 0 && d1 < 0 && d2 > 0) {
+            const _01 = this.intersection(
+                triangles[i].vertices[0],
+                triangles[i].vertices[1]
+            );
+            const _12 = this.intersection(
+                triangles[i].vertices[1],
+                triangles[i].vertices[2]
+            );
+            triangles[i] = new Triangle([
+                triangles[i].vertices[0],
+                triangles[i].vertices[2],
+                _01,
+            ]);
+            triangles.push(new Triangle([triangles[i].vertices[2], _01, _12]));
+        } else if (d0 < 0 && d1 > 0 && d2 > 0) {
+            const _01 = this.intersection(
+                triangles[i].vertices[0],
+                triangles[i].vertices[1]
+            );
+            const _02 = this.intersection(
+                triangles[i].vertices[0],
+                triangles[i].vertices[2]
+            );
+            triangles[i] = new Triangle([
+                triangles[i].vertices[1],
+                triangles[i].vertices[2],
+                _01,
+            ]);
+            triangles.push(new Triangle([triangles[i].vertices[1], _01, _02]));
         }
-        return mesh;
     }
 }
