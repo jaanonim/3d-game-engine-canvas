@@ -30,9 +30,9 @@ class Rotate extends Component {
     }
 }
 
-const m2 = new ObjLoader(await FileLoader.load("/teapot.obj")).parse();
+const teapot = new ObjLoader(await FileLoader.load("/teapot.obj")).parse();
 
-const mesh = new Mesh(
+const cube = new Mesh(
     [
         new Vector3(1, 1, 1),
         new Vector3(-1, 1, 1),
@@ -58,7 +58,7 @@ const mesh = new Mesh(
     ]
 );
 
-const m32 = new Mesh(
+const triangle = new Mesh(
     [new Vector3(1, 1, 1), new Vector3(-1, 1, 1), new Vector3(-1, -1, 1)],
     [[0, 1, 2]]
 );
@@ -74,7 +74,7 @@ const data = {
         //         scale: [1, 1, 1],
         //     },
         //     components: [
-        //         new MeshRenderer(mesh),
+        //         new MeshRenderer(cube),
         //         new Rotate(new Vector3(0, 0.1, 0)),
         //     ],
         // },
@@ -84,7 +84,7 @@ const data = {
                 position: [10, 0, 0],
                 scale: [1, 2, 3],
             },
-            components: [new MeshRenderer(mesh)],
+            components: [new MeshRenderer(cube)],
         },
         {
             name: "l",
@@ -92,7 +92,7 @@ const data = {
                 position: [-10, 0, 0],
                 scale: [1, 2, 3],
             },
-            components: [new MeshRenderer(mesh)],
+            components: [new MeshRenderer(cube)],
         },
         {
             name: "g",
@@ -106,7 +106,7 @@ const data = {
                     transform: {
                         position: [1, 1, 1],
                     },
-                    components: [new MeshRenderer(m2)],
+                    components: [new MeshRenderer(teapot)],
                 },
             ],
             components: [new Rotate(new Vector3(1, 1, 1))],
