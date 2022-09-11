@@ -4,6 +4,7 @@ import GameObject from "./classes/GameObject";
 import Renderer from "./classes/Renderer";
 import MeshRenderer from "./components/MeshRenderer";
 import "./style.css";
+import FPSCounter from "./tools/FPSCounter";
 import Importer from "./tools/Importer";
 import Mesh from "./utilities/Mesh";
 import Quaternion from "./utilities/Quaternion";
@@ -59,7 +60,7 @@ const data = {
         {
             name: "r",
             transform: {
-                position: [10, 0, 15],
+                position: [10, 0, 0],
                 scale: [1, 2, 3],
             },
             components: [new MeshRenderer(mesh)],
@@ -67,7 +68,7 @@ const data = {
         {
             name: "l",
             transform: {
-                position: [-10, 0, 15],
+                position: [-10, 0, 0],
                 scale: [1, 2, 3],
             },
             components: [new MeshRenderer(mesh)],
@@ -104,5 +105,13 @@ const r = new Renderer(canvas);
 r.setCamera(cam.addComponent(new Camera(90, 1, r.canvasRatio)) as Camera);
 r.setScene(scene);
 
+const fps = new FPSCounter(document.getElementById("fps") as HTMLElement);
 //r.render();
-r.startGameLoop();
+let t = 0;
+r.startGameLoop(() => {
+    if (t > 0.2) {
+        fps.update();
+        t = 0;
+    }
+    t += Renderer.deltaTime;
+});

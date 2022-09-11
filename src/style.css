@@ -18,3 +18,11 @@ canvas {
     max-height: 100vh;
     max-width: 100vw;
 }
+
+#fps {
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 5px;
+    color: #fff;
+}

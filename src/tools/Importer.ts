@@ -13,7 +13,7 @@ interface SceneData {
 interface GameObjectData {
     name: string;
     transform?: TransformData;
-    components: Array<Component>;
+    components?: Array<Component>;
     children?: Array<GameObjectData>;
 }
 
@@ -35,9 +35,10 @@ export default class Importer {
     static object(data: GameObjectData): GameObject {
         const obj = new GameObject(data.name);
         if (data.transform) obj.transform = Importer.transform(data.transform);
-        data.components.forEach((c) => {
-            obj.addComponent(c);
-        });
+        if (data.components)
+            data.components.forEach((c) => {
+                obj.addComponent(c);
+            });
         if (data.children)
             data.children.forEach((o) => {
                 obj.addChildren(Importer.object(o));

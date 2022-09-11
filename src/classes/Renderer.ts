@@ -7,6 +7,7 @@ import Camera from "./Camera";
 import Scene from "./Scene";
 
 export default class Renderer {
+    static deltaTime: number = 0;
     canvas: HTMLCanvasElement;
     ctx: CanvasRenderingContext2D;
     camera: Camera | null;
@@ -42,19 +43,30 @@ export default class Renderer {
         this.scene = scene;
     }
 
-    startGameLoop() {
-        this.gameLoop();
+    startGameLoop(update = () => {}, lateUpdate = () => {}) {
+        this.gameLoop(update, lateUpdate);
     }
 
-    gameLoop() {
+    gameLoop(update = () => {}, lateUpdate = () => {}) {
         if (!this.scene) {
             console.warn("No scene!");
             return;
         }
+        const start = performance.now();
+
+        update();
         this.scene.update();
+
         this.render();
+
+        lateUpdate();
         this.scene.lateUpdate();
-        requestAnimationFrame(this.gameLoop.bind(this));
+
+        Renderer.deltaTime = performance.now() - start;
+
+        requestAnimationFrame(() => {
+            this.gameLoop.bind(this)(update, lateUpdate);
+        });
     }
 
     render() {
