@@ -2,6 +2,8 @@ import { Sphere } from "./Math";
 import Triangle from "./Triangle";
 import Vector3 from "./Vector3";
 
+export type ClipResult = -1 | 0 | 1;
+
 export default class ClippingPlane {
     normal: Vector3;
     d: number;
@@ -25,14 +27,14 @@ export default class ClippingPlane {
             .add(a);
     }
 
-    clipObject(triangles: Array<Triangle>, boundingSphere: Sphere) {
+    preClipObject(boundingSphere: Sphere): ClipResult {
         const d = this.distance(boundingSphere.center);
         if (boundingSphere.radius < d) {
-            return triangles;
+            return 1;
         } else if (-boundingSphere.radius > d) {
-            return null;
+            return -1;
         } else {
-            return this.clipTriangles(triangles.map((t) => t.copy()));
+            return 0;
         }
     }
 

@@ -4,8 +4,10 @@ import GameObject from "./classes/GameObject";
 import Renderer from "./classes/Renderer";
 import MeshRenderer from "./components/MeshRenderer";
 import "./style.css";
+import FileLoader from "./tools/FileLoader";
 import FPSCounter from "./tools/FPSCounter";
 import Importer from "./tools/Importer";
+import ObjLoader from "./tools/ObjLoader";
 import Mesh from "./utilities/Mesh";
 import Quaternion from "./utilities/Quaternion";
 import Vector3 from "./utilities/Vector3";
@@ -27,6 +29,8 @@ class Rotate extends Component {
         this.v += 0.1;
     }
 }
+
+const m2 = new ObjLoader(await FileLoader.load("/teapot.obj")).parse();
 
 const mesh = new Mesh(
     [
@@ -54,9 +58,26 @@ const mesh = new Mesh(
     ]
 );
 
+const m32 = new Mesh(
+    [new Vector3(1, 1, 1), new Vector3(-1, 1, 1), new Vector3(-1, -1, 1)],
+    [[0, 1, 2]]
+);
+
 const data = {
     name: "scene",
     children: [
+        // {
+        //     name: "o",
+        //     transform: {
+        //         position: [0, 0, 10],
+        //         rotation: [0, 1, 0],
+        //         scale: [1, 1, 1],
+        //     },
+        //     components: [
+        //         new MeshRenderer(mesh),
+        //         new Rotate(new Vector3(0, 0.1, 0)),
+        //     ],
+        // },
         {
             name: "r",
             transform: {
@@ -76,7 +97,7 @@ const data = {
         {
             name: "g",
             transform: {
-                position: [-2, -3, 30],
+                position: [0, 0, 6],
                 scale: [0.5, 0.5, 0.5],
             },
             children: [
@@ -85,7 +106,7 @@ const data = {
                     transform: {
                         position: [1, 1, 1],
                     },
-                    components: [new MeshRenderer(mesh)],
+                    components: [new MeshRenderer(m2)],
                 },
             ],
             components: [new Rotate(new Vector3(1, 1, 1))],
@@ -98,7 +119,8 @@ const scene = Importer.scene(data);
 const canvas = document.getElementById("root") as HTMLCanvasElement;
 
 const cam = new GameObject("cam");
-cam.addComponent(new Rotate(new Vector3(0, 0.1, 0)));
+//cam.addComponent(new Rotate(new Vector3(0, 0.1, 0)));
+cam.transform.rotation = Quaternion.euler(new Vector3(0, 0, 0));
 scene.addChildren(cam);
 
 const r = new Renderer(canvas);
@@ -106,13 +128,15 @@ r.setCamera(cam.addComponent(new Camera(90, 1, r.canvasRatio)) as Camera);
 r.setScene(scene);
 
 const fps = new FPSCounter(document.getElementById("fps") as HTMLElement);
-// r.render();
+r.render();
 
 let t = 0;
+let i = 0;
+setInterval(() => {
+    console.log(t / i);
+}, 10000);
 r.startGameLoop(() => {
-    if (t > 0.2) {
-        fps.update();
-        t = 0;
-    }
+    fps.update();
     t += Renderer.deltaTime;
+    i++;
 });

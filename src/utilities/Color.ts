@@ -10,6 +10,15 @@ export default class Color {
     static white = new Color(255, 255, 255, 255);
     static black = new Color(0, 0, 0, 255);
 
+    static random() {
+        return new Color(
+            Math.round((Math.random() * 255) / 25) * 25,
+            Math.round((Math.random() * 255) / 25) * 25,
+            Math.round((Math.random() * 255) / 25) * 25,
+            255
+        );
+    }
+
     constructor(r: number = 0, g: number = 0, b: number = 0, a: number = 255) {
         this.r = r;
         this.g = g;

@@ -84,7 +84,6 @@ export default class Camera extends Component {
         const a = this._viewportSize.y / 2;
         const z = a / Math.sqrt(a * a + this.near * this.near);
         const z2 = this.near / Math.sqrt(a * a + this.near * this.near);
-        console.log(x, y, z, z2);
 
         this.clippingPlanes[1] = new ClippingPlane(new Vector3(x, 0, y));
         this.clippingPlanes[2] = new ClippingPlane(new Vector3(-x, 0, y));
@@ -92,12 +91,26 @@ export default class Camera extends Component {
         this.clippingPlanes[4] = new ClippingPlane(new Vector3(0, -z2, z));
     }
 
-    clipObject(triangles: Array<Triangle>, boundingSphere: Sphere) {
+    preClipObject(boundingSphere: Sphere) {
+        let res = 1;
+        for (let i = 0; i < this.clippingPlanes.length; i++) {
+            const p = this.clippingPlanes[i];
+            const c_res = p.preClipObject(boundingSphere);
+            if (c_res === -1) {
+                return -1;
+            }
+            if (c_res === 0) {
+                res = 0;
+            }
+        }
+        return res;
+    }
+
+    clipObject(triangles: Array<Triangle>) {
         let resTriangles: Array<Triangle> | null = triangles;
         for (let i = 0; i < this.clippingPlanes.length; i++) {
             const p = this.clippingPlanes[i];
-            resTriangles = p.clipObject(resTriangles, boundingSphere);
-            console.log(i, resTriangles);
+            resTriangles = p.clipTriangles(resTriangles.map((t) => t.copy()));
             if (resTriangles == null) {
                 break;
             }

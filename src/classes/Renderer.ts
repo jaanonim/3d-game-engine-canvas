@@ -1,16 +1,20 @@
+import Color from "../utilities/Color";
 import Mesh from "../utilities/Mesh";
 import Transform from "../utilities/Transform";
 import { Triangle2D } from "../utilities/Triangle";
 import Vector2 from "../utilities/Vector2";
 import Camera from "./Camera";
+import Drawer from "./Drawers";
+import DrawerPerPixel from "./Drawers/DrawerPerPixel";
+import DrawerStandard from "./Drawers/DrawerStandard";
 import Scene from "./Scene";
 
 export default class Renderer {
     static deltaTime: number = 0;
     canvas: HTMLCanvasElement;
-    ctx: CanvasRenderingContext2D;
     camera: Camera | null;
     scene: Scene | null;
+    drawer: Drawer;
 
     canvasRatio: number;
 
@@ -20,11 +24,15 @@ export default class Renderer {
         this.canvasRatio = 0;
         this.camera = null;
         this.scene = null;
-        this.resize();
 
         let ctx = canvas.getContext("2d");
         if (ctx == null) throw Error("Cannot get context");
-        this.ctx = ctx;
+        this.drawer = new DrawerPerPixel(
+            ctx,
+            this.canvas.width,
+            this.canvas.height
+        );
+        this.resize();
     }
 
     setCamera(camera: Camera) {
@@ -35,6 +43,7 @@ export default class Renderer {
 
     resize() {
         this.canvasRatio = this.canvas.width / this.canvas.height;
+        this.drawer.resize(this.canvas.width, this.canvas.height);
         if (this.camera) this.camera.resize(this.canvasRatio);
     }
 
@@ -78,11 +87,9 @@ export default class Renderer {
             return;
         }
 
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.beginPath();
+        this.drawer.begin();
         this.scene.render(this);
-        this.ctx.closePath();
-        this.ctx.stroke();
+        this.drawer.end();
     }
 
     viewportToCanvas(v: Vector2) {
@@ -99,43 +106,26 @@ export default class Renderer {
         );
     }
 
-    drawTriangleWireframe(
-        p1: Vector2,
-        p2: Vector2,
-        p3: Vector2,
-        color: string
-    ) {
-        this.ctx.strokeStyle = color;
-        this.ctx.beginPath();
-        this.ctx.moveTo(p1.x, p1.y);
-        this.ctx.lineTo(p2.x, p2.y);
-        this.ctx.lineTo(p3.x, p3.y);
-        this.ctx.lineTo(p1.x, p1.y);
-        this.ctx.closePath();
-        this.ctx.stroke();
-    }
-
     renderTriangle(triangle: Triangle2D) {
-        console.log(triangle);
-        this.drawTriangleWireframe(
+        this.drawer.drawTriangleWireframe(
             triangle.vertices[0],
             triangle.vertices[1],
             triangle.vertices[2],
-            triangle.color.getHex()
+            triangle.color
         );
     }
 
     renderMesh(mesh: Mesh, transform: Transform) {
         if (this.camera) {
             const projectedMesh = mesh.project(this.camera, transform);
-            const triangles = projectedMesh.toArrayOfTriangles();
-            const clippedTriangles = this.camera.clipObject(
-                triangles,
-                projectedMesh.boundingSphere
-            );
-            if (!clippedTriangles) return;
 
-            const triangles2d = clippedTriangles.map(
+            const res = this.camera.preClipObject(projectedMesh.boundingSphere);
+            if (res === -1) return;
+
+            let triangles = projectedMesh.toArrayOfTriangles();
+            if (res === 0) triangles = this.camera.clipObject(triangles);
+
+            const triangles2d = triangles.map(
                 (t) =>
                     new Triangle2D(
                         t.vertices.map((v) => {
