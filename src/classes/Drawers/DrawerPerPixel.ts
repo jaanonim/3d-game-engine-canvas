@@ -16,6 +16,38 @@ export default class DrawerPerPixel extends Drawer {
         this.img = this.ctx.createImageData(this.width, this.height);
     }
 
+    drawTriangleFilled(_p1: Vector2, _p2: Vector2, _p3: Vector2, color: Color) {
+        const a = [_p1, _p2, _p3];
+        a.sort((a, b) => a.y - b.y);
+        const [p1, p2, p3] = a;
+
+        const x12 = interpolate(p1.y, p1.x, p2.y, p2.x);
+        const x23 = interpolate(p2.y, p2.x, p3.y, p3.x);
+        const x13 = interpolate(p1.y, p1.x, p3.y, p3.x);
+
+        x12.pop();
+        const x123 = [...x12];
+        x123.push(...x23);
+
+        const m = Math.floor(x123.length / 2);
+        let x_left, x_right;
+        if (x13[m] < x123[m]) {
+            x_left = x13;
+            x_right = x123;
+        } else {
+            x_left = x123;
+            x_right = x13;
+        }
+
+        let i = 0;
+        for (let y = p1.y; y <= p3.y; y++) {
+            for (let x = x_left[i]; x < x_right[i]; x++) {
+                this.setPixel(x, y, color);
+            }
+            i++;
+        }
+    }
+
     drawTriangleWireframe(p1: Vector2, p2: Vector2, p3: Vector2, color: Color) {
         this.drawLine(p1, p2, color);
         this.drawLine(p2, p3, color);

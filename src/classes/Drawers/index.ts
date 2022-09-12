@@ -16,7 +16,12 @@ export default class Drawer {
         this.width = width;
         this.height = height;
     }
-
+    drawTriangleFilled(
+        _p1: Vector2,
+        _p2: Vector2,
+        _p3: Vector2,
+        _color: Color
+    ) {}
     drawTriangleWireframe(
         _p1: Vector2,
         _p2: Vector2,

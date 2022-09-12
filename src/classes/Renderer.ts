@@ -1,3 +1,4 @@
+import Color from "../utilities/Color";
 import Mesh from "../utilities/Mesh";
 import Transform from "../utilities/Transform";
 import { Triangle2D } from "../utilities/Triangle";
@@ -106,11 +107,17 @@ export default class Renderer {
     }
 
     renderTriangle(triangle: Triangle2D) {
-        this.drawer.drawTriangleWireframe(
+        this.drawer.drawTriangleFilled(
             triangle.vertices[0],
             triangle.vertices[1],
             triangle.vertices[2],
             triangle.color
+        );
+        this.drawer.drawTriangleWireframe(
+            triangle.vertices[0],
+            triangle.vertices[1],
+            triangle.vertices[2],
+            Color.red
         );
     }
 
