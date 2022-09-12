@@ -69,13 +69,13 @@ const data = {
         // {
         //     name: "o",
         //     transform: {
-        //         position: [0, 0, 10],
-        //         rotation: [0, 1, 0],
+        //         position: [11, 0, 10],
+        //         rotation: [0, 0, 0],
         //         scale: [1, 1, 1],
         //     },
         //     components: [
-        //         new MeshRenderer(cube),
-        //         new Rotate(new Vector3(0, 0.1, 0)),
+        //         new MeshRenderer(triangle),
+        //         //new Rotate(new Vector3(0, 0.1, 0)),
         //     ],
         // },
         {
@@ -105,11 +105,12 @@ const data = {
                     name: "cube",
                     transform: {
                         position: [1, 1, 1],
+                        scale: [1.5, 1.5, 1.5],
                     },
                     components: [new MeshRenderer(teapot)],
                 },
             ],
-            components: [new Rotate(new Vector3(1, 1, 1))],
+            components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],
         },
     ],
 };
@@ -120,7 +121,7 @@ const canvas = document.getElementById("root") as HTMLCanvasElement;
 
 const cam = new GameObject("cam");
 //cam.addComponent(new Rotate(new Vector3(0, 0.1, 0)));
-cam.transform.rotation = Quaternion.euler(new Vector3(0, 0, 0));
+cam.transform.rotation = Quaternion.euler(new Vector3(0, 0.7, 0));
 scene.addChildren(cam);
 
 const r = new Renderer(canvas);

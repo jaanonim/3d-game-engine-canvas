@@ -39,94 +39,69 @@ export default class ClippingPlane {
     }
 
     clipTriangles(triangles: Array<Triangle>) {
-        triangles.forEach((_t, i) => {
-            this.clipTriangle(i, triangles);
+        const resTriangles: Triangle[] = [];
+        triangles.forEach((t) => {
+            resTriangles.push(...this.clipTriangle(t));
         });
-        return triangles;
+        return resTriangles;
     }
 
-    clipTriangle(i: number, triangles: Array<Triangle>) {
-        const d0 = this.distance(triangles[i].vertices[0]);
-        const d1 = this.distance(triangles[i].vertices[1]);
-        const d2 = this.distance(triangles[i].vertices[2]);
+    clipTriangle(t: Triangle) {
+        const d0 = this.distance(t.vertices[0]);
+        const d1 = this.distance(t.vertices[1]);
+        const d2 = this.distance(t.vertices[2]);
 
         if (d0 >= 0 && d1 >= 0 && d2 >= 0) {
-            return;
+            return [t];
         } else if (d0 <= 0 && d1 <= 0 && d2 <= 0) {
-            triangles = triangles.filter((_e, x) => x !== i);
-            return;
+            return [];
         } else if (d0 > 0 && d1 < 0 && d2 < 0) {
-            triangles[i].vertices[1] = this.intersection(
-                triangles[i].vertices[1],
-                triangles[i].vertices[0]
-            );
-            triangles[i].vertices[2] = this.intersection(
-                triangles[i].vertices[2],
-                triangles[i].vertices[0]
-            );
+            return [
+                new Triangle([
+                    t.vertices[0],
+                    this.intersection(t.vertices[1], t.vertices[0]),
+                    this.intersection(t.vertices[2], t.vertices[0]),
+                ]),
+            ];
         } else if (d0 < 0 && d1 > 0 && d2 < 0) {
-            triangles[i].vertices[0] = this.intersection(
-                triangles[i].vertices[0],
-                triangles[i].vertices[1]
-            );
-            triangles[i].vertices[2] = this.intersection(
-                triangles[i].vertices[2],
-                triangles[i].vertices[1]
-            );
+            return [
+                new Triangle([
+                    this.intersection(t.vertices[0], t.vertices[1]),
+                    t.vertices[1],
+                    this.intersection(t.vertices[2], t.vertices[1]),
+                ]),
+            ];
         } else if (d0 < 0 && d1 < 0 && d2 > 0) {
-            triangles[i].vertices[0] = this.intersection(
-                triangles[i].vertices[0],
-                triangles[i].vertices[2]
-            );
-            triangles[i].vertices[1] = this.intersection(
-                triangles[i].vertices[1],
-                triangles[i].vertices[2]
-            );
+            return [
+                new Triangle([
+                    this.intersection(t.vertices[0], t.vertices[2]),
+                    this.intersection(t.vertices[1], t.vertices[2]),
+                    t.vertices[2],
+                ]),
+            ];
         } else if (d0 > 0 && d1 > 0 && d2 < 0) {
-            const _02 = this.intersection(
-                triangles[i].vertices[0],
-                triangles[i].vertices[2]
-            );
-            const _12 = this.intersection(
-                triangles[i].vertices[1],
-                triangles[i].vertices[2]
-            );
-            triangles[i] = new Triangle([
-                triangles[i].vertices[0],
-                triangles[i].vertices[1],
-                _02,
-            ]);
-            triangles.push(new Triangle([triangles[i].vertices[1], _02, _12]));
+            const _02 = this.intersection(t.vertices[0], t.vertices[2]);
+            const _12 = this.intersection(t.vertices[1], t.vertices[2]);
+            return [
+                new Triangle([t.vertices[0], t.vertices[1], _02]),
+                new Triangle([t.vertices[1], _02, _12]),
+            ];
         } else if (d0 > 0 && d1 < 0 && d2 > 0) {
-            const _01 = this.intersection(
-                triangles[i].vertices[0],
-                triangles[i].vertices[1]
-            );
-            const _12 = this.intersection(
-                triangles[i].vertices[1],
-                triangles[i].vertices[2]
-            );
-            triangles[i] = new Triangle([
-                triangles[i].vertices[0],
-                triangles[i].vertices[2],
-                _01,
-            ]);
-            triangles.push(new Triangle([triangles[i].vertices[2], _01, _12]));
+            const _01 = this.intersection(t.vertices[0], t.vertices[1]);
+            const _12 = this.intersection(t.vertices[1], t.vertices[2]);
+            return [
+                new Triangle([t.vertices[0], t.vertices[2], _01]),
+                new Triangle([t.vertices[2], _01, _12]),
+            ];
         } else if (d0 < 0 && d1 > 0 && d2 > 0) {
-            const _01 = this.intersection(
-                triangles[i].vertices[0],
-                triangles[i].vertices[1]
-            );
-            const _02 = this.intersection(
-                triangles[i].vertices[0],
-                triangles[i].vertices[2]
-            );
-            triangles[i] = new Triangle([
-                triangles[i].vertices[1],
-                triangles[i].vertices[2],
-                _01,
-            ]);
-            triangles.push(new Triangle([triangles[i].vertices[1], _01, _02]));
+            const _01 = this.intersection(t.vertices[0], t.vertices[1]);
+            const _02 = this.intersection(t.vertices[0], t.vertices[2]);
+            return [
+                new Triangle([t.vertices[1], t.vertices[2], _01]),
+                new Triangle([t.vertices[2], _01, _02]),
+            ];
+        } else {
+            throw new Error("Something went wrong in ClippingPlanes");
         }
     }
 }

@@ -24,7 +24,7 @@ export default class GameObject {
 
     addChildren(obj: GameObject) {
         this.children.push(obj);
-        obj.transform.parent = this.transform;
+        this.transform.addChildren(obj.transform);
         return obj;
     }
 

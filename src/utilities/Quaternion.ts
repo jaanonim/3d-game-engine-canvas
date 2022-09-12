@@ -57,10 +57,7 @@ export default class Quaternion {
     }
 
     invert() {
-        this.x *= 1;
-        this.y *= 1;
-        this.z *= 1;
-        return this;
+        return new Quaternion(-this.x, -this.y, -this.z, this.w);
     }
 
     normalize() {
