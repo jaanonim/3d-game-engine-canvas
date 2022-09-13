@@ -1,8 +1,9 @@
 import Color from "../utilities/Color";
 import Mesh from "../utilities/Mesh";
 import Transform from "../utilities/Transform";
-import { Triangle2D } from "../utilities/Triangle";
+import Triangle from "../utilities/Triangle";
 import Vector2 from "../utilities/Vector2";
+import Vector3 from "../utilities/Vector3";
 import Camera from "./Camera";
 import Drawer from "./Drawers";
 import DrawerPerPixel from "./Drawers/DrawerPerPixel";
@@ -92,33 +93,34 @@ export default class Renderer {
         this.drawer.end();
     }
 
-    viewportToCanvas(v: Vector2) {
+    viewportToCanvas(v: Vector3) {
         if (!this.camera) {
             console.warn("No camera!");
-            return Vector2.zero;
+            return Vector3.zero;
         }
 
-        return new Vector2(
+        return new Vector3(
             (v.x * this.canvas.width) / this.camera.viewportSize.x +
                 this.canvas.width / 2,
             (v.y * this.canvas.height) / this.camera.viewportSize.y +
-                this.canvas.height / 2
+                this.canvas.height / 2,
+            v.z
         );
     }
 
-    renderTriangle(triangle: Triangle2D) {
+    renderTriangle(triangle: Triangle) {
         this.drawer.drawTriangleFilled(
             triangle.vertices[0],
             triangle.vertices[1],
             triangle.vertices[2],
             triangle.color
         );
-        this.drawer.drawTriangleWireframe(
-            triangle.vertices[0],
-            triangle.vertices[1],
-            triangle.vertices[2],
-            Color.red
-        );
+        // this.drawer.drawTriangleWireframe(
+        //     triangle.vertices[0],
+        //     triangle.vertices[1],
+        //     triangle.vertices[2],
+        //     Color.red
+        // );
     }
 
     renderMesh(mesh: Mesh, transform: Transform) {
@@ -131,18 +133,18 @@ export default class Renderer {
             let triangles = projectedMesh.toArrayOfTriangles();
             if (res === 0) triangles = this.camera.clipObject(triangles);
 
-            const triangles2d = triangles.map(
+            const projectTriangles = triangles.map(
                 (t) =>
-                    new Triangle2D(
+                    new Triangle(
                         t.vertices.map((v) => {
                             if (this.camera)
                                 return this.camera.projectVertex(v, this);
                             else throw Error("This is really bad");
-                        }) as [Vector2, Vector2, Vector2]
+                        }) as [Vector3, Vector3, Vector3]
                     )
             );
 
-            triangles2d.forEach((t) => {
+            projectTriangles.forEach((t) => {
                 this.renderTriangle(t);
             });
         } else {

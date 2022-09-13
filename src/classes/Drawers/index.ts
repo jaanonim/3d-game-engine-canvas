@@ -1,5 +1,5 @@
 import Color from "../../utilities/Color";
-import Vector2 from "../../utilities/Vector2";
+import Vector3 from "../../utilities/Vector3";
 
 export default class Drawer {
     ctx: CanvasRenderingContext2D;
@@ -17,15 +17,15 @@ export default class Drawer {
         this.height = height;
     }
     drawTriangleFilled(
-        _p1: Vector2,
-        _p2: Vector2,
-        _p3: Vector2,
+        _p1: Vector3,
+        _p2: Vector3,
+        _p3: Vector3,
         _color: Color
     ) {}
     drawTriangleWireframe(
-        _p1: Vector2,
-        _p2: Vector2,
-        _p3: Vector2,
+        _p1: Vector3,
+        _p2: Vector3,
+        _p3: Vector3,
         _color: Color
     ) {}
     begin() {}

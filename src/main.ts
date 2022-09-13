@@ -32,7 +32,8 @@ class Rotate extends Component {
 
 const teapot = new ObjLoader(await FileLoader.load("/teapot.obj")).parse();
 
-const cube = new Mesh(
+const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
+/*= new Mesh(
     [
         new Vector3(1, 1, 1),
         new Vector3(-1, 1, 1),
@@ -57,7 +58,7 @@ const cube = new Mesh(
         [2, 7, 3],
     ]
 );
-
+*/
 const triangle = new Mesh(
     [new Vector3(1, 1, 1), new Vector3(-1, 1, 1), new Vector3(-1, -1, 1)],
     [[0, 1, 2]]
@@ -86,32 +87,32 @@ const data = {
             },
             components: [new MeshRenderer(cube)],
         },
-        {
-            name: "l",
-            transform: {
-                position: [-10, 0, 0],
-                scale: [1, 2, 3],
-            },
-            components: [new MeshRenderer(cube)],
-        },
-        {
-            name: "g",
-            transform: {
-                position: [0, 0, 6],
-                scale: [0.5, 0.5, 0.5],
-            },
-            children: [
-                {
-                    name: "cube",
-                    transform: {
-                        position: [1, 1, 1],
-                        scale: [1.5, 1.5, 1.5],
-                    },
-                    components: [new MeshRenderer(teapot)],
-                },
-            ],
-            components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],
-        },
+        // {
+        //     name: "l",
+        //     transform: {
+        //         position: [-10, 0, 0],
+        //         scale: [1, 2, 3],
+        //     },
+        //     components: [new MeshRenderer(cube)],
+        // },
+        // {
+        //     name: "g",
+        //     transform: {
+        //         position: [0, 0, 6],
+        //         scale: [0.5, 0.5, 0.5],
+        //     },
+        //     children: [
+        //         {
+        //             name: "cube",
+        //             transform: {
+        //                 position: [1, 1, 1],
+        //                 scale: [1.5, 1.5, 1.5],
+        //             },
+        //             components: [new MeshRenderer(teapot)],
+        //         },
+        //     ],
+        //     components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],
+        // },
     ],
 };
 
@@ -121,7 +122,7 @@ const canvas = document.getElementById("root") as HTMLCanvasElement;
 
 const cam = new GameObject("cam");
 //cam.addComponent(new Rotate(new Vector3(0, 0.1, 0)));
-cam.transform.rotation = Quaternion.euler(new Vector3(0, 0, 0));
+cam.transform.rotation = Quaternion.euler(new Vector3(0, 1, 0));
 scene.addChildren(cam);
 
 const r = new Renderer(canvas);

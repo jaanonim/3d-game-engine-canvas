@@ -125,9 +125,10 @@ export default class Camera extends Component {
 
     projectVertex(vertex: Vector3, renderer: Renderer) {
         return renderer.viewportToCanvas(
-            new Vector2(
+            new Vector3(
                 (vertex.x * this.near) / vertex.z,
-                (vertex.y * this.near) / vertex.z
+                (vertex.y * this.near) / vertex.z,
+                vertex.z
             )
         );
     }

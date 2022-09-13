@@ -22,3 +22,13 @@ export function interpolate(i0: number, d0: number, i1: number, d1: number) {
     }
     return values;
 }
+
+export function map(
+    v: number,
+    minIn: number,
+    maxIn: number,
+    minOut: number,
+    maxOut: number
+): number {
+    return ((v - minIn) * (maxOut - minOut)) / (maxIn - minIn) + minIn;
+}
