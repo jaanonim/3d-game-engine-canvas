@@ -109,18 +109,18 @@ export default class Renderer {
     }
 
     renderTriangle(triangle: Triangle) {
-        this.drawer.drawTriangleFilled(
-            triangle.vertices[0],
-            triangle.vertices[1],
-            triangle.vertices[2],
-            triangle.color
-        );
         // this.drawer.drawTriangleWireframe(
         //     triangle.vertices[0],
         //     triangle.vertices[1],
         //     triangle.vertices[2],
         //     Color.red
         // );
+        this.drawer.drawTriangleFilled(
+            triangle.vertices[0],
+            triangle.vertices[1],
+            triangle.vertices[2],
+            triangle.color
+        );
     }
 
     renderMesh(mesh: Mesh, transform: Transform) {

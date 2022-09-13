@@ -35,7 +35,7 @@ export default class DrawerPerPixel extends Drawer {
 
         const z12 = interpolate(p1.y, p1.z, p2.y, p2.z);
         const z23 = interpolate(p2.y, p2.z, p3.y, p3.z);
-        const z13 = interpolate(p1.y, p2.z, p3.y, p3.z);
+        const z13 = interpolate(p1.y, p1.z, p3.y, p3.z);
 
         z12.pop();
         const z123 = [...z12];
@@ -153,18 +153,20 @@ export default class DrawerPerPixel extends Drawer {
             max = Math.max(this.depthBuffer[i], max);
         }
 
-        for (let x = 0; x < this.width; x++) {
-            for (let y = 0; y < this.height; y++) {
-                const c = map(
-                    this.depthBuffer[y * this.width + x],
-                    0,
-                    max,
-                    0,
-                    255
-                );
-                this.setPixel(x, y, new Color(c, c, c, 255));
+        const DRAW_DEPTH_BUFFER = true;
+        if (DRAW_DEPTH_BUFFER)
+            for (let x = 0; x < this.width; x++) {
+                for (let y = 0; y < this.height; y++) {
+                    const c = map(
+                        this.depthBuffer[y * this.width + x],
+                        0,
+                        max,
+                        0,
+                        255
+                    );
+                    this.setPixel(x, y, new Color(c, c, c, 255));
+                }
             }
-        }
 
         this.ctx.putImageData(this.img, 0, 0);
     }
