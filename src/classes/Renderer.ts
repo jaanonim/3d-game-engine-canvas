@@ -1,13 +1,10 @@
-import Color from "../utilities/Color";
 import Mesh from "../utilities/Mesh";
 import Transform from "../utilities/Transform";
 import Triangle from "../utilities/Triangle";
-import Vector2 from "../utilities/Vector2";
 import Vector3 from "../utilities/Vector3";
 import Camera from "./Camera";
 import Drawer from "./Drawers";
 import DrawerPerPixel from "./Drawers/DrawerPerPixel";
-import DrawerStandard from "./Drawers/DrawerStandard";
 import Scene from "./Scene";
 
 export default class Renderer {
@@ -131,6 +128,10 @@ export default class Renderer {
             if (res === -1) return;
 
             let triangles = projectedMesh.toArrayOfTriangles();
+            triangles = triangles.filter(
+                (t) => t.normal.dotProduct(t.vertices[0].invert()) > 0
+            );
+
             if (res === 0) triangles = this.camera.clipObject(triangles);
 
             const projectTriangles = triangles.map(
@@ -140,7 +141,8 @@ export default class Renderer {
                             if (this.camera)
                                 return this.camera.projectVertex(v, this);
                             else throw Error("This is really bad");
-                        }) as [Vector3, Vector3, Vector3]
+                        }) as [Vector3, Vector3, Vector3],
+                        t.normal
                     )
             );
 

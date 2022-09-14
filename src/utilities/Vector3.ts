@@ -26,6 +26,14 @@ export default class Vector3 {
         );
     }
 
+    subtract(vector: Vector3) {
+        return new Vector3(
+            this.x - vector.x,
+            this.y - vector.y,
+            this.z - vector.z
+        );
+    }
+
     multiply(v: Vector3 | number) {
         if (v instanceof Vector3) {
             return new Vector3(this.x * v.x, this.y * v.y, this.z * v.z);
@@ -52,5 +60,13 @@ export default class Vector3 {
 
     dotProduct(v: Vector3) {
         return v.x * this.x + v.y * this.y + v.z * this.z;
+    }
+
+    crossProduct(v: Vector3) {
+        return new Vector3(
+            this.y * v.z - this.z * v.y,
+            this.z * v.x - this.x * v.z,
+            this.x * v.y - this.y * v.x
+        );
     }
 }

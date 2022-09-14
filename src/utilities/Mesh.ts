@@ -7,14 +7,28 @@ import Vector3 from "./Vector3";
 export default class Mesh {
     vertices: Array<Vector3>;
     triangles: Array<[number, number, number]>;
+    normals: Array<Vector3>;
     boundingSphere!: Sphere;
 
     constructor(
         vertices: Array<Vector3>,
-        triangles: Array<[number, number, number]>
+        triangles: Array<[number, number, number]>,
+        normals?: Array<Vector3>
     ) {
         this.triangles = triangles;
         this.vertices = vertices;
+        this.normals = [];
+        if (normals) this.normals = normals;
+        else this.calculateNormals();
+    }
+
+    calculateNormals() {
+        this.normals = [];
+        this.triangles.forEach((t) => {
+            const v1 = this.vertices[t[1]].subtract(this.vertices[t[0]]);
+            const v2 = this.vertices[t[2]].subtract(this.vertices[t[0]]);
+            this.normals.push(v1.crossProduct(v2).normalize());
+        });
     }
 
     calculateBoundingSphere() {
@@ -23,7 +37,7 @@ export default class Mesh {
             .multiply(1 / this.vertices.length);
         let radius = 0;
         this.vertices.forEach((v) => {
-            const x = center.add(v.invert()).squareLength();
+            const x = center.subtract(v).squareLength();
             if (x > radius) {
                 radius = x;
             }
@@ -47,7 +61,7 @@ export default class Mesh {
     }
 
     copy() {
-        return new Mesh(this.vertices, this.triangles);
+        return new Mesh(this.vertices, this.triangles, this.normals);
     }
 
     project(camera: Camera, transform: Transform) {
@@ -55,19 +69,23 @@ export default class Mesh {
         copy.vertices = copy.vertices.map((v) =>
             camera.transformToCamera(transform.apply(v))
         );
+        copy.normals = copy.normals.map((n) =>
+            camera.transformNormalToCamera(transform.rotateVector(n))
+        );
         copy.calculateBoundingSphere();
         return copy;
     }
 
     toArrayOfTriangles() {
         return this.triangles.map(
-            (t) =>
+            (t, i) =>
                 new Triangle(
                     t.map((i) => this.vertices[i]) as [
                         Vector3,
                         Vector3,
                         Vector3
-                    ]
+                    ],
+                    this.normals[i]
                 )
         );
     }

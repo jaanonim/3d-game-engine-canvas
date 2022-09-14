@@ -123,6 +123,11 @@ export default class Camera extends Component {
         return t.rotateVector(t.moveVector(vertex));
     }
 
+    transformNormalToCamera(vertex: Vector3) {
+        const t = this.gameObject.transform.invert();
+        return t.rotateVector(vertex);
+    }
+
     projectVertex(vertex: Vector3, renderer: Renderer) {
         return renderer.viewportToCanvas(
             new Vector3(

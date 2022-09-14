@@ -153,7 +153,7 @@ export default class DrawerPerPixel extends Drawer {
             max = Math.max(this.depthBuffer[i], max);
         }
 
-        const DRAW_DEPTH_BUFFER = true;
+        const DRAW_DEPTH_BUFFER = false;
         if (DRAW_DEPTH_BUFFER)
             for (let x = 0; x < this.width; x++) {
                 for (let y = 0; y < this.height; y++) {
