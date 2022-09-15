@@ -1,4 +1,4 @@
-import Camera from "./classes/Camera";
+import Camera from "./components/Camera";
 import Component from "./classes/Component";
 import GameObject from "./classes/GameObject";
 import Renderer from "./classes/Renderer";
@@ -70,24 +70,24 @@ const data = {
         // {
         //     name: "o",
         //     transform: {
-        //         position: [0, 0, 10],
+        //         position: [0, 0, 5],
         //         rotation: [1, 0, 1],
         //         scale: [1, 1, 1],
         //     },
         //     components: [
-        //         new MeshRenderer(triangle),
+        //         new MeshRenderer(cube),
         //         //new Rotate(new Vector3(0, 0.1, 0)),
         //     ],
         // },
-        {
-            name: "r",
-            transform: {
-                position: [10, 0, 0],
-                rotation: [1, 0, 1],
-                scale: [1, 2, 3],
-            },
-            components: [new MeshRenderer(cube)],
-        },
+        // {
+        //     name: "r",
+        //     transform: {
+        //         position: [10, 0, 0],
+        //         rotation: [1, 0, 1],
+        //         scale: [1, 2, 3],
+        //     },
+        //     components: [new MeshRenderer(cube)],
+        // },
         // {
         //     name: "l",
         //     transform: {

@@ -2,7 +2,7 @@ import Mesh from "../utilities/Mesh";
 import Transform from "../utilities/Transform";
 import Triangle from "../utilities/Triangle";
 import Vector3 from "../utilities/Vector3";
-import Camera from "./Camera";
+import Camera from "../components/Camera";
 import Drawer from "./Drawers";
 import DrawerPerPixel from "./Drawers/DrawerPerPixel";
 import Scene from "./Scene";
@@ -106,17 +106,18 @@ export default class Renderer {
     }
 
     renderTriangle(triangle: Triangle) {
+        const t = triangle.transformToInt();
         // this.drawer.drawTriangleWireframe(
-        //     triangle.vertices[0],
-        //     triangle.vertices[1],
-        //     triangle.vertices[2],
+        //     t.vertices[0],
+        //     t.vertices[1],
+        //     t.vertices[2],
         //     Color.red
         // );
         this.drawer.drawTriangleFilled(
-            triangle.vertices[0],
-            triangle.vertices[1],
-            triangle.vertices[2],
-            triangle.color
+            t.vertices[0],
+            t.vertices[1],
+            t.vertices[2],
+            t.color
         );
     }
 

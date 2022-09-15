@@ -3,8 +3,8 @@ import { degToRad, Sphere } from "../utilities/Math";
 import Triangle from "../utilities/Triangle";
 import Vector2 from "../utilities/Vector2";
 import Vector3 from "../utilities/Vector3";
-import Component from "./Component";
-import Renderer from "./Renderer";
+import Component from "../classes/Component";
+import Renderer from "../classes/Renderer";
 
 export default class Camera extends Component {
     private _viewportRatio: number;

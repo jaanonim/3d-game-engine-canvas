@@ -1,4 +1,4 @@
-import Camera from "../classes/Camera";
+import Camera from "../components/Camera";
 import { Sphere } from "./Math";
 import Transform from "./Transform";
 import Triangle from "./Triangle";
