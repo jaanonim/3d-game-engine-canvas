@@ -120,6 +120,11 @@ const data = {
 const scene = Importer.scene(data);
 
 const canvas = document.getElementById("root") as HTMLCanvasElement;
+window.onresize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    canvas.dispatchEvent(new Event("resize"));
+};
 
 const cam = new GameObject("cam");
 //cam.addComponent(new Rotate(new Vector3(0, 0.1, 0)));

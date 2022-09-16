@@ -1,14 +1,17 @@
 import Vector3 from "../utilities/Vector3";
 import GameObject from "./GameObject";
+import Illumination from "./Illumination";
 import Renderer from "./Renderer";
 
 export default class Scene {
     name: string;
     children: Array<GameObject>;
+    illumination: Illumination;
 
     constructor(name: string) {
         this.name = name;
         this.children = [];
+        this.illumination = new Illumination();
     }
 
     getWordPosition() {
@@ -17,6 +20,7 @@ export default class Scene {
 
     addChildren(obj: GameObject) {
         this.children.push(obj);
+        obj.transform.setParent(this);
         return obj;
     }
 
@@ -30,5 +34,9 @@ export default class Scene {
 
     lateUpdate() {
         this.children.forEach((c) => c.lateUpdate());
+    }
+
+    find(name: string) {
+        return this.children.filter((c) => c.name == name);
     }
 }

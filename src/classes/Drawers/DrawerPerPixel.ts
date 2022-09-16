@@ -148,13 +148,13 @@ export default class DrawerPerPixel extends Drawer {
     }
 
     end() {
-        let max = 0;
-        for (let i = 0; i < this.width * this.height; i++) {
-            max = Math.max(this.depthBuffer[i], max);
-        }
-
         const DRAW_DEPTH_BUFFER = false;
-        if (DRAW_DEPTH_BUFFER)
+        if (DRAW_DEPTH_BUFFER) {
+            let max = 0;
+            for (let i = 0; i < this.width * this.height; i++) {
+                max = Math.max(this.depthBuffer[i], max);
+            }
+
             for (let x = 0; x < this.width; x++) {
                 for (let y = 0; y < this.height; y++) {
                     const c = map(
@@ -167,6 +167,7 @@ export default class DrawerPerPixel extends Drawer {
                     this.setPixel(x, y, new Color(c, c, c, 255));
                 }
             }
+        }
 
         this.ctx.putImageData(this.img, 0, 0);
     }

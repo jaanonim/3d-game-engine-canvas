@@ -34,7 +34,8 @@ export default class Importer {
 
     static object(data: GameObjectData): GameObject {
         const obj = new GameObject(data.name);
-        if (data.transform) obj.transform = Importer.transform(data.transform);
+        if (data.transform)
+            obj.transform = Importer.transform(data.transform, obj);
         if (data.components)
             data.components.forEach((c) => {
                 obj.addComponent(c);
@@ -57,8 +58,9 @@ export default class Importer {
     //     throw Error(`Component ${data.name} not found`);
     // }
 
-    static transform(data: TransformData): Transform {
+    static transform(data: TransformData, obj: GameObject): Transform {
         const t = new Transform(
+            obj,
             data.position ? Importer.vector3(data.position) : undefined,
             data.rotation
                 ? Quaternion.euler(Importer.vector3(data.rotation))

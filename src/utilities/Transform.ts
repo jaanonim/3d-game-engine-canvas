@@ -1,10 +1,17 @@
+import GameObject from "../classes/GameObject";
+import Scene from "../classes/Scene";
 import Quaternion from "./Quaternion";
 import Vector3 from "./Vector3";
 
 export default class Transform {
-    private _parent: Transform | undefined;
+    gameObject: GameObject;
+
+    private _parent: Transform | Scene | undefined;
     private _children: Array<Transform>;
-    public get parent(): Transform | undefined {
+    public get children(): Array<Transform> {
+        return this._children;
+    }
+    public get parent(): Transform | Scene | undefined {
         return this._parent;
     }
 
@@ -51,10 +58,12 @@ export default class Transform {
     }
 
     constructor(
+        gameObject: GameObject,
         position: Vector3 = Vector3.zero,
         rotation: Quaternion = new Quaternion(),
         scale: Vector3 = Vector3.one
     ) {
+        this.gameObject = gameObject;
         this._scale = scale;
         this._rotation = rotation;
         this._position = position;
@@ -72,6 +81,7 @@ export default class Transform {
      */
     invert() {
         return new Transform(
+            this.gameObject,
             this.position.invert(),
             this.rotation.invert(),
             this.scale.invert()
@@ -97,6 +107,10 @@ export default class Transform {
         return transform;
     }
 
+    setParent(scene: Scene) {
+        this._parent = scene;
+    }
+
     updateAll() {
         this.updateGlobalScale();
         this.updateGlobalRotation();
@@ -104,7 +118,8 @@ export default class Transform {
     }
 
     updateGlobalRotation(): void {
-        if (this.parent == undefined) this._globalRotation = this.rotation;
+        if (!(this.parent instanceof Transform))
+            this._globalRotation = this.rotation;
         else
             this._globalRotation = this.rotation.multiply(
                 this.parent.globalRotation
@@ -115,7 +130,7 @@ export default class Transform {
     }
 
     updateGlobalScale(): void {
-        if (this.parent == undefined) this._globalScale = this.scale;
+        if (!(this.parent instanceof Transform)) this._globalScale = this.scale;
         else this._globalScale = this.scale.multiply(this.parent.globalScale);
         this._children.forEach((t) => {
             t.updateGlobalScale();
@@ -123,7 +138,8 @@ export default class Transform {
     }
 
     updateGlobalPosition(): void {
-        if (this.parent == undefined) this._globalPosition = this.position;
+        if (!(this.parent instanceof Transform))
+            this._globalPosition = this.position;
         else this._globalPosition = this.parent.apply(this.position);
         this._children.forEach((t) => {
             t.updateGlobalPosition();

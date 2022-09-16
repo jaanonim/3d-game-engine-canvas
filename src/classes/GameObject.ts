@@ -1,11 +1,11 @@
 import Transform from "../utilities/Transform";
 import Component from "./Component";
 import Renderer from "./Renderer";
+import Scene from "./Scene";
 
 export default class GameObject {
     name: string;
     transform: Transform;
-    children: Array<GameObject>;
     components: Array<Component>;
 
     private static _register: { [name: string]: GameObject } = {};
@@ -16,14 +16,12 @@ export default class GameObject {
 
     constructor(name: string) {
         this.name = name;
-        this.transform = new Transform();
-        this.children = [];
+        this.transform = new Transform(this);
         this.components = [];
         GameObject._register[name] = this;
     }
 
     addChildren(obj: GameObject) {
-        this.children.push(obj);
         this.transform.addChildren(obj.transform);
         return obj;
     }
@@ -35,17 +33,53 @@ export default class GameObject {
     }
 
     update() {
-        this.children.forEach((c) => c.update());
-        this.components.forEach((c) => c.update());
+        this.transform.children.forEach((t) => t.gameObject.update());
+        this.components.forEach((c) => {
+            if (c.isActive) c.update();
+        });
     }
 
     lateUpdate() {
-        this.children.forEach((c) => c.lateUpdate());
-        this.components.forEach((c) => c.lateUpdate());
+        this.transform.children.forEach((t) => t.gameObject.lateUpdate());
+        this.components.forEach((c) => {
+            if (c.isActive) c.lateUpdate();
+        });
     }
 
     render(renderer: Renderer) {
-        this.children.forEach((c) => c.render(renderer));
-        this.components.forEach((c) => c.render(renderer));
+        this.transform.children.forEach((t) => t.gameObject.render(renderer));
+        this.components.forEach((c) => {
+            if (c.isActive) c.render(renderer);
+        });
+    }
+
+    getScene(): Scene {
+        if (this.transform.parent instanceof Transform)
+            return this.transform.parent.gameObject.getScene();
+        else if (this.transform.parent instanceof Scene)
+            return this.transform.parent;
+        else throw new Error("Has no parent");
+    }
+
+    findMany(name: string) {
+        return this.transform.children
+            .filter((t) => t.gameObject.name == name)
+            .map((t) => t.gameObject);
+    }
+
+    find(name: string) {
+        return this.transform.children
+            .filter((t) => t.gameObject.name == name)
+            .map((t) => t.gameObject)[0];
+    }
+
+    getComponent<T>(type: Newable<any>) {
+        return this.components.filter((c) => c instanceof type) as Array<T>;
+    }
+
+    getComponents<T>(type: Newable<any>) {
+        return this.components.filter((c) => c instanceof type)[0] as T;
     }
 }
+
+type Newable<T> = { new (...args: any[]): T };

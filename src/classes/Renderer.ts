@@ -8,6 +8,7 @@ import DrawerPerPixel from "./Drawers/DrawerPerPixel";
 import Scene from "./Scene";
 
 export default class Renderer {
+    /**In milliseconds */
     static deltaTime: number = 0;
     canvas: HTMLCanvasElement;
     camera: Camera | null;
@@ -18,7 +19,7 @@ export default class Renderer {
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
-        this.canvas.onresize = this.resize;
+        this.canvas.onresize = this.resize.bind(this);
         this.canvasRatio = 0;
         this.camera = null;
         this.scene = null;
@@ -40,6 +41,7 @@ export default class Renderer {
     }
 
     resize() {
+        console.log("ok");
         this.canvasRatio = this.canvas.width / this.canvas.height;
         this.drawer.resize(this.canvas.width, this.canvas.height);
         if (this.camera) this.camera.resize(this.canvasRatio);
@@ -99,25 +101,24 @@ export default class Renderer {
         return new Vector3(
             (v.x * this.canvas.width) / this.camera.viewportSize.x +
                 this.canvas.width / 2,
-            (v.y * this.canvas.height) / this.camera.viewportSize.y +
+            -(v.y * this.canvas.height) / this.camera.viewportSize.y +
                 this.canvas.height / 2,
             v.z
-        );
+        ).roundXYToInt();
     }
 
     renderTriangle(triangle: Triangle) {
-        const t = triangle.transformToInt();
         // this.drawer.drawTriangleWireframe(
-        //     t.vertices[0],
-        //     t.vertices[1],
-        //     t.vertices[2],
+        //     triangle.vertices[0],
+        //     triangle.vertices[1],
+        //     triangle.vertices[2],
         //     Color.red
         // );
         this.drawer.drawTriangleFilled(
-            t.vertices[0],
-            t.vertices[1],
-            t.vertices[2],
-            t.color
+            triangle.vertices[0],
+            triangle.vertices[1],
+            triangle.vertices[2],
+            triangle.color
         );
     }
 

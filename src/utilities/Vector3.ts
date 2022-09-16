@@ -69,4 +69,8 @@ export default class Vector3 {
             this.x * v.y - this.y * v.x
         );
     }
+
+    roundXYToInt() {
+        return new Vector3(Math.round(this.x), Math.round(this.y), this.z);
+    }
 }
