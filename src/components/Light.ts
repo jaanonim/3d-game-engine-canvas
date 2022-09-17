@@ -1,5 +1,5 @@
 import Component from "../classes/Component";
-import GameObject from "../classes/GameObject";
+import Color from "../utilities/Color";
 
 export enum LightType {
     AMBIENT = 0,
@@ -10,15 +10,16 @@ export enum LightType {
 export default class Light extends Component {
     type: LightType;
     intensity: number;
+    color: Color;
 
-    constructor(type: LightType, intensity: number) {
+    constructor(type: LightType, intensity: number, color: Color) {
         super();
         this.type = type;
         this.intensity = intensity;
+        this.color = color;
     }
 
-    register(obj: GameObject): void {
-        super.register(obj);
+    start() {
         this.gameObject.getScene().illumination.registerLight(this);
     }
 }

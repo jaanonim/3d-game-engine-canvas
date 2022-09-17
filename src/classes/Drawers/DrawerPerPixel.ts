@@ -19,8 +19,8 @@ export default class DrawerPerPixel extends Drawer {
     }
 
     drawTriangleFilled(_p1: Vector3, _p2: Vector3, _p3: Vector3, color: Color) {
-        const c = (1 / _p3.z) * 500;
-        color = new Color(c, c, c, 255);
+        //     const c = (1 / _p3.z) * 500;
+        //     color = new Color(c, c, c, 255);
         const a = [_p1, _p2, _p3];
         a.sort((a, b) => a.y - b.y);
         const [p1, p2, p3] = a;

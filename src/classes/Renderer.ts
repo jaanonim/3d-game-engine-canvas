@@ -6,6 +6,7 @@ import Camera from "../components/Camera";
 import Drawer from "./Drawers";
 import DrawerPerPixel from "./Drawers/DrawerPerPixel";
 import Scene from "./Scene";
+import Material from "../utilities/Material";
 
 export default class Renderer {
     /**In milliseconds */
@@ -41,7 +42,6 @@ export default class Renderer {
     }
 
     resize() {
-        console.log("ok");
         this.canvasRatio = this.canvas.width / this.canvas.height;
         this.drawer.resize(this.canvas.width, this.canvas.height);
         if (this.camera) this.camera.resize(this.canvasRatio);
@@ -52,6 +52,12 @@ export default class Renderer {
     }
 
     startGameLoop(update = () => {}, lateUpdate = () => {}) {
+        if (!this.scene) {
+            console.warn("No scene!");
+            return;
+        }
+
+        this.scene.start();
         this.gameLoop(update, lateUpdate);
     }
 
@@ -107,22 +113,7 @@ export default class Renderer {
         ).roundXYToInt();
     }
 
-    renderTriangle(triangle: Triangle) {
-        // this.drawer.drawTriangleWireframe(
-        //     triangle.vertices[0],
-        //     triangle.vertices[1],
-        //     triangle.vertices[2],
-        //     Color.red
-        // );
-        this.drawer.drawTriangleFilled(
-            triangle.vertices[0],
-            triangle.vertices[1],
-            triangle.vertices[2],
-            triangle.color
-        );
-    }
-
-    renderMesh(mesh: Mesh, transform: Transform) {
+    renderMesh(mesh: Mesh, material: Material, transform: Transform) {
         if (this.camera) {
             const projectedMesh = mesh.project(this.camera, transform);
 
@@ -148,8 +139,8 @@ export default class Renderer {
                     )
             );
 
-            projectTriangles.forEach((t) => {
-                this.renderTriangle(t);
+            projectTriangles.forEach((t, i) => {
+                material.renderTriangle(t, triangles[i], this);
             });
         } else {
             console.warn("No camera!");

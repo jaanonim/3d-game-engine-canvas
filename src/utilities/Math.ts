@@ -32,3 +32,9 @@ export function map(
 ): number {
     return ((v - minIn) * (maxOut - minOut)) / (maxIn - minIn) + minIn;
 }
+
+export function clamp(v: number, min: number = 0, max: number = 1) {
+    if (v < min) v = min;
+    if (v > max) v = max;
+    return v;
+}

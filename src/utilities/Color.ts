@@ -1,3 +1,5 @@
+import { clamp, map } from "./Math";
+
 export default class Color {
     r: number;
     g: number;
@@ -24,7 +26,11 @@ export default class Color {
         this.g = g;
         this.b = b;
         this.a = a;
-        if (!this.verify()) throw Error("Invalid color values");
+
+        if (!this.verify()) {
+            console.error(this);
+            throw Error(`Invalid color values`);
+        }
     }
 
     verify() {
@@ -60,5 +66,46 @@ export default class Color {
 
     copy() {
         return new Color(this.r, this.g, this.b, this.a);
+    }
+
+    multiply(v: number | Color) {
+        if (v instanceof Color) {
+            const r = this.r * v.r;
+            const g = this.g * v.g;
+            const b = this.b * v.b;
+
+            const maxV = Math.max(r, g, b, 255);
+
+            return new Color(
+                clamp(map(r, 0, maxV, 0, 255), 0, 255),
+                clamp(map(g, 0, maxV, 0, 255), 0, 255),
+                clamp(map(b, 0, maxV, 0, 255), 0, 255),
+                this.a
+            );
+        } else
+            return new Color(
+                clamp(this.r * v, 0, 255),
+                clamp(this.g * v, 0, 255),
+                clamp(this.b * v, 0, 255),
+                this.a
+            );
+    }
+
+    normalize() {
+        return new Color(
+            this.r / 255,
+            this.g / 255,
+            this.b / 255,
+            this.a / 255
+        );
+    }
+
+    add(c: Color) {
+        return new Color(
+            clamp(this.r + c.r, 0, 255),
+            clamp(this.g + c.g, 0, 255),
+            clamp(this.b + c.b, 0, 255),
+            this.a
+        );
     }
 }

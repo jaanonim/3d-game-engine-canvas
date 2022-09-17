@@ -36,6 +36,10 @@ export default class Scene {
         this.children.forEach((c) => c.lateUpdate());
     }
 
+    start() {
+        this.children.forEach((c) => c.start());
+    }
+
     find(name: string) {
         return this.children.filter((c) => c.name == name);
     }

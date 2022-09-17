@@ -20,6 +20,7 @@ export default class Component {
         this.gameObject = obj;
     }
 
+    start() {}
     update() {}
     lateUpdate() {}
     render(_renderer: Renderer) {}

@@ -11,6 +11,9 @@ import ObjLoader from "./tools/ObjLoader";
 import Mesh from "./utilities/Mesh";
 import Quaternion from "./utilities/Quaternion";
 import Vector3 from "./utilities/Vector3";
+import Material from "./utilities/Material";
+import Color from "./utilities/Color";
+import Light, { LightType } from "./components/Light";
 
 class Rotate extends Component {
     v: number;
@@ -64,6 +67,9 @@ const triangle = new Mesh(
     [[0, 1, 2]]
 );
 
+const material = new Material(Color.white, false);
+const wireframe = new Material(Color.red, true);
+
 const data = {
     name: "scene",
     children: [
@@ -97,6 +103,30 @@ const data = {
         //     components: [new MeshRenderer(cube)],
         // },
         {
+            name: "light",
+            transform: {
+                position: [-2, 0, 0],
+                rotation: [1, 1, 1],
+                scale: [0.2, 0.2, 0.2],
+            },
+            components: [
+                new Light(LightType.POINT, 1, Color.blue),
+                new MeshRenderer(cube, wireframe),
+            ],
+        },
+        {
+            name: "light",
+            transform: {
+                position: [2, 0, 0],
+                rotation: [1, 1, 1],
+                scale: [0.2, 0.2, 0.2],
+            },
+            components: [
+                new Light(LightType.POINT, 1, Color.white),
+                new MeshRenderer(cube, wireframe),
+            ],
+        },
+        {
             name: "g",
             transform: {
                 position: [0, 0, 6],
@@ -109,7 +139,7 @@ const data = {
                         position: [1, 1, 1],
                         scale: [1.5, 1.5, 1.5],
                     },
-                    components: [new MeshRenderer(teapot)],
+                    components: [new MeshRenderer(teapot, material)],
                 },
             ],
             components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],
@@ -120,11 +150,6 @@ const data = {
 const scene = Importer.scene(data);
 
 const canvas = document.getElementById("root") as HTMLCanvasElement;
-window.onresize = () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    canvas.dispatchEvent(new Event("resize"));
-};
 
 const cam = new GameObject("cam");
 //cam.addComponent(new Rotate(new Vector3(0, 0.1, 0)));

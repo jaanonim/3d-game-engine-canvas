@@ -32,6 +32,13 @@ export default class GameObject {
         return obj;
     }
 
+    start() {
+        this.transform.children.forEach((t) => t.gameObject.start());
+        this.components.forEach((c) => {
+            if (c.isActive) c.start();
+        });
+    }
+
     update() {
         this.transform.children.forEach((t) => t.gameObject.update());
         this.components.forEach((c) => {
