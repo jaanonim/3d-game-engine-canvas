@@ -28,6 +28,14 @@ export default class Drawer {
         _p3: Vector3,
         _color: Color
     ) {}
+    drawTriangleFilledShaded(
+        _p1: Vector3,
+        _p2: Vector3,
+        _p3: Vector3,
+        _color1: Color,
+        _color2: Color,
+        _color3: Color
+    ) {}
     begin() {}
     end() {}
 }

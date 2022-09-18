@@ -14,6 +14,7 @@ import Vector3 from "./utilities/Vector3";
 import Material from "./utilities/Material";
 import Color from "./utilities/Color";
 import Light, { LightType } from "./components/Light";
+import GouraudMaterial from "./utilities/GouraudMaterial";
 
 class Rotate extends Component {
     v: number;
@@ -67,7 +68,8 @@ const triangle = new Mesh(
     [[0, 1, 2]]
 );
 
-const material = new Material(Color.white, false);
+const material = new GouraudMaterial(Color.white, false);
+const material2 = new Material(Color.white, false);
 const wireframe = new Material(Color.red, true);
 
 const data = {
@@ -129,7 +131,7 @@ const data = {
         {
             name: "g",
             transform: {
-                position: [0, 0, 6],
+                position: [2, 0, 6],
                 scale: [0.5, 0.5, 0.5],
             },
             children: [
@@ -140,6 +142,24 @@ const data = {
                         scale: [1.5, 1.5, 1.5],
                     },
                     components: [new MeshRenderer(teapot, material)],
+                },
+            ],
+            components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],
+        },
+        {
+            name: "g",
+            transform: {
+                position: [-2, 0, 6],
+                scale: [0.5, 0.5, 0.5],
+            },
+            children: [
+                {
+                    name: "cube",
+                    transform: {
+                        position: [-1, 1, 1],
+                        scale: [1.5, 1.5, 1.5],
+                    },
+                    components: [new MeshRenderer(teapot, material2)],
                 },
             ],
             components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],

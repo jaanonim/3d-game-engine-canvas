@@ -24,6 +24,7 @@ export default class Material {
             originalTriangle.normal,
             10
         );
+
         if (this.wireframe) {
             renderer.drawer.drawTriangleWireframe(
                 triangle.vertices[0],

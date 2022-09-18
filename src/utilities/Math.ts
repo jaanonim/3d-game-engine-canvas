@@ -23,6 +23,24 @@ export function interpolate(i0: number, d0: number, i1: number, d1: number) {
     return values;
 }
 
+export function getInterpolatedValues(
+    k1: number,
+    k2: number,
+    k3: number,
+    v1: number,
+    v2: number,
+    v3: number
+) {
+    const v12 = interpolate(v1, k1, v2, k2);
+    const v23 = interpolate(v2, k2, v3, k3);
+    const v13 = interpolate(v1, k1, v3, k3);
+
+    v12.pop();
+    const v123 = [...v12];
+    v123.push(...v23);
+    return [v123, v13];
+}
+
 export function map(
     v: number,
     minIn: number,

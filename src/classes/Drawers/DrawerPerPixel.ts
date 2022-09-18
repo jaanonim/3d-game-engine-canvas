@@ -1,6 +1,11 @@
 import Drawer from ".";
 import Color from "../../utilities/Color";
-import { interpolate, map } from "../../utilities/Math";
+import {
+    clamp,
+    getInterpolatedValues,
+    interpolate,
+    map,
+} from "../../utilities/Math";
 import Vector2 from "../../utilities/Vector2";
 import Vector3 from "../../utilities/Vector3";
 
@@ -19,27 +24,27 @@ export default class DrawerPerPixel extends Drawer {
     }
 
     drawTriangleFilled(_p1: Vector3, _p2: Vector3, _p3: Vector3, color: Color) {
-        //     const c = (1 / _p3.z) * 500;
-        //     color = new Color(c, c, c, 255);
         const a = [_p1, _p2, _p3];
         a.sort((a, b) => a.y - b.y);
         const [p1, p2, p3] = a;
 
-        const x12 = interpolate(p1.y, p1.x, p2.y, p2.x);
-        const x23 = interpolate(p2.y, p2.x, p3.y, p3.x);
-        const x13 = interpolate(p1.y, p1.x, p3.y, p3.x);
+        const [x123, x13] = getInterpolatedValues(
+            p1.x,
+            p2.x,
+            p3.x,
+            p1.y,
+            p2.y,
+            p3.y
+        );
 
-        x12.pop();
-        const x123 = [...x12];
-        x123.push(...x23);
-
-        const z12 = interpolate(p1.y, p1.z, p2.y, p2.z);
-        const z23 = interpolate(p2.y, p2.z, p3.y, p3.z);
-        const z13 = interpolate(p1.y, p1.z, p3.y, p3.z);
-
-        z12.pop();
-        const z123 = [...z12];
-        z123.push(...z23);
+        const [z123, z13] = getInterpolatedValues(
+            p1.z,
+            p2.z,
+            p3.z,
+            p1.y,
+            p2.y,
+            p3.y
+        );
 
         const m = Math.floor(x123.length / 2);
         let x_left, x_right;
@@ -72,6 +77,153 @@ export default class DrawerPerPixel extends Drawer {
 
                 if (z > this.depthBuffer[_y * this.width + _x]) {
                     this.setPixel(_x, _y, color);
+                    this.depthBuffer[_y * this.width + _x] = z;
+                }
+                j++;
+            }
+            i++;
+        }
+    }
+
+    drawTriangleFilledShaded(
+        _p1: Vector3,
+        _p2: Vector3,
+        _p3: Vector3,
+        color1: Color,
+        color2: Color,
+        color3: Color
+    ) {
+        const a = [_p1, _p2, _p3];
+        a.sort((a, b) => a.y - b.y);
+        const [p1, p2, p3] = a;
+
+        const [x123, x13] = getInterpolatedValues(
+            p1.x,
+            p2.x,
+            p3.x,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const [z123, z13] = getInterpolatedValues(
+            p1.z,
+            p2.z,
+            p3.z,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const [r123, r13] = getInterpolatedValues(
+            color1.r,
+            color2.r,
+            color3.r,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const [g123, g13] = getInterpolatedValues(
+            color1.g,
+            color2.g,
+            color3.g,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const [b123, b13] = getInterpolatedValues(
+            color1.b,
+            color2.b,
+            color3.b,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const [a123, a13] = getInterpolatedValues(
+            color1.a,
+            color2.a,
+            color3.a,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const m = Math.floor(x123.length / 2);
+        let x_left, x_right;
+        let z_left, z_right;
+        let r_left, r_right;
+        let g_left, g_right;
+        let b_left, b_right;
+        let a_left, a_right;
+
+        if (x13[m] < x123[m]) {
+            x_left = x13;
+            x_right = x123;
+
+            z_left = z13;
+            z_right = z123;
+
+            r_left = r13;
+            r_right = r123;
+
+            g_left = g13;
+            g_right = g123;
+
+            b_left = b13;
+            b_right = b123;
+
+            a_left = a13;
+            a_right = a123;
+        } else {
+            x_left = x123;
+            x_right = x13;
+
+            z_left = z123;
+            z_right = z13;
+
+            r_left = r123;
+            r_right = r13;
+
+            g_left = g123;
+            g_right = g13;
+
+            b_left = b123;
+            b_right = b13;
+
+            a_left = a123;
+            a_right = a13;
+        }
+
+        let i = 0;
+        for (let y = p1.y; y <= p3.y; y++) {
+            const xl = x_left[i];
+            const xr = x_right[i];
+            const z_segment = interpolate(xl, z_left[i], xr, z_right[i]);
+            const r_segment = interpolate(xl, r_left[i], xr, r_right[i]);
+            const g_segment = interpolate(xl, g_left[i], xr, g_right[i]);
+            const b_segment = interpolate(xl, b_left[i], xr, b_right[i]);
+            const a_segment = interpolate(xl, a_left[i], xr, a_right[i]);
+
+            let j = 0;
+            for (let x = xl; x < xr; x++) {
+                const z = 1 / z_segment[j];
+                const _x = Math.ceil(x);
+                const _y = Math.ceil(y);
+
+                if (z > this.depthBuffer[_y * this.width + _x]) {
+                    this.setPixel(
+                        _x,
+                        _y,
+                        new Color(
+                            clamp(r_segment[j], 0, 255),
+                            clamp(g_segment[j], 0, 255),
+                            clamp(b_segment[j], 0, 255),
+                            clamp(a_segment[j], 0, 255)
+                        )
+                    );
                     this.depthBuffer[_y * this.width + _x] = z;
                 }
                 j++;
