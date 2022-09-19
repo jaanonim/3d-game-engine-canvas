@@ -1,4 +1,4 @@
-import Vector3 from "./Vector3";
+import Vector3 from "./math/Vector3";
 
 export default class Triangle {
     vertices: [Vector3, Vector3, Vector3];

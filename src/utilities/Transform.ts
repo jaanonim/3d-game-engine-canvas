@@ -1,7 +1,7 @@
 import GameObject from "../classes/GameObject";
 import Scene from "../classes/Scene";
 import Quaternion from "./Quaternion";
-import Vector3 from "./Vector3";
+import Vector3 from "./math/Vector3";
 
 export default class Transform {
     gameObject: GameObject;

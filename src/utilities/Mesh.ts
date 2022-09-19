@@ -1,8 +1,8 @@
 import Camera from "../components/Camera";
-import { Sphere } from "./Math";
+import { Sphere } from "./math/Math";
 import Transform from "./Transform";
 import Triangle from "./Triangle";
-import Vector3 from "./Vector3";
+import Vector3 from "./math/Vector3";
 
 export default class Mesh {
     vertices: Array<Vector3>;

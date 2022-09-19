@@ -1,7 +1,7 @@
 import Renderer from "../Renderer";
 import Material from "./Material";
 import Triangle from "../../utilities/Triangle";
-import Color from "../../utilities/Color";
+import Color from "../../utilities/math/Color";
 
 export default class GouraudMaterial extends Material {
     specular: number;

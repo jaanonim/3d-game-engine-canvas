@@ -1,5 +1,5 @@
 import Renderer from "../Renderer";
-import Color from "../../utilities/Color";
+import Color from "../../utilities/math/Color";
 import Triangle from "../../utilities/Triangle";
 
 export default class Material {

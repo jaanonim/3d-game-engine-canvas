@@ -1,8 +1,12 @@
 import Drawer from ".";
-import Color from "../../utilities/Color";
-import { getInterpolatedValues, interpolate, map } from "../../utilities/Math";
-import Vector2 from "../../utilities/Vector2";
-import Vector3 from "../../utilities/Vector3";
+import Color from "../../utilities/math/Color";
+import {
+    getInterpolatedValues,
+    interpolate,
+    map,
+} from "../../utilities/math/Math";
+import Vector2 from "../../utilities/math/Vector2";
+import Vector3 from "../../utilities/math/Vector3";
 
 export default class DrawerPerPixel extends Drawer {
     img: ImageData;

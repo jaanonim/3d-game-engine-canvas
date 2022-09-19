@@ -1,8 +1,8 @@
 import ClippingPlane from "../utilities/ClippingPlane";
-import { degToRad, Sphere } from "../utilities/Math";
+import { degToRad, Sphere } from "../utilities/math/Math";
 import Triangle from "../utilities/Triangle";
-import Vector2 from "../utilities/Vector2";
-import Vector3 from "../utilities/Vector3";
+import Vector2 from "../utilities/math/Vector2";
+import Vector3 from "../utilities/math/Vector3";
 import Component from "../classes/Component";
 import Renderer from "../classes/Renderer";
 

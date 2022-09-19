@@ -1,5 +1,5 @@
 import Component from "../classes/Component";
-import Color from "../utilities/Color";
+import Color from "../utilities/math/Color";
 
 export enum LightType {
     AMBIENT = 0,

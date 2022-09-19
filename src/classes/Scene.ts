@@ -1,4 +1,4 @@
-import Vector3 from "../utilities/Vector3";
+import Vector3 from "../utilities/math/Vector3";
 import GameObject from "./GameObject";
 import Illumination from "./Illumination";
 import Renderer from "./Renderer";

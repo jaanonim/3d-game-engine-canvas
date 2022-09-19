@@ -1,6 +1,6 @@
-import { Sphere } from "./Math";
+import { Sphere } from "./math/Math";
 import Triangle from "./Triangle";
-import Vector3 from "./Vector3";
+import Vector3 from "./math/Vector3";
 
 export type ClipResult = -1 | 0 | 1;
 

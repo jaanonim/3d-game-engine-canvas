@@ -3,7 +3,7 @@ import GameObject from "../classes/GameObject";
 import Scene from "../classes/Scene";
 import Quaternion from "../utilities/Quaternion";
 import Transform from "../utilities/Transform";
-import Vector3 from "../utilities/Vector3";
+import Vector3 from "../utilities/math/Vector3";
 
 interface SceneData {
     name: string;

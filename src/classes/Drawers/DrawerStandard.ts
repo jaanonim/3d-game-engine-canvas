@@ -1,6 +1,6 @@
 import Drawer from ".";
-import Color from "../../utilities/Color";
-import Vector2 from "../../utilities/Vector2";
+import Color from "../../utilities/math/Color";
+import Vector2 from "../../utilities/math/Vector2";
 
 /**
  * @deprecated

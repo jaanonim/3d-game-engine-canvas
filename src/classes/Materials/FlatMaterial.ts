@@ -1,4 +1,4 @@
-import Color from "../../utilities/Color";
+import Color from "../../utilities/math/Color";
 import Triangle from "../../utilities/Triangle";
 import Renderer from "../Renderer";
 import Material from "./Material";

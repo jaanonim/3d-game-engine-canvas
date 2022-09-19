@@ -1,5 +1,5 @@
-import Color from "../../utilities/Color";
-import Vector3 from "../../utilities/Vector3";
+import Color from "../../utilities/math/Color";
+import Vector3 from "../../utilities/math/Vector3";
 
 export default class Drawer {
     ctx: CanvasRenderingContext2D;

@@ -1,5 +1,5 @@
 import Mesh from "../utilities/Mesh";
-import Vector3 from "../utilities/Vector3";
+import Vector3 from "../utilities/math/Vector3";
 
 export default class ObjLoader {
     raw: String;
