@@ -19,7 +19,6 @@ export default class FlatMaterial extends Material {
         if (!renderer.scene) throw Error("No scene!");
         if (!renderer.camera) throw Error("No camera!");
         const [c, i] = renderer.scene.illumination.computeLighting(
-            renderer.camera,
             originalTriangle.center(),
             originalTriangle.normal,
             this.specular

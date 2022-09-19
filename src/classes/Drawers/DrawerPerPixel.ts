@@ -240,17 +240,19 @@ export default class DrawerPerPixel extends Drawer {
         _p1: Vector3,
         _p2: Vector3,
         _p3: Vector3,
+        _normal1: Vector3,
+        _normal2: Vector3,
+        _normal3: Vector3,
         color: Color,
-        normal: Vector3,
         specular: number,
         renderer: Renderer
     ) {
         if (!renderer.scene) throw Error("No scene!");
         if (!renderer.camera) throw Error("No camera!");
 
-        const a = [_p1, _p2, _p3];
-        a.sort((a, b) => a.y - b.y);
-        const [p1, p2, p3] = a;
+        const a = [[_p1,_normal1],[_p2,_normal2],[_p3,_normal3]];
+        a.sort((a, b) => a[0].y - b[0].y);
+        const [[p1,n1],[ p2,n2], [p3,n3]] = a;
 
         const [x123, x13] = getInterpolatedValues(
             p1.x,
@@ -270,9 +272,41 @@ export default class DrawerPerPixel extends Drawer {
             p3.y
         );
 
+        const [nx123, nx13] = getInterpolatedValues(
+            n1.x,
+            n2.x,
+            n3.x,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const [ny123, ny13] = getInterpolatedValues(
+            n1.y,
+            n2.y,
+            n3.y,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const [nz123, nz13] = getInterpolatedValues(
+            n1.z,
+            n2.z,
+            n3.z,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+
+
         const m = Math.floor(x123.length / 2);
         let x_left, x_right;
         let z_left, z_right;
+        let nx_left, nx_right;
+        let ny_left, ny_right;
+        let nz_left, nz_right;
 
         if (x13[m] < x123[m]) {
             x_left = x13;
@@ -280,12 +314,30 @@ export default class DrawerPerPixel extends Drawer {
 
             z_left = z13;
             z_right = z123;
+
+            nx_left = nx13;
+            nx_right = nx123;
+
+            ny_left = ny13;
+            ny_right = ny123;
+
+            nz_left = nz13;
+            nz_right = nz123;
         } else {
             x_left = x123;
             x_right = x13;
 
             z_left = z123;
             z_right = z13;
+
+            nx_left = nx123;
+            nx_right = nx13;
+
+            ny_left = ny123;
+            ny_right = ny13;
+
+            nz_left = nz123;
+            nz_right = nz13;
         }
 
         let i = 0;
@@ -293,11 +345,16 @@ export default class DrawerPerPixel extends Drawer {
             const xl = x_left[i];
             const xr = x_right[i];
             const z_segment = interpolate(xl, z_left[i], xr, z_right[i]);
+            const nx_segment = interpolate(xl, nx_left[i], xr, nx_right[i]);
+            const ny_segment = interpolate(xl, ny_left[i], xr, ny_right[i]);
+            const nz_segment = interpolate(xl, nz_left[i], xr, nz_right[i]);
             let j = 0;
             for (let x = xl; x < xr; x++) {
                 const z = z_segment[j];
                 const _x = Math.ceil(x);
                 const _y = Math.ceil(y);
+
+                const normal = new Vector3(nx_segment[j],ny_segment[j],nz_segment[j])
 
                 if (z > this.depthBuffer[_y * this.width + _x]) {
                     const pos = renderer.camera.getOriginalCoords(

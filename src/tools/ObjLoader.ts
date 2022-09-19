@@ -11,6 +11,7 @@ export default class ObjLoader {
     parse() {
         let vertices: Array<Vector3> = [];
         let triangles: Array<[number, number, number]> = [];
+        let verticesNormals: Array<Vector3> = [];
 
         let vertexMatches = this.raw.match(/^v( -?\d+(\.\d+)?){3}$/gm);
         if (vertexMatches) {
@@ -42,12 +43,25 @@ export default class ObjLoader {
             });
         }
 
+        let vertexNormalMatches = this.raw.match(/^vn( -?\d+(\.\d+)?){3}$/gm);
+        if (vertexNormalMatches) {
+            verticesNormals = vertexNormalMatches.map((vn) => {
+                let verticesNormal = vn.split(" ");
+                verticesNormal.shift();
+                return new Vector3(
+                    parseFloat(verticesNormal[0]),
+                    parseFloat(verticesNormal[1]),
+                    parseFloat(verticesNormal[2])
+                );
+            });
+        }
+
         //* May be used later
         // let name = this.raw.match(/^o (\S+)/gm);
         // if (name) {
         //     obj.name = name[0].split(" ")[1];
         // }
 
-        return new Mesh(vertices, triangles);
+        return new Mesh(vertices, triangles, undefined, verticesNormals);
     }
 }

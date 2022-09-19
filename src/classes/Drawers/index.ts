@@ -42,8 +42,10 @@ export default class Drawer {
         _p1: Vector3,
         _p2: Vector3,
         _p3: Vector3,
+        _normal1: Vector3,
+        _normal2: Vector3,
+        _normal3: Vector3,
         _color: Color,
-        _normal: Vector3,
         _specular: number,
         _renderer: Renderer
     ) {}

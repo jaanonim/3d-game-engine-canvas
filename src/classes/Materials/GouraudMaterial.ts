@@ -20,23 +20,20 @@ export default class GouraudMaterial extends Material {
         if (!renderer.camera) throw Error("No camera!");
 
         const [c1, i1] = renderer.scene.illumination.computeLighting(
-            renderer.camera,
             originalTriangle.vertices[0],
-            originalTriangle.normal,
+            originalTriangle.verticesNormals[0],
             this.specular
         );
 
         const [c2, i2] = renderer.scene.illumination.computeLighting(
-            renderer.camera,
             originalTriangle.vertices[1],
-            originalTriangle.normal,
+            originalTriangle.verticesNormals[1],
             this.specular
         );
 
         const [c3, i3] = renderer.scene.illumination.computeLighting(
-            renderer.camera,
             originalTriangle.vertices[2],
-            originalTriangle.normal,
+            originalTriangle.verticesNormals[2],
             this.specular
         );
 

@@ -70,8 +70,9 @@ const triangle = new Mesh(
     [[0, 1, 2]]
 );
 
-const material = new PongMaterial(Color.white, 15);
-const material2 = new FlatMaterial(Color.white, 1);
+const materialPong = new PongMaterial(Color.white, 50);
+const materialGouraud = new GouraudMaterial(Color.white, 15);
+const materialFlat = new FlatMaterial(Color.white, 1);
 const wireframe = new WireframeMaterial(Color.red);
 
 const data = {
@@ -80,13 +81,50 @@ const data = {
         {
             name: "o",
             transform: {
-                position: [0, 0, 6],
+                position: [0, -2, 6],
                 rotation: [0, 1, 0],
                 scale: [1, 1, 1],
             },
             components: [
-                new MeshRenderer(cube, material),
+                new MeshRenderer(teapot, materialPong),
                 //new Rotate(new Vector3(0.1, 0.1, 0.1)),
+            ],
+            children: [
+                {
+                    name: "e",
+                    transform: {
+                        position: [0, 2, 0],
+                        rotation: [0, 0, 0],
+                        scale: [1, 1, 1],
+                    },
+                    components: [new Rotate(new Vector3(0, 1, 0))],
+                    children: [
+                        {
+                            name: "light",
+                            transform: {
+                                position: [-5, 0, 0],
+                                rotation: [1, 1, 1],
+                                scale: [0.2, 0.2, 0.2],
+                            },
+                            components: [
+                                new Light(LightType.POINT, 1, Color.blue),
+                                //new MeshRenderer(cube, wireframe),
+                            ],
+                        },
+                        {
+                            name: "light",
+                            transform: {
+                                position: [5, 0, 0],
+                                rotation: [1, 1, 1],
+                                scale: [0.2, 0.2, 0.2],
+                            },
+                            components: [
+                                new Light(LightType.POINT, 1, Color.white),
+                                //new MeshRenderer(cube, wireframe),
+                            ],
+                        },
+                    ],
+                },
             ],
         },
         // {
@@ -106,30 +144,7 @@ const data = {
         //     },
         //     components: [new MeshRenderer(cube)],
         // },
-        {
-            name: "light",
-            transform: {
-                position: [-0.5, 0, 5.5],
-                rotation: [1, 1, 1],
-                scale: [0.2, 0.2, 0.2],
-            },
-            components: [
-                new Light(LightType.POINT, 1, Color.blue),
-                new MeshRenderer(cube, wireframe),
-            ],
-        },
-        {
-            name: "light",
-            transform: {
-                position: [0.5, 0, 5.5],
-                rotation: [1, 1, 1],
-                scale: [0.2, 0.2, 0.2],
-            },
-            components: [
-                new Light(LightType.POINT, 1, Color.white),
-                new MeshRenderer(cube, wireframe),
-            ],
-        },
+
         // {
         //     name: "g",
         //     transform: {

@@ -20,8 +20,10 @@ export default class PongMaterial extends Material {
             triangle.vertices[0],
             triangle.vertices[1],
             triangle.vertices[2],
+            triangle.verticesNormals[0],
+            triangle.verticesNormals[1],
+            triangle.verticesNormals[2],
             this.color,
-            triangle.normal,
             this.specular,
             renderer
         );

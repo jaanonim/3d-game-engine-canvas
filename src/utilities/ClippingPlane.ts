@@ -63,7 +63,8 @@ export default class ClippingPlane {
                         this.intersection(t.vertices[1], t.vertices[0]),
                         this.intersection(t.vertices[2], t.vertices[0]),
                     ],
-                    t.normal
+                    t.normal,
+                    t.verticesNormals
                 ),
             ];
         } else if (d0 < 0 && d1 > 0 && d2 < 0) {
@@ -74,7 +75,8 @@ export default class ClippingPlane {
                         t.vertices[1],
                         this.intersection(t.vertices[2], t.vertices[1]),
                     ],
-                    t.normal
+                    t.normal,
+                    t.verticesNormals
                 ),
             ];
         } else if (d0 < 0 && d1 < 0 && d2 > 0) {
@@ -85,29 +87,54 @@ export default class ClippingPlane {
                         this.intersection(t.vertices[1], t.vertices[2]),
                         t.vertices[2],
                     ],
-                    t.normal
+                    t.normal,
+                    t.verticesNormals
                 ),
             ];
         } else if (d0 > 0 && d1 > 0 && d2 < 0) {
             const _02 = this.intersection(t.vertices[0], t.vertices[2]);
             const _12 = this.intersection(t.vertices[1], t.vertices[2]);
             return [
-                new Triangle([t.vertices[0], t.vertices[1], _02], t.normal),
-                new Triangle([t.vertices[1], _02, _12], t.normal),
+                new Triangle(
+                    [t.vertices[0], t.vertices[1], _02],
+                    t.normal,
+                    t.verticesNormals
+                ),
+                new Triangle(
+                    [t.vertices[1], _02, _12],
+                    t.normal,
+                    t.verticesNormals
+                ),
             ];
         } else if (d0 > 0 && d1 < 0 && d2 > 0) {
             const _01 = this.intersection(t.vertices[0], t.vertices[1]);
             const _12 = this.intersection(t.vertices[1], t.vertices[2]);
             return [
-                new Triangle([t.vertices[0], t.vertices[2], _01], t.normal),
-                new Triangle([t.vertices[2], _01, _12], t.normal),
+                new Triangle(
+                    [t.vertices[0], t.vertices[2], _01],
+                    t.normal,
+                    t.verticesNormals
+                ),
+                new Triangle(
+                    [t.vertices[2], _01, _12],
+                    t.normal,
+                    t.verticesNormals
+                ),
             ];
         } else if (d0 < 0 && d1 > 0 && d2 > 0) {
             const _01 = this.intersection(t.vertices[0], t.vertices[1]);
             const _02 = this.intersection(t.vertices[0], t.vertices[2]);
             return [
-                new Triangle([t.vertices[1], t.vertices[2], _01], t.normal),
-                new Triangle([t.vertices[2], _01, _02], t.normal),
+                new Triangle(
+                    [t.vertices[1], t.vertices[2], _01],
+                    t.normal,
+                    t.verticesNormals
+                ),
+                new Triangle(
+                    [t.vertices[2], _01, _02],
+                    t.normal,
+                    t.verticesNormals
+                ),
             ];
         } else {
             throw new Error("Something went wrong in ClippingPlanes");

@@ -150,7 +150,8 @@ export default class Renderer {
                                 return this.camera.projectVertex(v, this);
                             else throw Error("This is really bad");
                         }) as [Vector3, Vector3, Vector3],
-                        t.normal
+                        t.normal,
+                        t.verticesNormals
                     )
             );
 

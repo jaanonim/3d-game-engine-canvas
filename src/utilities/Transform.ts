@@ -125,7 +125,7 @@ export default class Transform {
                 this.parent.globalRotation
             ) as Quaternion;
         this._children.forEach((t) => {
-            t.updateGlobalRotation();
+            t.updateAll();
         });
     }
 
@@ -133,7 +133,7 @@ export default class Transform {
         if (!(this.parent instanceof Transform)) this._globalScale = this.scale;
         else this._globalScale = this.scale.multiply(this.parent.globalScale);
         this._children.forEach((t) => {
-            t.updateGlobalScale();
+            t.updateAll();
         });
     }
 
@@ -142,7 +142,7 @@ export default class Transform {
             this._globalPosition = this.position;
         else this._globalPosition = this.parent.apply(this.position);
         this._children.forEach((t) => {
-            t.updateGlobalPosition();
+            t.updateAll();
         });
     }
 }

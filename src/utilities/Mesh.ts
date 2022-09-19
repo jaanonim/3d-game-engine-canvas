@@ -8,18 +8,23 @@ export default class Mesh {
     vertices: Array<Vector3>;
     triangles: Array<[number, number, number]>;
     normals: Array<Vector3>;
+    verticesNormals: Array<Vector3>;
     boundingSphere!: Sphere;
 
     constructor(
         vertices: Array<Vector3>,
         triangles: Array<[number, number, number]>,
-        normals?: Array<Vector3>
+        normals?: Array<Vector3>,
+        verticesNormals?: Array<Vector3>
     ) {
         this.triangles = triangles;
         this.vertices = vertices;
         this.normals = [];
+        this.verticesNormals = [];
         if (normals) this.normals = normals;
         else this.calculateNormals();
+
+        if (verticesNormals) this.verticesNormals = verticesNormals;
     }
 
     calculateNormals() {
@@ -61,7 +66,12 @@ export default class Mesh {
     }
 
     copy() {
-        return new Mesh(this.vertices, this.triangles, this.normals);
+        return new Mesh(
+            this.vertices,
+            this.triangles,
+            this.normals,
+            this.verticesNormals
+        );
     }
 
     project(camera: Camera, transform: Transform) {
@@ -71,6 +81,9 @@ export default class Mesh {
         );
         copy.normals = copy.normals.map((n) =>
             camera.transformNormalToCamera(transform.rotateVector(n))
+        );
+        copy.verticesNormals = copy.verticesNormals.map((vn) =>
+            camera.transformNormalToCamera(transform.rotateVector(vn))
         );
         copy.calculateBoundingSphere();
         return copy;
@@ -85,7 +98,14 @@ export default class Mesh {
                         Vector3,
                         Vector3
                     ],
-                    this.normals[i]
+                    this.normals[i],
+                    this.verticesNormals.length > 0
+                        ? (t.map((i) => this.verticesNormals[i]) as [
+                              Vector3,
+                              Vector3,
+                              Vector3
+                          ])
+                        : undefined
                 )
         );
     }
