@@ -130,33 +130,26 @@ export default class Renderer {
 
     renderMesh(mesh: Mesh, material: Material, transform: Transform) {
         if (this.camera) {
-            const projectedMesh = mesh.project(this.camera, transform);
+            const transformedMesh = mesh.transform(this.camera, transform);
 
-            const res = this.camera.preClipObject(projectedMesh.boundingSphere);
+            const res = this.camera.preClipObject(
+                transformedMesh.boundingSphere
+            );
             if (res === -1) return;
 
-            let triangles = projectedMesh.toArrayOfTriangles();
-            triangles = triangles.filter(
+            transformedMesh.triangles = transformedMesh.triangles.filter(
                 (t) => t.normal.dotProduct(t.vertices[0].invert()) > 0
             );
 
-            if (res === 0) triangles = this.camera.clipObject(triangles);
+            if (res === 0)
+                transformedMesh.triangles = this.camera.clipObject(
+                    transformedMesh.triangles
+                );
 
-            const projectTriangles = triangles.map(
-                (t) =>
-                    new Triangle(
-                        t.vertices.map((v) => {
-                            if (this.camera)
-                                return this.camera.projectVertex(v, this);
-                            else throw Error("This is really bad");
-                        }) as [Vector3, Vector3, Vector3],
-                        t.normal,
-                        t.verticesNormals
-                    )
-            );
+            const projectedMesh = transformedMesh.project(this.camera, this);
 
-            projectTriangles.forEach((t, i) => {
-                material.renderTriangle(t, triangles[i], this);
+            projectedMesh.triangles.forEach((t, i) => {
+                material.renderTriangle(t, transformedMesh.triangles[i], this);
             });
         } else {
             console.warn("No camera!");
