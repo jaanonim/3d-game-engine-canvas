@@ -1,8 +1,16 @@
-import Renderer from "../classes/Renderer";
+import Renderer from "../Renderer";
 import Material from "./Material";
-import Triangle from "./Triangle";
+import Triangle from "../../utilities/Triangle";
+import Color from "../../utilities/Color";
 
 export default class GouraudMaterial extends Material {
+    specular: number;
+
+    constructor(color: Color, specular: number) {
+        super(color);
+        this.specular = specular;
+    }
+
     renderTriangle(
         triangle: Triangle,
         originalTriangle: Triangle,
@@ -15,21 +23,21 @@ export default class GouraudMaterial extends Material {
             renderer.camera,
             originalTriangle.vertices[0],
             originalTriangle.normal,
-            10
+            this.specular
         );
 
         const [c2, i2] = renderer.scene.illumination.computeLighting(
             renderer.camera,
             originalTriangle.vertices[1],
             originalTriangle.normal,
-            10
+            this.specular
         );
 
         const [c3, i3] = renderer.scene.illumination.computeLighting(
             renderer.camera,
             originalTriangle.vertices[2],
             originalTriangle.normal,
-            10
+            this.specular
         );
 
         renderer.drawer.drawTriangleFilledShaded(

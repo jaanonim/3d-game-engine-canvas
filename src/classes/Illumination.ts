@@ -55,21 +55,24 @@ export default class Illumination {
                     color.push(light.color);
                 }
 
-                // if (specular != -1) {
-                //     const vec_r = normal
-                //         .multiply(2.0 * normal.dotProduct(vec_l))
-                //         .subtract(vec_l);
+                if (specular != -1) {
+                    const vec_r = normal
+                        .multiply(2.0 * normal.dotProduct(vec_l))
+                        .subtract(vec_l);
 
-                //     let r_dot_v = vec_r.dotProduct(d);
-                //     if (r_dot_v > 0) {
-                //         intensity +=
-                //             light.intensity *
-                //             Math.pow(
-                //                 r_dot_v / (vec_r.length() * length_v),
-                //                 specular
-                //             );
-                //     }
-                // }
+                    let r_dot_v = vec_r.dotProduct(d);
+                    if (r_dot_v > 0) {
+                        const int =
+                            light.intensity *
+                            Math.pow(
+                                r_dot_v / (vec_r.length() * length_v),
+                                specular
+                            );
+                        intensity_sum += int;
+                        intensity.push(int);
+                        color.push(light.color);
+                    }
+                }
             }
         });
         if (intensity_sum != 0)

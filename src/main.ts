@@ -11,10 +11,11 @@ import ObjLoader from "./tools/ObjLoader";
 import Mesh from "./utilities/Mesh";
 import Quaternion from "./utilities/Quaternion";
 import Vector3 from "./utilities/Vector3";
-import Material from "./utilities/Material";
 import Color from "./utilities/Color";
 import Light, { LightType } from "./components/Light";
-import GouraudMaterial from "./utilities/GouraudMaterial";
+import GouraudMaterial from "./classes/Materials/GouraudMaterial";
+import FlatMaterial from "./classes/Materials/FlatMaterial";
+import WireframeMaterial from "./classes/Materials/WireframeMaterial";
 
 class Rotate extends Component {
     v: number;
@@ -68,9 +69,9 @@ const triangle = new Mesh(
     [[0, 1, 2]]
 );
 
-const material = new GouraudMaterial(Color.white, false);
-const material2 = new Material(Color.white, false);
-const wireframe = new Material(Color.red, true);
+const material = new GouraudMaterial(Color.white, 15);
+const material2 = new FlatMaterial(Color.white, 1);
+const wireframe = new WireframeMaterial(Color.red);
 
 const data = {
     name: "scene",

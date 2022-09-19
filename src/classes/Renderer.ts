@@ -6,7 +6,7 @@ import Camera from "../components/Camera";
 import Drawer from "./Drawers";
 import DrawerPerPixel from "./Drawers/DrawerPerPixel";
 import Scene from "./Scene";
-import Material from "../utilities/Material";
+import Material from "./Materials/Material";
 
 export default class Renderer {
     /**In milliseconds */

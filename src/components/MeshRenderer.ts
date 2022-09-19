@@ -1,6 +1,6 @@
 import Component from "../classes/Component";
 import Renderer from "../classes/Renderer";
-import Material from "../utilities/Material";
+import Material from "../classes/Materials/Material";
 import Mesh from "../utilities/Mesh";
 
 export default class MeshRenderer extends Component {

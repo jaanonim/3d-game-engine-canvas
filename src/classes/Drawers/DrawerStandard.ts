@@ -2,6 +2,9 @@ import Drawer from ".";
 import Color from "../../utilities/Color";
 import Vector2 from "../../utilities/Vector2";
 
+/**
+ * @deprecated
+ */
 export default class DrawerStandard extends Drawer {
     drawTriangleWireframe(p1: Vector2, p2: Vector2, p3: Vector2, color: Color) {
         this.ctx.strokeStyle = color.getHex();

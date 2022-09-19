@@ -1,7 +1,9 @@
 import Component from "../classes/Component";
 import Renderer from "../classes/Renderer";
 
-//! DEPRECATED
+/**
+ * @deprecated
+ */
 export default class SpriteRenderer extends Component {
     private _sprite: HTMLImageElement;
 
