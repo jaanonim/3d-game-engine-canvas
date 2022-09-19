@@ -25,6 +25,9 @@ export default class Scene {
     }
 
     render(renderer: Renderer) {
+        if (!renderer.camera) throw Error("No camera!");
+
+        this.illumination.startFrame(renderer.camera);
         this.children.forEach((c) => c.render(renderer));
     }
 

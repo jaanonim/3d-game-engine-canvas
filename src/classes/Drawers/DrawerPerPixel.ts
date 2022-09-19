@@ -1,5 +1,4 @@
 import Drawer from ".";
-import Camera from "../../components/Camera";
 import Color from "../../utilities/math/Color";
 import {
     getInterpolatedValues,
@@ -8,7 +7,6 @@ import {
 } from "../../utilities/math/Math";
 import Vector2 from "../../utilities/math/Vector2";
 import Vector3 from "../../utilities/math/Vector3";
-import Illumination from "../Illumination";
 import Renderer from "../Renderer";
 
 export default class DrawerPerPixel extends Drawer {
@@ -243,12 +241,13 @@ export default class DrawerPerPixel extends Drawer {
         _p2: Vector3,
         _p3: Vector3,
         color: Color,
-        camera: Camera,
-        illumination: Illumination,
         normal: Vector3,
         specular: number,
         renderer: Renderer
     ) {
+        if (!renderer.scene) throw Error("No scene!");
+        if (!renderer.camera) throw Error("No camera!");
+
         const a = [_p1, _p2, _p3];
         a.sort((a, b) => a.y - b.y);
         const [p1, p2, p3] = a;
@@ -301,12 +300,11 @@ export default class DrawerPerPixel extends Drawer {
                 const _y = Math.ceil(y);
 
                 if (z > this.depthBuffer[_y * this.width + _x]) {
-                    const pos = camera.getOriginalCoords(
+                    const pos = renderer.camera.getOriginalCoords(
                         new Vector3(_x, _y, z),
-                        renderer,
+                        renderer
                     );
-                    const [c, i] = illumination.computeLighting(
-                        camera,
+                    const [c, i] = renderer.scene.illumination.computeLighting(
                         pos,
                         normal,
                         specular

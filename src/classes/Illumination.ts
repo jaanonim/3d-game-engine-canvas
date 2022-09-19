@@ -14,8 +14,15 @@ export default class Illumination {
         this.lights.push(light);
     }
 
+    startFrame(camera: Camera) {
+        this.lights.forEach((l) => {
+            l.transformedPosition = camera.transformToCamera(
+                l.gameObject.transform.globalPosition
+            );
+        });
+    }
+
     computeLighting(
-        camera: Camera,
         point: Vector3,
         normal: Vector3,
         specular: number
@@ -35,11 +42,7 @@ export default class Illumination {
                 color.push(light.color);
             } else {
                 let vec_l;
-                const lightPos = camera.transformToCamera(
-                    light.gameObject.transform.globalPosition
-                );
-
-                //console.log(point, lightPos);
+                const lightPos = light.transformedPosition;
 
                 if (light.type == LightType.POINT) {
                     vec_l = lightPos.subtract(point);

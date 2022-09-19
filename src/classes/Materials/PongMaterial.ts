@@ -16,16 +16,11 @@ export default class PongMaterial extends Material {
         _originalTriangle: Triangle,
         renderer: Renderer
     ) {
-        if (!renderer.scene) throw Error("No scene!");
-        if (!renderer.camera) throw Error("No camera!");
-
         renderer.drawer.drawTriangleFiledPong(
             triangle.vertices[0],
             triangle.vertices[1],
             triangle.vertices[2],
             this.color,
-            renderer.camera,
-            renderer.scene.illumination,
             triangle.normal,
             this.specular,
             renderer

@@ -84,7 +84,10 @@ const data = {
                 rotation: [0, 1, 0],
                 scale: [1, 1, 1],
             },
-            components: [new MeshRenderer(cube, material)],
+            components: [
+                new MeshRenderer(cube, material),
+                //new Rotate(new Vector3(0.1, 0.1, 0.1)),
+            ],
         },
         // {
         //     name: "r",

@@ -1,5 +1,6 @@
 import Component from "../classes/Component";
 import Color from "../utilities/math/Color";
+import Vector3 from "../utilities/math/Vector3";
 
 export enum LightType {
     AMBIENT = 0,
@@ -11,12 +12,14 @@ export default class Light extends Component {
     type: LightType;
     intensity: number;
     color: Color;
+    transformedPosition: Vector3;
 
     constructor(type: LightType, intensity: number, color: Color) {
         super();
         this.type = type;
         this.intensity = intensity;
         this.color = color;
+        this.transformedPosition = Vector3.zero;
     }
 
     start() {

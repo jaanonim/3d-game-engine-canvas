@@ -1,7 +1,5 @@
-import Camera from "../../components/Camera";
 import Color from "../../utilities/math/Color";
 import Vector3 from "../../utilities/math/Vector3";
-import Illumination from "../Illumination";
 import Renderer from "../Renderer";
 
 export default class Drawer {
@@ -45,8 +43,6 @@ export default class Drawer {
         _p2: Vector3,
         _p3: Vector3,
         _color: Color,
-        _camera: Camera,
-        _illumination: Illumination,
         _normal: Vector3,
         _specular: number,
         _renderer: Renderer
