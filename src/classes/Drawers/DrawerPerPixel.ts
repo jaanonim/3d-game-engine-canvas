@@ -1,11 +1,6 @@
 import Drawer from ".";
 import Color from "../../utilities/Color";
-import {
-    clamp,
-    getInterpolatedValues,
-    interpolate,
-    map,
-} from "../../utilities/Math";
+import { getInterpolatedValues, interpolate, map } from "../../utilities/Math";
 import Vector2 from "../../utilities/Vector2";
 import Vector3 from "../../utilities/Vector3";
 
@@ -89,13 +84,17 @@ export default class DrawerPerPixel extends Drawer {
         _p1: Vector3,
         _p2: Vector3,
         _p3: Vector3,
-        color1: Color,
-        color2: Color,
-        color3: Color
+        _color1: Color,
+        _color2: Color,
+        _color3: Color
     ) {
-        const a = [_p1, _p2, _p3];
-        a.sort((a, b) => a.y - b.y);
-        const [p1, p2, p3] = a;
+        const a: Array<[Vector3, Color]> = [
+            [_p1, _color1],
+            [_p2, _color2],
+            [_p3, _color3],
+        ];
+        a.sort((a, b) => a[0].y - b[0].y);
+        const [[p1, color1], [p2, color2], [p3, color3]] = a;
 
         const [x123, x13] = getInterpolatedValues(
             p1.x,
@@ -218,10 +217,10 @@ export default class DrawerPerPixel extends Drawer {
                         _x,
                         _y,
                         new Color(
-                            clamp(r_segment[j], 0, 255),
-                            clamp(g_segment[j], 0, 255),
-                            clamp(b_segment[j], 0, 255),
-                            clamp(a_segment[j], 0, 255)
+                            r_segment[j],
+                            g_segment[j],
+                            b_segment[j],
+                            a_segment[j]
                         )
                     );
                     this.depthBuffer[_y * this.width + _x] = z;

@@ -22,24 +22,10 @@ export default class Color {
     }
 
     constructor(r: number = 0, g: number = 0, b: number = 0, a: number = 255) {
-        this.r = r;
-        this.g = g;
-        this.b = b;
-        this.a = a;
-
-        if (!this.verify()) {
-            console.error(this);
-            throw Error(`Invalid color values`);
-        }
-    }
-
-    verify() {
-        return (
-            this.verifyValue(this.r) &&
-            this.verifyValue(this.g) &&
-            this.verifyValue(this.b) &&
-            this.verifyValue(this.a)
-        );
+        this.r = clamp(r, 0, 255);
+        this.g = clamp(g, 0, 255);
+        this.b = clamp(b, 0, 255);
+        this.a = clamp(a, 0, 255);
     }
 
     verifyValue(v: number) {
@@ -77,18 +63,12 @@ export default class Color {
             const maxV = Math.max(r, g, b, 255);
 
             return new Color(
-                clamp(map(r, 0, maxV, 0, 255), 0, 255),
-                clamp(map(g, 0, maxV, 0, 255), 0, 255),
-                clamp(map(b, 0, maxV, 0, 255), 0, 255),
+                map(r, 0, maxV, 0, 255),
+                map(g, 0, maxV, 0, 255),
+                map(b, 0, maxV, 0, 255),
                 this.a
             );
-        } else
-            return new Color(
-                clamp(this.r * v, 0, 255),
-                clamp(this.g * v, 0, 255),
-                clamp(this.b * v, 0, 255),
-                this.a
-            );
+        } else return new Color(this.r * v, this.g * v, this.b * v, this.a);
     }
 
     normalize() {
@@ -101,11 +81,6 @@ export default class Color {
     }
 
     add(c: Color) {
-        return new Color(
-            clamp(this.r + c.r, 0, 255),
-            clamp(this.g + c.g, 0, 255),
-            clamp(this.b + c.b, 0, 255),
-            this.a
-        );
+        return new Color(this.r + c.r, this.g + c.g, this.b + c.b, this.a);
     }
 }
