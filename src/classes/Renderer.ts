@@ -113,6 +113,21 @@ export default class Renderer {
         ).roundXYToInt();
     }
 
+    getOriginalCoords(v: Vector3) {
+        if (!this.camera) {
+            console.warn("No camera!");
+            return Vector3.zero;
+        }
+        return new Vector3(
+            ((v.x - this.canvas.width / 2) * this.camera.viewportSize.x) /
+                this.canvas.width,
+
+            ((v.y - this.canvas.height / 2) * -this.camera.viewportSize.y) /
+                this.canvas.height,
+            v.z
+        );
+    }
+
     renderMesh(mesh: Mesh, material: Material, transform: Transform) {
         if (this.camera) {
             const projectedMesh = mesh.project(this.camera, transform);

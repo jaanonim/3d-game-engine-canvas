@@ -16,6 +16,7 @@ import Light, { LightType } from "./components/Light";
 import GouraudMaterial from "./classes/Materials/GouraudMaterial";
 import FlatMaterial from "./classes/Materials/FlatMaterial";
 import WireframeMaterial from "./classes/Materials/WireframeMaterial";
+import PongMaterial from "./classes/Materials/PongMaterial";
 
 class Rotate extends Component {
     v: number;
@@ -69,25 +70,22 @@ const triangle = new Mesh(
     [[0, 1, 2]]
 );
 
-const material = new GouraudMaterial(Color.white, 15);
+const material = new PongMaterial(Color.white, 15);
 const material2 = new FlatMaterial(Color.white, 1);
 const wireframe = new WireframeMaterial(Color.red);
 
 const data = {
     name: "scene",
     children: [
-        // {
-        //     name: "o",
-        //     transform: {
-        //         position: [0, 0, 5],
-        //         rotation: [1, 0, 1],
-        //         scale: [1, 1, 1],
-        //     },
-        //     components: [
-        //         new MeshRenderer(cube),
-        //         //new Rotate(new Vector3(0, 0.1, 0)),
-        //     ],
-        // },
+        {
+            name: "o",
+            transform: {
+                position: [0, 0, 6],
+                rotation: [0, 1, 0],
+                scale: [1, 1, 1],
+            },
+            components: [new MeshRenderer(cube, material)],
+        },
         // {
         //     name: "r",
         //     transform: {
@@ -108,7 +106,7 @@ const data = {
         {
             name: "light",
             transform: {
-                position: [-2, 0, 0],
+                position: [-0.5, 0, 5.5],
                 rotation: [1, 1, 1],
                 scale: [0.2, 0.2, 0.2],
             },
@@ -120,7 +118,7 @@ const data = {
         {
             name: "light",
             transform: {
-                position: [2, 0, 0],
+                position: [0.5, 0, 5.5],
                 rotation: [1, 1, 1],
                 scale: [0.2, 0.2, 0.2],
             },
@@ -129,42 +127,42 @@ const data = {
                 new MeshRenderer(cube, wireframe),
             ],
         },
-        {
-            name: "g",
-            transform: {
-                position: [2, 0, 6],
-                scale: [0.5, 0.5, 0.5],
-            },
-            children: [
-                {
-                    name: "cube",
-                    transform: {
-                        position: [1, 1, 1],
-                        scale: [1.5, 1.5, 1.5],
-                    },
-                    components: [new MeshRenderer(teapot, material)],
-                },
-            ],
-            components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],
-        },
-        {
-            name: "g",
-            transform: {
-                position: [-2, 0, 6],
-                scale: [0.5, 0.5, 0.5],
-            },
-            children: [
-                {
-                    name: "cube",
-                    transform: {
-                        position: [-1, 1, 1],
-                        scale: [1.5, 1.5, 1.5],
-                    },
-                    components: [new MeshRenderer(teapot, material2)],
-                },
-            ],
-            components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],
-        },
+        // {
+        //     name: "g",
+        //     transform: {
+        //         position: [2, 0, 6],
+        //         scale: [0.5, 0.5, 0.5],
+        //     },
+        //     children: [
+        //         {
+        //             name: "cube",
+        //             transform: {
+        //                 position: [1, 1, 1],
+        //                 scale: [1.5, 1.5, 1.5],
+        //             },
+        //             components: [new MeshRenderer(teapot, material)],
+        //         },
+        //     ],
+        //     components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],
+        // },
+        // {
+        //     name: "g",
+        //     transform: {
+        //         position: [-2, 0, 6],
+        //         scale: [0.5, 0.5, 0.5],
+        //     },
+        //     children: [
+        //         {
+        //             name: "cube",
+        //             transform: {
+        //                 position: [-1, 1, 1],
+        //                 scale: [1.5, 1.5, 1.5],
+        //             },
+        //             components: [new MeshRenderer(teapot, material2)],
+        //         },
+        //     ],
+        //     components: [new Rotate(new Vector3(0.1, 0.1, 0.1))],
+        // },
     ],
 };
 

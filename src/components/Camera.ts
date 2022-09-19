@@ -133,8 +133,17 @@ export default class Camera extends Component {
             new Vector3(
                 (vertex.x * this.near) / vertex.z,
                 (vertex.y * this.near) / vertex.z,
-                vertex.z
+                1 / vertex.z
             )
+        );
+    }
+
+    getOriginalCoords(_v: Vector3, renderer: Renderer) {
+        const v = renderer.getOriginalCoords(_v);
+        return new Vector3(
+            v.x / (this.near * v.z),
+            v.y / (this.near * v.z),
+            1 / v.z
         );
     }
 }

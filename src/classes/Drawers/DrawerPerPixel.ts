@@ -1,4 +1,5 @@
 import Drawer from ".";
+import Camera from "../../components/Camera";
 import Color from "../../utilities/math/Color";
 import {
     getInterpolatedValues,
@@ -7,6 +8,8 @@ import {
 } from "../../utilities/math/Math";
 import Vector2 from "../../utilities/math/Vector2";
 import Vector3 from "../../utilities/math/Vector3";
+import Illumination from "../Illumination";
+import Renderer from "../Renderer";
 
 export default class DrawerPerPixel extends Drawer {
     img: ImageData;
@@ -70,7 +73,7 @@ export default class DrawerPerPixel extends Drawer {
             const z_segment = interpolate(xl, z_left[i], xr, z_right[i]);
             let j = 0;
             for (let x = xl; x < xr; x++) {
-                const z = 1 / z_segment[j];
+                const z = z_segment[j];
                 const _x = Math.ceil(x);
                 const _y = Math.ceil(y);
 
@@ -212,7 +215,7 @@ export default class DrawerPerPixel extends Drawer {
 
             let j = 0;
             for (let x = xl; x < xr; x++) {
-                const z = 1 / z_segment[j];
+                const z = z_segment[j];
                 const _x = Math.ceil(x);
                 const _y = Math.ceil(y);
 
@@ -226,6 +229,92 @@ export default class DrawerPerPixel extends Drawer {
                             b_segment[j],
                             a_segment[j]
                         )
+                    );
+                    this.depthBuffer[_y * this.width + _x] = z;
+                }
+                j++;
+            }
+            i++;
+        }
+    }
+
+    drawTriangleFiledPong(
+        _p1: Vector3,
+        _p2: Vector3,
+        _p3: Vector3,
+        color: Color,
+        camera: Camera,
+        illumination: Illumination,
+        normal: Vector3,
+        specular: number,
+        renderer: Renderer
+    ) {
+        const a = [_p1, _p2, _p3];
+        a.sort((a, b) => a.y - b.y);
+        const [p1, p2, p3] = a;
+
+        const [x123, x13] = getInterpolatedValues(
+            p1.x,
+            p2.x,
+            p3.x,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const [z123, z13] = getInterpolatedValues(
+            p1.z,
+            p2.z,
+            p3.z,
+            p1.y,
+            p2.y,
+            p3.y
+        );
+
+        const m = Math.floor(x123.length / 2);
+        let x_left, x_right;
+        let z_left, z_right;
+
+        if (x13[m] < x123[m]) {
+            x_left = x13;
+            x_right = x123;
+
+            z_left = z13;
+            z_right = z123;
+        } else {
+            x_left = x123;
+            x_right = x13;
+
+            z_left = z123;
+            z_right = z13;
+        }
+
+        let i = 0;
+        for (let y = p1.y; y <= p3.y; y++) {
+            const xl = x_left[i];
+            const xr = x_right[i];
+            const z_segment = interpolate(xl, z_left[i], xr, z_right[i]);
+            let j = 0;
+            for (let x = xl; x < xr; x++) {
+                const z = z_segment[j];
+                const _x = Math.ceil(x);
+                const _y = Math.ceil(y);
+
+                if (z > this.depthBuffer[_y * this.width + _x]) {
+                    const pos = camera.getOriginalCoords(
+                        new Vector3(_x, _y, z),
+                        renderer,
+                    );
+                    const [c, i] = illumination.computeLighting(
+                        camera,
+                        pos,
+                        normal,
+                        specular
+                    );
+                    this.setPixel(
+                        _x,
+                        _y,
+                        color.multiply(c.normalize().multiply(i))
                     );
                     this.depthBuffer[_y * this.width + _x] = z;
                 }

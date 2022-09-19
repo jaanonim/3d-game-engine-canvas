@@ -39,6 +39,8 @@ export default class Illumination {
                     light.gameObject.transform.globalPosition
                 );
 
+                //console.log(point, lightPos);
+
                 if (light.type == LightType.POINT) {
                     vec_l = lightPos.subtract(point);
                 } else {
