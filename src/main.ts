@@ -39,36 +39,6 @@ class Rotate extends Component {
 const teapot = new ObjLoader(await FileLoader.load("/teapot.obj")).parse();
 
 const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
-/*= new Mesh(
-    [
-        new Vector3(1, 1, 1),
-        new Vector3(-1, 1, 1),
-        new Vector3(-1, -1, 1),
-        new Vector3(1, -1, 1),
-        new Vector3(1, 1, -1),
-        new Vector3(-1, 1, -1),
-        new Vector3(-1, -1, -1),
-        new Vector3(1, -1, -1),
-    ],
-    [
-        [0, 1, 2],
-        [0, 2, 3],
-        [4, 0, 3],
-        [4, 3, 7],
-        [5, 4, 7],
-        [5, 7, 6],
-        [1, 6, 2],
-        [4, 5, 1],
-        [4, 1, 0],
-        [2, 6, 7],
-        [2, 7, 3],
-    ]
-);
-*/
-const triangle = new Mesh(
-    [new Vector3(1, 1, 1), new Vector3(-1, 1, 1), new Vector3(-1, -1, 1)],
-    [[0, 1, 2]]
-);
 
 const materialPong = new PongMaterial(Color.white, 50);
 const materialGouraud = new GouraudMaterial(Color.white, 15);
@@ -108,7 +78,7 @@ const data = {
                             },
                             components: [
                                 new Light(LightType.POINT, 1, Color.blue),
-                                //new MeshRenderer(cube, wireframe),
+                                new MeshRenderer(cube, wireframe),
                             ],
                         },
                         {
@@ -120,7 +90,7 @@ const data = {
                             },
                             components: [
                                 new Light(LightType.POINT, 1, Color.white),
-                                //new MeshRenderer(cube, wireframe),
+                                new MeshRenderer(cube, wireframe),
                             ],
                         },
                     ],

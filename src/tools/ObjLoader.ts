@@ -1,67 +1,133 @@
 import Mesh from "../utilities/Mesh";
 import Vector3 from "../utilities/math/Vector3";
+import Triangle from "../utilities/Triangle";
 
 export default class ObjLoader {
     raw: String;
 
     constructor(text: String) {
         this.raw = text;
+        if (this.raw.indexOf("\r\n") !== -1) {
+            this.raw = this.raw.replace(/\r\n/g, "\n");
+        }
+        if (this.raw.indexOf("\\\n") !== -1) {
+            this.raw = this.raw.replace(/\\\n/g, "");
+        }
     }
 
     parse() {
+        const lines = this.raw.split("\n");
         let vertices: Array<Vector3> = [];
-        let triangles: Array<[number, number, number]> = [];
-        let verticesNormals: Array<Vector3> = [];
+        let normals: Array<Vector3> = [];
+        let uvs: Array<Vector3> = [];
+        let triangles = [];
 
-        let vertexMatches = this.raw.match(/^v( -?\d+(\.\d+)?){3}$/gm);
-        if (vertexMatches) {
-            vertices = vertexMatches.map((vertex) => {
-                let vertices = vertex.split(" ");
-                vertices.shift();
-                return new Vector3(
-                    parseFloat(vertices[0]),
-                    parseFloat(vertices[1]),
-                    parseFloat(vertices[2])
-                );
-            });
-        }
+        for (let i = 0, l = lines.length; i < l; i++) {
+            const line = lines[i].trimStart();
 
-        let facesMatches = this.raw.match(/^f(.*)([^\n]*\n+)/gm);
-        if (facesMatches) {
-            triangles = facesMatches.map((face) => {
-                let faces = face.split(" ");
-                faces.shift();
-                const f: number[] = [];
-                faces.forEach((e, i) => {
-                    if (e.indexOf("/") !== -1) {
-                        f[i] = parseFloat(e.split("/")[0]) - 1;
-                    } else {
-                        f[i] = parseFloat(e) - 1;
+            if (line.length === 0) continue;
+
+            const lineFirstChar = line.charAt(0);
+
+            if (lineFirstChar === "#") continue;
+            if (lineFirstChar === "v") {
+                const data = line.split(/\s+/);
+                if (data[0] == "v") {
+                    vertices.push(
+                        new Vector3(
+                            parseFloat(data[1]),
+                            parseFloat(data[2]),
+                            parseFloat(data[3])
+                        )
+                    );
+                } else if (data[0] == "vn") {
+                    normals.push(
+                        new Vector3(
+                            parseFloat(data[1]),
+                            parseFloat(data[2]),
+                            parseFloat(data[3])
+                        )
+                    );
+                } else if (data[0] == "vt") {
+                    uvs.push(
+                        new Vector3(
+                            parseFloat(data[1]),
+                            parseFloat(data[2]),
+                            parseFloat(data[3])
+                        )
+                    );
+                }
+            } else if (lineFirstChar === "f") {
+                const lineData = line.slice(1).trim();
+                const data = lineData.split(/\s+/);
+
+                const tVertexes = [];
+                const tNormals = [];
+                const tUvs = [];
+
+                if (data.length !== 3)
+                    throw new Error(
+                        "Invalid count of points in faces in .obj file"
+                    );
+                for (let index = 0; index < data.length; index++) {
+                    if (data[index].length > 0) {
+                        const parts = data[index].split("/");
+                        let processedParts = [];
+                        if (parts.length === 1) {
+                            const v = parseInt(parts[0]);
+                            if (isNaN(v)) {
+                                throw new Error(
+                                    "Missing part in faces in .obj file"
+                                );
+                            }
+                            processedParts = [v, v, v];
+                        } else if (parts.length === 3) {
+                            processedParts = parts.map((e) => parseInt(e));
+                            if (isNaN(processedParts[0])) {
+                                throw new Error(
+                                    "Missing first part in faces in .obj file"
+                                );
+                            }
+                            if (isNaN(processedParts[1]))
+                                processedParts[1] = processedParts[0];
+                            if (isNaN(processedParts[2]))
+                                processedParts[2] = processedParts[1];
+                        } else {
+                            throw new Error(
+                                "Invalid parts count in faces in .obj file"
+                            );
+                        }
+                        tVertexes.push(processedParts[0]);
+                        tUvs.push(processedParts[1]);
+                        tNormals.push(processedParts[2]);
                     }
-                });
-                return f as [number, number, number];
-            });
-        }
+                }
 
-        let vertexNormalMatches = this.raw.match(/^vn( -?\d+(\.\d+)?){3}$/gm);
-        if (vertexNormalMatches) {
-            verticesNormals = vertexNormalMatches.map((vn) => {
-                let verticesNormal = vn.split(" ");
-                verticesNormal.shift();
-                return new Vector3(
-                    parseFloat(verticesNormal[0]),
-                    parseFloat(verticesNormal[1]),
-                    parseFloat(verticesNormal[2])
+                const resUvs = tUvs.map((i) => uvs[i - 1]) as [
+                    Vector3,
+                    Vector3,
+                    Vector3
+                ];
+                const resNormals = tNormals.map((i) => normals[i - 1]) as [
+                    Vector3,
+                    Vector3,
+                    Vector3
+                ];
+
+                triangles.push(
+                    new Triangle(
+                        tVertexes.map((i) => vertices[i - 1]) as [
+                            Vector3,
+                            Vector3,
+                            Vector3
+                        ],
+                        resUvs[0] == undefined ? undefined : resUvs,
+                        resNormals[0] == undefined ? undefined : resNormals
+                    )
                 );
-            });
+            }
         }
 
-        //* May be used later
-        // let name = this.raw.match(/^o (\S+)/gm);
-        // if (name) {
-        //     obj.name = name[0].split(" ")[1];
-        // }
-
-        return new Mesh(vertices, triangles, undefined, verticesNormals);
+        return new Mesh(triangles);
     }
 }

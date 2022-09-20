@@ -63,8 +63,9 @@ export default class ClippingPlane {
                         this.intersection(t.vertices[1], t.vertices[0]),
                         this.intersection(t.vertices[2], t.vertices[0]),
                     ],
-                    t.normal,
-                    t.verticesNormals
+                    t.verticesUvs,
+                    t.verticesNormals,
+                    t.normal
                 ),
             ];
         } else if (d0 < 0 && d1 > 0 && d2 < 0) {
@@ -75,8 +76,9 @@ export default class ClippingPlane {
                         t.vertices[1],
                         this.intersection(t.vertices[2], t.vertices[1]),
                     ],
-                    t.normal,
-                    t.verticesNormals
+                    t.verticesUvs,
+                    t.verticesNormals,
+                    t.normal
                 ),
             ];
         } else if (d0 < 0 && d1 < 0 && d2 > 0) {
@@ -87,8 +89,9 @@ export default class ClippingPlane {
                         this.intersection(t.vertices[1], t.vertices[2]),
                         t.vertices[2],
                     ],
-                    t.normal,
-                    t.verticesNormals
+                    t.verticesUvs,
+                    t.verticesNormals,
+                    t.normal
                 ),
             ];
         } else if (d0 > 0 && d1 > 0 && d2 < 0) {
@@ -97,13 +100,15 @@ export default class ClippingPlane {
             return [
                 new Triangle(
                     [t.vertices[0], t.vertices[1], _02],
-                    t.normal,
-                    t.verticesNormals
+                    t.verticesUvs,
+                    t.verticesNormals,
+                    t.normal
                 ),
                 new Triangle(
                     [t.vertices[1], _02, _12],
-                    t.normal,
-                    t.verticesNormals
+                    t.verticesUvs,
+                    t.verticesNormals,
+                    t.normal
                 ),
             ];
         } else if (d0 > 0 && d1 < 0 && d2 > 0) {
@@ -112,13 +117,15 @@ export default class ClippingPlane {
             return [
                 new Triangle(
                     [t.vertices[0], t.vertices[2], _01],
-                    t.normal,
-                    t.verticesNormals
+                    t.verticesUvs,
+                    t.verticesNormals,
+                    t.normal
                 ),
                 new Triangle(
                     [t.vertices[2], _01, _12],
-                    t.normal,
-                    t.verticesNormals
+                    t.verticesUvs,
+                    t.verticesNormals,
+                    t.normal
                 ),
             ];
         } else if (d0 < 0 && d1 > 0 && d2 > 0) {
@@ -127,13 +134,15 @@ export default class ClippingPlane {
             return [
                 new Triangle(
                     [t.vertices[1], t.vertices[2], _01],
-                    t.normal,
-                    t.verticesNormals
+                    t.verticesUvs,
+                    t.verticesNormals,
+                    t.normal
                 ),
                 new Triangle(
                     [t.vertices[2], _01, _02],
-                    t.normal,
-                    t.verticesNormals
+                    t.verticesUvs,
+                    t.verticesNormals,
+                    t.normal
                 ),
             ];
         } else {

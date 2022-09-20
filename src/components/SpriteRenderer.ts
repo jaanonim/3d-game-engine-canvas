@@ -22,7 +22,6 @@ export default class SpriteRenderer extends Component {
     render(renderer: Renderer) {
         //     let pos = this.gameObject.getWordPosition();
         //     let scale = this.gameObject.getWordScale();
-        //     console.log(this._sprite.width, this._sprite.height);
         //     renderer.ctx.drawImage(
         //         this._sprite,
         //         pos.x - (this._sprite.naturalWidth * scale.x) / 2,

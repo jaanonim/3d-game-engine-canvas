@@ -109,8 +109,7 @@ export default class Camera extends Component {
     clipObject(triangles: Array<Triangle>) {
         let resTriangles: Array<Triangle> | null = triangles;
         for (let i = 0; i < this.clippingPlanes.length; i++) {
-            const p = this.clippingPlanes[i];
-            resTriangles = p.clipTriangles(resTriangles);
+            resTriangles = this.clippingPlanes[i].clipTriangles(resTriangles);
             if (resTriangles == null) {
                 break;
             }

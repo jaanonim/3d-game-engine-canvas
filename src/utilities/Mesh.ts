@@ -38,7 +38,7 @@ export default class Mesh {
     }
 
     copy() {
-        return new Mesh(this.triangles);
+        return new Mesh(this.triangles.map((t) => t.copy()));
     }
 
     transform(camera: Camera, transform: Transform) {

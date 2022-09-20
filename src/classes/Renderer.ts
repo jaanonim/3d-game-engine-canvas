@@ -1,6 +1,5 @@
 import Mesh from "../utilities/Mesh";
 import Transform from "../utilities/Transform";
-import Triangle from "../utilities/Triangle";
 import Vector3 from "../utilities/math/Vector3";
 import Camera from "../components/Camera";
 import Drawer from "./Drawers";
@@ -141,10 +140,11 @@ export default class Renderer {
                 (t) => t.normal.dotProduct(t.vertices[0].invert()) > 0
             );
 
-            if (res === 0)
+            if (res === 0) {
                 transformedMesh.triangles = this.camera.clipObject(
                     transformedMesh.triangles
                 );
+            }
 
             const projectedMesh = transformedMesh.project(this.camera, this);
 
