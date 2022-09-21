@@ -52,8 +52,8 @@ export default class ObjLoader {
                     uvs.push(
                         new Vector3(
                             parseFloat(data[1]),
-                            parseFloat(data[2]),
-                            parseFloat(data[3])
+                            parseFloat(data[2]) || 0,
+                            parseFloat(data[3]) || 0
                         )
                     );
                 }
