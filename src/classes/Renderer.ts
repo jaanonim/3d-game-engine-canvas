@@ -2,10 +2,9 @@ import Mesh from "../utilities/Mesh";
 import Transform from "../utilities/Transform";
 import Vector3 from "../utilities/math/Vector3";
 import Camera from "../components/Camera";
-import Drawer from "./Drawers";
-import DrawerPerPixel from "./Drawers/DrawerPerPixel";
 import Scene from "./Scene";
 import Material from "./Materials/Material";
+import Drawer from "./Drawer";
 
 export default class Renderer {
     /**In milliseconds */
@@ -26,11 +25,7 @@ export default class Renderer {
 
         let ctx = canvas.getContext("2d");
         if (ctx == null) throw Error("Cannot get context");
-        this.drawer = new DrawerPerPixel(
-            ctx,
-            this.canvas.width,
-            this.canvas.height
-        );
+        this.drawer = new Drawer(ctx, this.canvas.width, this.canvas.height);
         this.resize();
     }
 

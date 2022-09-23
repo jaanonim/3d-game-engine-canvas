@@ -8,7 +8,6 @@ import FileLoader from "./tools/FileLoader";
 import FPSCounter from "./tools/FPSCounter";
 import Importer from "./tools/Importer";
 import ObjLoader from "./tools/ObjLoader";
-import Mesh from "./utilities/Mesh";
 import Quaternion from "./utilities/Quaternion";
 import Vector3 from "./utilities/math/Vector3";
 import Color from "./utilities/math/Color";
@@ -56,7 +55,7 @@ const data = {
                 scale: [1, 1, 1],
             },
             components: [
-                new MeshRenderer(teapot, materialGouraud),
+                new MeshRenderer(cube, materialPong),
                 //new Rotate(new Vector3(0.1, 0.1, 0.1)),
             ],
             children: [

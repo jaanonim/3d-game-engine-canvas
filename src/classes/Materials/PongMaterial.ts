@@ -17,12 +17,7 @@ export default class PongMaterial extends Material {
         renderer: Renderer
     ) {
         renderer.drawer.drawTriangleFiledPong(
-            triangle.vertices[0],
-            triangle.vertices[1],
-            triangle.vertices[2],
-            triangle.verticesNormals[0],
-            triangle.verticesNormals[1],
-            triangle.verticesNormals[2],
+            triangle,
             this.color,
             this.specular,
             renderer

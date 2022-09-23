@@ -38,9 +38,7 @@ export default class GouraudMaterial extends Material {
         );
 
         renderer.drawer.drawTriangleFilledShaded(
-            triangle.vertices[0],
-            triangle.vertices[1],
-            triangle.vertices[2],
+            triangle,
             this.color.multiply(c1.normalize().multiply(i1)),
             this.color.multiply(c2.normalize().multiply(i2)),
             this.color.multiply(c3.normalize().multiply(i3))

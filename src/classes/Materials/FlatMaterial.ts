@@ -25,9 +25,7 @@ export default class FlatMaterial extends Material {
         );
 
         renderer.drawer.drawTriangleFilled(
-            triangle.vertices[0],
-            triangle.vertices[1],
-            triangle.vertices[2],
+            triangle,
             this.color.multiply(c.normalize().multiply(i))
         );
     }
