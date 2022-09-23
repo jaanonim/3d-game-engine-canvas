@@ -1,8 +1,21 @@
 import Color from "../utilities/math/Color";
-import { interpolate, map } from "../utilities/math/Math";
+import { map } from "../utilities/math/Math";
+import {
+    getInterpolatedNumber,
+    getInterpolatedValue,
+    interpolateNumber,
+    interpolateValue,
+    Iterpolatable,
+} from "../utilities/math/Interpolation";
 import Vector2 from "../utilities/math/Vector2";
 
 type ColorFn = () => Color;
+
+type TriangleCallback = (
+    x: number,
+    y: number,
+    values: Array<Iterpolatable>
+) => void;
 
 export default class Drawer {
     ctx: CanvasRenderingContext2D;
@@ -27,7 +40,7 @@ export default class Drawer {
     drawLine(p0: Vector2, p1: Vector2, color: Color) {
         if (Math.abs(p1.x - p0.x) > Math.abs(p1.y - p0.y)) {
             if (p0.x > p1.x) {
-                const ys = interpolate(p1.x, p1.y, p0.x, p0.y);
+                const ys = interpolateNumber(p1.x, p1.y, p0.x, p0.y);
                 let i = 0;
                 for (let x = p1.x; x <= p0.x; x++) {
                     const _x = Math.ceil(x);
@@ -36,7 +49,7 @@ export default class Drawer {
                     i++;
                 }
             } else {
-                const ys = interpolate(p0.x, p0.y, p1.x, p1.y);
+                const ys = interpolateNumber(p0.x, p0.y, p1.x, p1.y);
                 let i = 0;
                 for (let x = p0.x; x <= p1.x; x++) {
                     const _x = Math.ceil(x);
@@ -47,7 +60,7 @@ export default class Drawer {
             }
         } else {
             if (p0.y > p1.y) {
-                const xs = interpolate(p1.y, p1.x, p0.y, p0.x);
+                const xs = interpolateNumber(p1.y, p1.x, p0.y, p0.x);
                 let i = 0;
                 for (let y = p1.y; y <= p0.y; y++) {
                     const _x = Math.ceil(xs[i]);
@@ -56,7 +69,7 @@ export default class Drawer {
                     i++;
                 }
             } else {
-                const xs = interpolate(p0.y, p0.x, p1.y, p1.x);
+                const xs = interpolateNumber(p0.y, p0.x, p1.y, p1.x);
                 let i = 0;
                 for (let y = p0.y; y <= p1.y; y++) {
                     const _x = Math.ceil(xs[i]);
@@ -65,6 +78,73 @@ export default class Drawer {
                     i++;
                 }
             }
+        }
+    }
+
+    basicTriangle(
+        xList: [number, number, number],
+        yList: [number, number, number],
+        values: [
+            Array<Iterpolatable>,
+            Array<Iterpolatable>,
+            Array<Iterpolatable>
+        ],
+        callback: TriangleCallback
+    ) {
+        const v = yList.map((y, i): [number, number, Array<Iterpolatable>] => [
+            y,
+            xList[i],
+            values[i],
+        ]);
+        v.sort((a, b) => a[0] - b[0]);
+        const [[y0, x0, values0], [y1, x1, values1], [y2, x2, values2]] = v;
+
+        const [x012, x02] = getInterpolatedNumber(x0, x1, x2, y0, y1, y2);
+        const m = Math.floor(x012.length / 2);
+        let reverse = x02[m] < x012[m];
+        let xs = [];
+        if (reverse) {
+            xs = [x02, x012];
+        } else {
+            xs = [x012, x02];
+        }
+
+        const res: Array<[Array<Iterpolatable>, Array<Iterpolatable>]> = [];
+        values0.forEach((_v, i) => {
+            const [res012, res02] = getInterpolatedValue(
+                values0[i],
+                values1[i],
+                values2[i],
+                y0,
+                y1,
+                y2
+            );
+            if (reverse) res.push([res02, res012]);
+            else res.push([res012, res02]);
+        });
+
+        let i = 0;
+        for (let y = y0; y <= y2; y++) {
+            const xl = xs[0][i];
+            const xr = xs[1][i];
+
+            const segments = res.map((ele) =>
+                interpolateValue(ele[0][i], ele[1][i], xl, xr)
+            );
+
+            let j = 0;
+            for (let x = xl; x < xr; x++) {
+                const _x = Math.ceil(x);
+                const _y = Math.ceil(y);
+
+                callback(
+                    _x,
+                    _y,
+                    segments.map((ele) => ele[j])
+                );
+                j++;
+            }
+            i++;
         }
     }
 
