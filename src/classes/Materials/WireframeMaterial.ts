@@ -8,6 +8,20 @@ export default class WireframeMaterial extends Material {
         _originalTriangle: Triangle,
         renderer: Renderer
     ) {
-        renderer.drawer.drawTriangleWireframe(triangle, this.color);
+        renderer.drawer.drawLine(
+            triangle.vertices[0],
+            triangle.vertices[1],
+            this.color
+        );
+        renderer.drawer.drawLine(
+            triangle.vertices[1],
+            triangle.vertices[2],
+            this.color
+        );
+        renderer.drawer.drawLine(
+            triangle.vertices[2],
+            triangle.vertices[0],
+            this.color
+        );
     }
 }

@@ -1,8 +1,10 @@
-import Color from "../../utilities/math/Color";
-import { interpolate, map } from "../../utilities/math/Math";
-import Vector2 from "../../utilities/math/Vector2";
+import Color from "../utilities/math/Color";
+import { interpolate, map } from "../utilities/math/Math";
+import Vector2 from "../utilities/math/Vector2";
 
-export default class DrawerLib {
+type ColorFn = () => Color;
+
+export default class Drawer {
     ctx: CanvasRenderingContext2D;
     width: number;
     height: number;
@@ -63,6 +65,19 @@ export default class DrawerLib {
                     i++;
                 }
             }
+        }
+    }
+
+    setPixelUsingDepthMap(
+        x: number,
+        y: number,
+        z: number,
+        color: Color | ColorFn
+    ) {
+        if (z > this.depthBuffer[y * this.width + x]) {
+            if (color instanceof Color) this.setPixel(x, y, color);
+            else this.setPixel(x, y, color());
+            this.depthBuffer[y * this.width + x] = z;
         }
     }
 

@@ -55,7 +55,7 @@ const data = {
                 scale: [1, 1, 1],
             },
             components: [
-                new MeshRenderer(cube, materialPong),
+                new MeshRenderer(teapot, materialPong),
                 //new Rotate(new Vector3(0.1, 0.1, 0.1)),
             ],
             children: [
