@@ -1,4 +1,3 @@
-import Color from "../utilities/math/Color";
 import Texture from "../utilities/Texture";
 
 export default class TextureLoader {
@@ -21,13 +20,7 @@ export default class TextureLoader {
             this.img.width,
             this.img.height
         ).data;
-        const colors = [];
-        for (let i = 0; i < data.length; i += 4) {
-            colors.push(
-                new Color(data[i], data[i + 1], data[i + 2], data[i + 3])
-            );
-        }
 
-        return new Texture(this.img.width, this.img.height, colors);
+        return new Texture(this.img.width, this.img.height, data);
     }
 }

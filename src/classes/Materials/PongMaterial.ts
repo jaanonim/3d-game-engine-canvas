@@ -1,14 +1,15 @@
 import Color from "../../utilities/math/Color";
 import Vector3 from "../../utilities/math/Vector3";
+import Texture from "../../utilities/Texture";
 import Triangle from "../../utilities/Triangle";
 import Renderer from "../Renderer";
-import Material from "./Material";
+import TextureMaterial from "./TextureMaterial";
 
-export default class PongMaterial extends Material {
+export default class PongMaterial extends TextureMaterial {
     specular: number;
 
-    constructor(color: Color, specular: number) {
-        super(color);
+    constructor(color: Color, specular: number, texture?: Texture) {
+        super(color, texture);
         this.specular = specular;
     }
 
@@ -17,6 +18,12 @@ export default class PongMaterial extends Material {
         _originalTriangle: Triangle,
         renderer: Renderer
     ) {
+        if (!renderer.scene) throw Error("No scene!");
+        if (!renderer.camera) throw Error("No camera!");
+
+        const cam = renderer.camera;
+        const ilu = renderer.scene.illumination;
+
         renderer.drawer.basicTriangle(
             [
                 triangle.vertices[0].x,
@@ -29,26 +36,42 @@ export default class PongMaterial extends Material {
                 triangle.vertices[2].y,
             ],
             [
-                [triangle.vertices[0].z, triangle.verticesNormals[0]],
-                [triangle.vertices[1].z, triangle.verticesNormals[1]],
-                [triangle.vertices[2].z, triangle.verticesNormals[2]],
+                [
+                    triangle.vertices[0].z,
+                    triangle.verticesNormals[0],
+                    triangle.verticesUvs[0].multiply(triangle.vertices[0].z),
+                ],
+                [
+                    triangle.vertices[1].z,
+                    triangle.verticesNormals[1],
+                    triangle.verticesUvs[1].multiply(triangle.vertices[1].z),
+                ],
+                [
+                    triangle.vertices[2].z,
+                    triangle.verticesNormals[2],
+                    triangle.verticesUvs[2].multiply(triangle.vertices[2].z),
+                ],
             ],
             (x, y, v) => {
                 const z = v[0] as number;
                 const normal = v[1] as Vector3;
+                const uv = v[2] as Vector3;
                 renderer.drawer.setPixelUsingDepthMap(x, y, z, () => {
-                    if (!renderer.scene) throw Error("No scene!");
-                    if (!renderer.camera) throw Error("No camera!");
-                    const pos = renderer.camera.getOriginalCoords(
+                    const pos = cam.getOriginalCoords(
                         new Vector3(x, y, z),
                         renderer
                     );
-                    const [c, i] = renderer.scene.illumination.computeLighting(
+                    const [c, i] = ilu.computeLighting(
                         pos,
                         normal,
                         this.specular
                     );
-                    return this.color.multiply(c.normalize().multiply(i));
+                    let color = this.color.copy();
+                    if (this.texture)
+                        color = this.texture
+                            .get(uv.x / z, uv.y / z)
+                            .multiply(color.normalize());
+                    return color.multiply(c.normalize().multiply(i));
                 });
             }
         );

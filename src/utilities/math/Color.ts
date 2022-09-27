@@ -6,11 +6,21 @@ export default class Color {
     b: number;
     a: number;
 
-    static red = new Color(255, 0, 0, 255);
-    static green = new Color(0, 255, 0, 255);
-    static blue = new Color(0, 0, 255, 255);
-    static white = new Color(255, 255, 255, 255);
-    static black = new Color(0, 0, 0, 255);
+    static get red() {
+        return new Color(255, 0, 0, 255);
+    }
+    static get green() {
+        return new Color(0, 255, 0, 255);
+    }
+    static get blue() {
+        return new Color(0, 0, 255, 255);
+    }
+    static get white() {
+        return new Color(255, 255, 255, 255);
+    }
+    static get black() {
+        return new Color(0, 0, 0, 255);
+    }
 
     static random() {
         return new Color(
@@ -56,31 +66,32 @@ export default class Color {
 
     multiply(v: number | Color) {
         if (v instanceof Color) {
-            const r = this.r * v.r;
-            const g = this.g * v.g;
-            const b = this.b * v.b;
-
-            const maxV = Math.max(r, g, b, 255);
-
-            return new Color(
-                map(r, 0, maxV, 0, 255),
-                map(g, 0, maxV, 0, 255),
-                map(b, 0, maxV, 0, 255),
-                this.a
-            );
-        } else return new Color(this.r * v, this.g * v, this.b * v, this.a);
+            this.r = map(this.r * v.r, 0, 255, 0, 255);
+            this.g = map(this.g * v.g, 0, 255, 0, 255);
+            this.b = map(this.b * v.b, 0, 255, 0, 255);
+            this.a = map(this.a * v.a, 0, 255, 0, 255);
+            return this;
+        } else {
+            this.r *= v;
+            this.g *= v;
+            this.b *= v;
+            return this;
+        }
     }
 
     normalize() {
-        return new Color(
-            this.r / 255,
-            this.g / 255,
-            this.b / 255,
-            this.a / 255
-        );
+        this.r /= 255;
+        this.g /= 255;
+        this.b /= 255;
+        this.a /= 255;
+        return this;
     }
 
-    add(c: Color) {
-        return new Color(this.r + c.r, this.g + c.g, this.b + c.b, this.a);
+    add(v: Color) {
+        this.r = clamp(this.r + v.r, 0, 255);
+        this.g = clamp(this.g + v.g, 0, 255);
+        this.b = clamp(this.b + v.b, 0, 255);
+        this.a = clamp(this.a + v.a, 0, 255);
+        return this;
     }
 }

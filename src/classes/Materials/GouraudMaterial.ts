@@ -1,13 +1,15 @@
 import Renderer from "../Renderer";
-import Material from "./Material";
 import Triangle from "../../utilities/Triangle";
 import Color from "../../utilities/math/Color";
+import TextureMaterial from "./TextureMaterial";
+import Texture from "../../utilities/Texture";
+import Vector3 from "../../utilities/math/Vector3";
 
-export default class GouraudMaterial extends Material {
+export default class GouraudMaterial extends TextureMaterial {
     specular: number;
 
-    constructor(color: Color, specular: number) {
-        super(color);
+    constructor(color: Color, specular: number, texture?: Texture) {
+        super(color, texture);
         this.specular = specular;
     }
 
@@ -51,23 +53,31 @@ export default class GouraudMaterial extends Material {
             [
                 [
                     triangle.vertices[0].z,
-                    this.color.multiply(c1.normalize().multiply(i1)),
+                    this.color.copy().multiply(c1.normalize().multiply(i1)),
+                    triangle.verticesUvs[0].multiply(triangle.vertices[0].z),
                 ],
                 [
                     triangle.vertices[1].z,
-                    this.color.multiply(c2.normalize().multiply(i2)),
+                    this.color.copy().multiply(c2.normalize().multiply(i2)),
+                    triangle.verticesUvs[1].multiply(triangle.vertices[1].z),
                 ],
                 [
                     triangle.vertices[2].z,
-                    this.color.multiply(c3.normalize().multiply(i3)),
+                    this.color.copy().multiply(c3.normalize().multiply(i3)),
+                    triangle.verticesUvs[2].multiply(triangle.vertices[2].z),
                 ],
             ],
             (x, y, v) => {
-                renderer.drawer.setPixelUsingDepthMap(
-                    x,
-                    y,
-                    v[0] as number,
-                    v[1] as Color
+                const z = v[0] as number;
+                const c = v[1] as Color;
+                const uv = v[2] as Vector3;
+
+                renderer.drawer.setPixelUsingDepthMap(x, y, z, () =>
+                    this.texture
+                        ? this.texture
+                              .get(uv.x / z, uv.y / z)
+                              .multiply(c.normalize())
+                        : c
                 );
             }
         );

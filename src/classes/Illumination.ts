@@ -39,7 +39,7 @@ export default class Illumination {
             if (light.type == LightType.AMBIENT) {
                 intensity_sum += light.intensity;
                 intensity.push(light.intensity);
-                color.push(light.color);
+                color.push(light.color.copy());
             } else {
                 let vec_l;
                 const lightPos = light.transformedPosition;
@@ -82,7 +82,7 @@ export default class Illumination {
         });
         if (intensity_sum != 0)
             color = color.map((c, i) =>
-                c.multiply(intensity[i] / intensity_sum)
+                c.copy().multiply(intensity[i] / intensity_sum)
             );
         return [color.reduce((p, c) => p.add(c)), intensity_sum];
     }

@@ -1,13 +1,15 @@
 import Color from "../../utilities/math/Color";
+import Vector3 from "../../utilities/math/Vector3";
+import Texture from "../../utilities/Texture";
 import Triangle from "../../utilities/Triangle";
 import Renderer from "../Renderer";
-import Material from "./Material";
+import TextureMaterial from "./TextureMaterial";
 
-export default class FlatMaterial extends Material {
+export default class FlatMaterial extends TextureMaterial {
     specular: number;
 
-    constructor(color: Color, specular: number) {
-        super(color);
+    constructor(color: Color, specular: number, texture?: Texture) {
+        super(color, texture);
         this.specular = specular;
     }
 
@@ -23,6 +25,7 @@ export default class FlatMaterial extends Material {
             originalTriangle.normal,
             this.specular
         );
+        const baseColor = this.color.copy().multiply(c.normalize().multiply(i));
 
         renderer.drawer.basicTriangle(
             [
@@ -36,16 +39,29 @@ export default class FlatMaterial extends Material {
                 triangle.vertices[2].y,
             ],
             [
-                [triangle.vertices[0].z],
-                [triangle.vertices[1].z],
-                [triangle.vertices[2].z],
+                [
+                    triangle.vertices[0].z,
+                    triangle.verticesUvs[0].multiply(triangle.vertices[0].z),
+                ],
+                [
+                    triangle.vertices[1].z,
+                    triangle.verticesUvs[1].multiply(triangle.vertices[1].z),
+                ],
+                [
+                    triangle.vertices[2].z,
+                    triangle.verticesUvs[2].multiply(triangle.vertices[2].z),
+                ],
             ],
             (x, y, v) => {
-                renderer.drawer.setPixelUsingDepthMap(
-                    x,
-                    y,
-                    v[0] as number,
-                    this.color.multiply(c.normalize().multiply(i))
+                const z = v[0] as number;
+                const uv = v[1] as Vector3;
+
+                renderer.drawer.setPixelUsingDepthMap(x, y, z, () =>
+                    this.texture
+                        ? this.texture
+                              .get(uv.x / z, uv.y / z)
+                              .multiply(baseColor.copy().normalize())
+                        : baseColor
                 );
             }
         );

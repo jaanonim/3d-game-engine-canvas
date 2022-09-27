@@ -7,7 +7,7 @@ import {
     interpolateValue,
     Iterpolatable,
 } from "../utilities/math/Interpolation";
-import Vector2 from "../utilities/math/Vector2";
+import Vector3 from "../utilities/math/Vector3";
 
 type ColorFn = () => Color;
 
@@ -37,44 +37,49 @@ export default class Drawer {
         this.height = height;
     }
 
-    drawLine(p0: Vector2, p1: Vector2, color: Color) {
+    drawLine(p0: Vector3, p1: Vector3, color: Color) {
         if (Math.abs(p1.x - p0.x) > Math.abs(p1.y - p0.y)) {
             if (p0.x > p1.x) {
                 const ys = interpolateNumber(p1.x, p1.y, p0.x, p0.y);
+                const zs = interpolateNumber(p1.x, p1.z, p0.x, p0.z);
                 let i = 0;
                 for (let x = p1.x; x <= p0.x; x++) {
                     const _x = Math.ceil(x);
                     const _y = Math.ceil(ys[i]);
-                    this.setPixel(_x, _y, color);
+                    this.setPixelUsingDepthMap(_x, _y, zs[i], color);
                     i++;
                 }
             } else {
                 const ys = interpolateNumber(p0.x, p0.y, p1.x, p1.y);
+                const zs = interpolateNumber(p0.x, p0.z, p1.x, p1.z);
                 let i = 0;
                 for (let x = p0.x; x <= p1.x; x++) {
                     const _x = Math.ceil(x);
                     const _y = Math.ceil(ys[i]);
-                    this.setPixel(_x, _y, color);
+                    this.setPixelUsingDepthMap(_x, _y, zs[i], color);
                     i++;
                 }
             }
         } else {
             if (p0.y > p1.y) {
                 const xs = interpolateNumber(p1.y, p1.x, p0.y, p0.x);
+                const zs = interpolateNumber(p1.y, p1.z, p0.y, p0.z);
                 let i = 0;
                 for (let y = p1.y; y <= p0.y; y++) {
                     const _x = Math.ceil(xs[i]);
                     const _y = Math.ceil(y);
-                    this.setPixel(_x, _y, color);
+                    this.setPixelUsingDepthMap(_x, _y, zs[i], color);
+
                     i++;
                 }
             } else {
                 const xs = interpolateNumber(p0.y, p0.x, p1.y, p1.x);
+                const zs = interpolateNumber(p0.y, p0.z, p1.y, p1.z);
                 let i = 0;
                 for (let y = p0.y; y <= p1.y; y++) {
                     const _x = Math.ceil(xs[i]);
                     const _y = Math.ceil(y);
-                    this.setPixel(_x, _y, color);
+                    this.setPixelUsingDepthMap(_x, _y, zs[i], color);
                     i++;
                 }
             }

@@ -6,7 +6,7 @@ export default class FileLoader {
     }
 
     static loadImg(url: string): Promise<HTMLImageElement> {
-        return new Promise((res, rej) => {
+        return new Promise((res, _rej) => {
             const img = new Image();
             img.src = url;
             img.onload = () => {
