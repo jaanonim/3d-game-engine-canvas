@@ -65,7 +65,7 @@ export default class ObjLoader {
                 const tNormals = [];
                 const tUvs = [];
 
-                if (data.length !== 3)
+                if (data.length < 3)
                     throw new Error(
                         "Invalid count of points in faces in .obj file"
                     );
@@ -81,7 +81,7 @@ export default class ObjLoader {
                                 );
                             }
                             processedParts = [v, v, v];
-                        } else if (parts.length === 3) {
+                        } else if (parts.length >= 3) {
                             processedParts = parts.map((e) => parseInt(e));
                             if (isNaN(processedParts[0])) {
                                 throw new Error(
@@ -103,28 +103,31 @@ export default class ObjLoader {
                     }
                 }
 
-                const resUvs = tUvs.map((i) => uvs[i - 1]) as [
-                    Vector3,
-                    Vector3,
-                    Vector3
-                ];
-                const resNormals = tNormals.map((i) => normals[i - 1]) as [
-                    Vector3,
-                    Vector3,
-                    Vector3
-                ];
+                const resUvs = tUvs.map((i) => uvs[i - 1]);
+                const resNormals = tNormals.map((i) => normals[i - 1]);
+                const resVertexes = tVertexes.map((i) => vertices[i - 1]);
 
-                triangles.push(
-                    new Triangle(
-                        tVertexes.map((i) => vertices[i - 1]) as [
-                            Vector3,
-                            Vector3,
-                            Vector3
-                        ],
-                        resUvs[0] == undefined ? undefined : resUvs,
-                        resNormals[0] == undefined ? undefined : resNormals
-                    )
-                );
+                for (let j = 2; j < resVertexes.length; j++) {
+                    triangles.push(
+                        new Triangle(
+                            [
+                                resVertexes[0],
+                                resVertexes[j - 1],
+                                resVertexes[j],
+                            ],
+                            resUvs[0] == undefined
+                                ? undefined
+                                : [resUvs[0], resUvs[j - 1], resUvs[j]],
+                            resNormals[0] == undefined
+                                ? undefined
+                                : [
+                                      resNormals[0],
+                                      resNormals[j - 1],
+                                      resNormals[j],
+                                  ]
+                        )
+                    );
+                }
             }
         }
 

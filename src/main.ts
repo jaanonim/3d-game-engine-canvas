@@ -36,7 +36,7 @@ class Rotate extends Component {
     }
 }
 
-const teapot = new ObjLoader(await FileLoader.load("/teapot.obj")).parse();
+const teapot = new ObjLoader(await FileLoader.load("/torus.obj")).parse();
 async function main() {
     const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
 
@@ -57,7 +57,7 @@ async function main() {
                 name: "o",
                 transform: {
                     position: [0, 0, 2],
-                    rotation: [0, 1, 0],
+                    rotation: [0, 0, 0],
                     scale: [0.2, 0.2, 0.2],
                 },
                 components: [
