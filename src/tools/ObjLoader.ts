@@ -81,7 +81,17 @@ export default class ObjLoader {
                                 );
                             }
                             processedParts = [v, v, v];
-                        } else if (parts.length >= 3) {
+                        } else if (parts.length === 2) {
+                            processedParts = parts.map((e) => parseInt(e));
+                            if (isNaN(processedParts[0])) {
+                                throw new Error(
+                                    "Missing first part in faces in .obj file"
+                                );
+                            }
+                            if (isNaN(processedParts[1]))
+                                processedParts[1] = processedParts[0];
+                            processedParts[2] = processedParts[1];
+                        } else if (parts.length === 3) {
                             processedParts = parts.map((e) => parseInt(e));
                             if (isNaN(processedParts[0])) {
                                 throw new Error(

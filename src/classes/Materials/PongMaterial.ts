@@ -55,7 +55,7 @@ export default class PongMaterial extends TextureMaterial {
             (x, y, v) => {
                 const z = v[0] as number;
                 const normal = v[1] as Vector3;
-                const uv = v[2] as Vector3;
+                const uv = (v[2] as Vector3).multiply(1 / z);
                 renderer.drawer.setPixelUsingDepthMap(x, y, z, () => {
                     const pos = cam.getOriginalCoords(
                         new Vector3(x, y, z),
@@ -69,7 +69,7 @@ export default class PongMaterial extends TextureMaterial {
                     let color = this.color.copy();
                     if (this.texture)
                         color = this.texture
-                            .get(uv.x / z, uv.y / z)
+                            .get(uv.x, uv.y, 0)
                             .multiply(color.normalize());
                     return color.multiply(c.normalize().multiply(i));
                 });

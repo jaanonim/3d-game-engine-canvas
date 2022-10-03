@@ -55,7 +55,7 @@ export default class ClippingPlane {
             return [t];
         } else if (d0 <= 0 && d1 <= 0 && d2 <= 0) {
             return [];
-        } else if (d0 > 0 && d1 < 0 && d2 < 0) {
+        } else if (d0 >= 0 && d1 < 0 && d2 < 0) {
             return [
                 new Triangle(
                     [
@@ -68,7 +68,7 @@ export default class ClippingPlane {
                     t.normal
                 ),
             ];
-        } else if (d0 < 0 && d1 > 0 && d2 < 0) {
+        } else if (d0 < 0 && d1 >= 0 && d2 < 0) {
             return [
                 new Triangle(
                     [
@@ -81,7 +81,7 @@ export default class ClippingPlane {
                     t.normal
                 ),
             ];
-        } else if (d0 < 0 && d1 < 0 && d2 > 0) {
+        } else if (d0 < 0 && d1 < 0 && d2 >= 0) {
             return [
                 new Triangle(
                     [
@@ -94,7 +94,7 @@ export default class ClippingPlane {
                     t.normal
                 ),
             ];
-        } else if (d0 > 0 && d1 > 0 && d2 < 0) {
+        } else if (d0 >= 0 && d1 >= 0 && d2 < 0) {
             const _02 = this.intersection(t.vertices[0], t.vertices[2]);
             const _12 = this.intersection(t.vertices[1], t.vertices[2]);
             return [
@@ -111,7 +111,7 @@ export default class ClippingPlane {
                     t.normal
                 ),
             ];
-        } else if (d0 > 0 && d1 < 0 && d2 > 0) {
+        } else if (d0 >= 0 && d1 < 0 && d2 >= 0) {
             const _01 = this.intersection(t.vertices[0], t.vertices[1]);
             const _12 = this.intersection(t.vertices[1], t.vertices[2]);
             return [
@@ -128,7 +128,7 @@ export default class ClippingPlane {
                     t.normal
                 ),
             ];
-        } else if (d0 < 0 && d1 > 0 && d2 > 0) {
+        } else if (d0 < 0 && d1 >= 0 && d2 >= 0) {
             const _01 = this.intersection(t.vertices[0], t.vertices[1]);
             const _02 = this.intersection(t.vertices[0], t.vertices[2]);
             return [
@@ -146,6 +146,7 @@ export default class ClippingPlane {
                 ),
             ];
         } else {
+            console.error(d0, d1, d2);
             throw new Error("Something went wrong in ClippingPlanes");
         }
     }

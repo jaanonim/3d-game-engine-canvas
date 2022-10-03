@@ -14,7 +14,9 @@ type ColorFn = () => Color;
 type TriangleCallback = (
     x: number,
     y: number,
-    values: Array<Iterpolatable>
+    values: Array<Iterpolatable>,
+    sequence: Array<Array<Iterpolatable>>,
+    i: number
 ) => void;
 
 export default class Drawer {
@@ -145,7 +147,9 @@ export default class Drawer {
                 callback(
                     _x,
                     _y,
-                    segments.map((ele) => ele[j])
+                    segments.map((ele) => ele[j]),
+                    segments,
+                    j
                 );
                 j++;
             }

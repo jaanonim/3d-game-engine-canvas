@@ -41,12 +41,12 @@ async function main() {
     const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
 
     const testTexture = new TextureLoader(
-        await FileLoader.loadImg("/test.png")
+        await FileLoader.loadImg("/test_small.png")
     ).parse();
     //testTexture.bilinearFiltering = false;
 
-    const materialPong = new PongMaterial(Color.white, 50);
-    const materialGouraud = new GouraudMaterial(Color.white, 15);
+    const materialPong = new PongMaterial(Color.white, 50, testTexture);
+    const materialGouraud = new GouraudMaterial(Color.white, 15, testTexture);
     const materialFlat = new FlatMaterial(Color.white, 1);
     const wireframe = new WireframeMaterial(Color.red);
 
@@ -56,50 +56,25 @@ async function main() {
             {
                 name: "o",
                 transform: {
-                    position: [0, 0, 2],
-                    rotation: [0, 0, 0],
+                    position: [0, 0, 5],
+                    rotation: [1, 1, 1],
+                    scale: [1, 1, 1],
+                },
+                components: [
+                    new MeshRenderer(cube, materialPong),
+                    new Rotate(new Vector3(0.1, 0.1, 0.1)),
+                ],
+            },
+            {
+                name: "light",
+                transform: {
+                    position: [1, -0.5, 5],
+                    rotation: [1, 1, 1],
                     scale: [0.2, 0.2, 0.2],
                 },
                 components: [
-                    new MeshRenderer(teapot, materialPong),
-                    //new Rotate(new Vector3(0.1, 0.1, 0.1)),
-                ],
-                children: [
-                    {
-                        name: "e",
-                        transform: {
-                            position: [0, 2, 0],
-                            rotation: [0, 1, 0],
-                            scale: [1, 1, 1],
-                        },
-                        components: [new Rotate(new Vector3(0, 1, 0))],
-                        children: [
-                            // {
-                            //     name: "light",
-                            //     transform: {
-                            //         position: [-5, 0, 0],
-                            //         rotation: [1, 1, 1],
-                            //         scale: [0.2, 0.2, 0.2],
-                            //     },
-                            //     components: [
-                            //         new Light(LightType.POINT, 1, Color.blue),
-                            //         new MeshRenderer(cube, wireframe),
-                            //     ],
-                            // },
-                            {
-                                name: "light",
-                                transform: {
-                                    position: [5, 0, 0],
-                                    rotation: [1, 1, 1],
-                                    scale: [0.2, 0.2, 0.2],
-                                },
-                                components: [
-                                    new Light(LightType.POINT, 1, Color.white),
-                                    new MeshRenderer(cube, wireframe),
-                                ],
-                            },
-                        ],
-                    },
+                    new Light(LightType.AMBIENT, 1, Color.white),
+                    new MeshRenderer(cube, wireframe),
                 ],
             },
             // {
