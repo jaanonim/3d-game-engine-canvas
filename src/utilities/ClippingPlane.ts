@@ -17,18 +17,20 @@ export default class ClippingPlane {
         return v.dotProduct(this.normal) + this.d;
     }
 
-    intersection(a: Vector3, b: Vector3) {
-        const ab = a.subtract(b);
-        return ab
-            .multiply(
-                (-this.d - a.dotProduct(this.normal)) /
-                    ab.dotProduct(this.normal)
-            )
-            .add(a);
+    intersection(a: Vector3, b: Vector3, t: number) {
+        return a.subtract(b).multiply(t).add(a);
+    }
+
+    computeT(a: Vector3, b: Vector3) {
+        return (
+            (-this.d - a.dotProduct(this.normal)) /
+            a.subtract(b).dotProduct(this.normal)
+        );
     }
 
     preClipObject(boundingSphere: Sphere): ClipResult {
         const d = this.distance(boundingSphere.center);
+        console.log(d, boundingSphere.radius);
         if (boundingSphere.radius < d) {
             return 1;
         } else if (-boundingSphere.radius > d) {
@@ -56,92 +58,242 @@ export default class ClippingPlane {
         } else if (d0 <= 0 && d1 <= 0 && d2 <= 0) {
             return [];
         } else if (d0 >= 0 && d1 < 0 && d2 < 0) {
+            const t10 = this.computeT(t.vertices[1], t.vertices[0]);
+            const t20 = this.computeT(t.vertices[2], t.vertices[0]);
+
             return [
                 new Triangle(
                     [
                         t.vertices[0],
-                        this.intersection(t.vertices[1], t.vertices[0]),
-                        this.intersection(t.vertices[2], t.vertices[0]),
+                        this.intersection(t.vertices[1], t.vertices[0], t10),
+                        this.intersection(t.vertices[2], t.vertices[0], t20),
                     ],
-                    t.verticesUvs,
-                    t.verticesNormals,
+                    [
+                        t.verticesUvs[0],
+                        this.intersection(
+                            t.verticesUvs[1],
+                            t.verticesUvs[0],
+                            t10
+                        ),
+                        this.intersection(
+                            t.verticesUvs[2],
+                            t.verticesUvs[0],
+                            t20
+                        ),
+                    ],
+                    [
+                        t.verticesNormals[0],
+                        this.intersection(
+                            t.verticesNormals[1],
+                            t.verticesNormals[0],
+                            t10
+                        ),
+                        this.intersection(
+                            t.verticesNormals[2],
+                            t.verticesNormals[0],
+                            t20
+                        ),
+                    ],
                     t.normal
                 ),
             ];
         } else if (d0 < 0 && d1 >= 0 && d2 < 0) {
+            const t01 = this.computeT(t.vertices[0], t.vertices[1]);
+            const t21 = this.computeT(t.vertices[2], t.vertices[1]);
+
             return [
                 new Triangle(
                     [
-                        this.intersection(t.vertices[0], t.vertices[1]),
+                        this.intersection(t.vertices[0], t.vertices[1], t01),
                         t.vertices[1],
-                        this.intersection(t.vertices[2], t.vertices[1]),
+                        this.intersection(t.vertices[2], t.vertices[1], t21),
                     ],
-                    t.verticesUvs,
-                    t.verticesNormals,
+                    [
+                        this.intersection(
+                            t.verticesUvs[0],
+                            t.verticesUvs[1],
+                            t01
+                        ),
+                        t.verticesUvs[1],
+                        this.intersection(
+                            t.verticesUvs[2],
+                            t.verticesUvs[1],
+                            t21
+                        ),
+                    ],
+                    [
+                        this.intersection(
+                            t.verticesNormals[0],
+                            t.verticesNormals[1],
+                            t01
+                        ),
+                        t.verticesNormals[1],
+                        this.intersection(
+                            t.verticesNormals[2],
+                            t.verticesNormals[1],
+                            t21
+                        ),
+                    ],
                     t.normal
                 ),
             ];
         } else if (d0 < 0 && d1 < 0 && d2 >= 0) {
+            const t02 = this.computeT(t.vertices[0], t.vertices[2]);
+            const t12 = this.computeT(t.vertices[1], t.vertices[2]);
+
             return [
                 new Triangle(
                     [
-                        this.intersection(t.vertices[0], t.vertices[2]),
-                        this.intersection(t.vertices[1], t.vertices[2]),
+                        this.intersection(t.vertices[0], t.vertices[2], t02),
+                        this.intersection(t.vertices[1], t.vertices[2], t12),
                         t.vertices[2],
                     ],
-                    t.verticesUvs,
-                    t.verticesNormals,
+                    [
+                        this.intersection(
+                            t.verticesUvs[0],
+                            t.verticesUvs[2],
+                            t02
+                        ),
+                        this.intersection(
+                            t.verticesUvs[1],
+                            t.verticesUvs[2],
+                            t12
+                        ),
+                        t.verticesUvs[2],
+                    ],
+                    [
+                        this.intersection(
+                            t.verticesNormals[0],
+                            t.verticesNormals[2],
+                            t02
+                        ),
+                        this.intersection(
+                            t.verticesNormals[1],
+                            t.verticesNormals[2],
+                            t12
+                        ),
+                        t.verticesNormals[2],
+                    ],
                     t.normal
                 ),
             ];
         } else if (d0 >= 0 && d1 >= 0 && d2 < 0) {
-            const _02 = this.intersection(t.vertices[0], t.vertices[2]);
-            const _12 = this.intersection(t.vertices[1], t.vertices[2]);
+            const t02 = this.computeT(t.vertices[0], t.vertices[2]);
+            const t12 = this.computeT(t.vertices[1], t.vertices[2]);
+            const v02 = this.intersection(t.vertices[0], t.vertices[2], t02);
+            const v12 = this.intersection(t.vertices[1], t.vertices[2], t12);
+            const u02 = this.intersection(
+                t.verticesUvs[0],
+                t.verticesUvs[2],
+                t02
+            );
+            const u12 = this.intersection(
+                t.verticesUvs[1],
+                t.verticesUvs[2],
+                t12
+            );
+            const n02 = this.intersection(
+                t.verticesNormals[0],
+                t.verticesNormals[2],
+                t02
+            );
+            const n12 = this.intersection(
+                t.verticesNormals[1],
+                t.verticesNormals[2],
+                t12
+            );
+
             return [
                 new Triangle(
-                    [t.vertices[0], t.vertices[1], _02],
-                    t.verticesUvs,
-                    t.verticesNormals,
+                    [t.vertices[0], t.vertices[1], v02],
+                    [t.verticesUvs[0], t.verticesUvs[1], u02],
+                    [t.verticesNormals[0], t.verticesNormals[1], n02],
                     t.normal
                 ),
                 new Triangle(
-                    [t.vertices[1], _02, _12],
-                    t.verticesUvs,
-                    t.verticesNormals,
+                    [t.vertices[1], v02, v12],
+                    [t.verticesUvs[1], u02, u12],
+                    [t.verticesNormals[1], n02, n12],
                     t.normal
                 ),
             ];
         } else if (d0 >= 0 && d1 < 0 && d2 >= 0) {
-            const _01 = this.intersection(t.vertices[0], t.vertices[1]);
-            const _12 = this.intersection(t.vertices[1], t.vertices[2]);
+            const t01 = this.computeT(t.vertices[0], t.vertices[1]);
+            const t12 = this.computeT(t.vertices[1], t.vertices[2]);
+            const v01 = this.intersection(t.vertices[0], t.vertices[1], t01);
+            const v12 = this.intersection(t.vertices[1], t.vertices[2], t12);
+            const u01 = this.intersection(
+                t.verticesUvs[0],
+                t.verticesUvs[1],
+                t01
+            );
+            const u12 = this.intersection(
+                t.verticesUvs[1],
+                t.verticesUvs[2],
+                t12
+            );
+            const n01 = this.intersection(
+                t.verticesNormals[0],
+                t.verticesNormals[1],
+                t01
+            );
+            const n12 = this.intersection(
+                t.verticesNormals[1],
+                t.verticesNormals[2],
+                t12
+            );
+
             return [
                 new Triangle(
-                    [t.vertices[0], t.vertices[2], _01],
-                    t.verticesUvs,
-                    t.verticesNormals,
+                    [t.vertices[0], t.vertices[2], v01],
+                    [t.verticesUvs[0], t.verticesUvs[2], u01],
+                    [t.verticesNormals[0], t.verticesNormals[2], n01],
                     t.normal
                 ),
                 new Triangle(
-                    [t.vertices[2], _01, _12],
-                    t.verticesUvs,
-                    t.verticesNormals,
+                    [t.vertices[2], v01, v12],
+                    [t.verticesUvs[2], u01, u12],
+                    [t.verticesNormals[2], n01, n12],
                     t.normal
                 ),
             ];
         } else if (d0 < 0 && d1 >= 0 && d2 >= 0) {
-            const _01 = this.intersection(t.vertices[0], t.vertices[1]);
-            const _02 = this.intersection(t.vertices[0], t.vertices[2]);
+            const t01 = this.computeT(t.vertices[0], t.vertices[1]);
+            const t02 = this.computeT(t.vertices[0], t.vertices[2]);
+            const v01 = this.intersection(t.vertices[0], t.vertices[1], t01);
+            const v02 = this.intersection(t.vertices[0], t.vertices[2], t02);
+            const u01 = this.intersection(
+                t.verticesUvs[0],
+                t.verticesUvs[1],
+                t01
+            );
+            const u02 = this.intersection(
+                t.verticesUvs[0],
+                t.verticesUvs[2],
+                t02
+            );
+            const n01 = this.intersection(
+                t.verticesNormals[0],
+                t.verticesNormals[1],
+                t01
+            );
+            const n02 = this.intersection(
+                t.verticesNormals[0],
+                t.verticesNormals[2],
+                t02
+            );
+
             return [
                 new Triangle(
-                    [t.vertices[1], t.vertices[2], _01],
-                    t.verticesUvs,
-                    t.verticesNormals,
+                    [t.vertices[1], t.vertices[2], v01],
+                    [t.verticesUvs[1], t.verticesUvs[2], u01],
+                    [t.verticesNormals[1], t.verticesNormals[2], n01],
                     t.normal
                 ),
                 new Triangle(
-                    [t.vertices[2], _01, _02],
-                    t.verticesUvs,
-                    t.verticesNormals,
+                    [t.vertices[2], v01, v02],
+                    [t.verticesUvs[2], u01, u02],
+                    [t.verticesNormals[2], n01, n02],
                     t.normal
                 ),
             ];

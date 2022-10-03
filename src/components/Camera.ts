@@ -7,9 +7,9 @@ import Component from "../classes/Component";
 import Renderer from "../classes/Renderer";
 
 export default class Camera extends Component {
-    private _viewportRatio: number;
+    protected _viewportRatio: number;
 
-    private _near: number;
+    protected _near: number;
     public get near(): number {
         return this._near;
     }
@@ -18,12 +18,21 @@ export default class Camera extends Component {
         this.updateFov();
     }
 
-    private _viewportSize: Vector2;
+    protected _far: number;
+    public get far(): number {
+        return this._far;
+    }
+    public set far(value: number) {
+        this._far = value;
+        this.updateFov();
+    }
+
+    protected _viewportSize: Vector2;
     public get viewportSize(): Vector2 {
         return this._viewportSize;
     }
 
-    private _fov: number;
+    protected _fov: number;
     public get fov(): number {
         return this._fov;
     }
@@ -37,17 +46,25 @@ export default class Camera extends Component {
         ClippingPlane,
         ClippingPlane,
         ClippingPlane,
+        ClippingPlane,
         ClippingPlane
     ];
 
-    constructor(fov: number, near: number, viewportRatio: number) {
+    constructor(
+        viewportRatio: number,
+        fov: number = 90,
+        near: number = 1,
+        far: number = 10000
+    ) {
         super();
         this._fov = fov;
         this._near = near;
+        this._far = far;
         this._viewportRatio = viewportRatio;
         this._viewportSize = Vector2.zero;
 
         this.clippingPlanes = [
+            new ClippingPlane(),
             new ClippingPlane(),
             new ClippingPlane(),
             new ClippingPlane(),
@@ -76,7 +93,11 @@ export default class Camera extends Component {
     updateClippingPlanes(angle: number) {
         this.clippingPlanes[0] = new ClippingPlane(
             new Vector3(0, 0, 1),
-            this.near
+            -this._near
+        );
+        this.clippingPlanes[5] = new ClippingPlane(
+            new Vector3(0, 0, -1),
+            this._far
         );
 
         const x = Math.cos(angle);

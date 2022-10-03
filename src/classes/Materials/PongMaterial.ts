@@ -1,3 +1,4 @@
+import CameraOrthographic from "../../components/CameraOrthographic";
 import Color from "../../utilities/math/Color";
 import Vector3 from "../../utilities/math/Vector3";
 import Texture from "../../utilities/Texture";
@@ -24,6 +25,8 @@ export default class PongMaterial extends TextureMaterial {
         const cam = renderer.camera;
         const ilu = renderer.scene.illumination;
 
+        const isOrthographic = renderer.camera instanceof CameraOrthographic;
+
         renderer.drawer.basicTriangle(
             [
                 triangle.vertices[0].x,
@@ -39,23 +42,37 @@ export default class PongMaterial extends TextureMaterial {
                 [
                     triangle.vertices[0].z,
                     triangle.verticesNormals[0],
-                    triangle.verticesUvs[0].multiply(triangle.vertices[0].z),
+                    isOrthographic
+                        ? triangle.verticesUvs[0]
+                        : triangle.verticesUvs[0].multiply(
+                              triangle.vertices[0].z
+                          ),
                 ],
                 [
                     triangle.vertices[1].z,
                     triangle.verticesNormals[1],
-                    triangle.verticesUvs[1].multiply(triangle.vertices[1].z),
+                    isOrthographic
+                        ? triangle.verticesUvs[1]
+                        : triangle.verticesUvs[1].multiply(
+                              triangle.vertices[1].z
+                          ),
                 ],
                 [
                     triangle.vertices[2].z,
                     triangle.verticesNormals[2],
-                    triangle.verticesUvs[2].multiply(triangle.vertices[2].z),
+                    isOrthographic
+                        ? triangle.verticesUvs[2]
+                        : triangle.verticesUvs[2].multiply(
+                              triangle.vertices[2].z
+                          ),
                 ],
             ],
             (x, y, v) => {
                 const z = v[0] as number;
                 const normal = v[1] as Vector3;
-                const uv = (v[2] as Vector3).multiply(1 / z);
+                const uv = isOrthographic
+                    ? (v[2] as Vector3)
+                    : (v[2] as Vector3).multiply(1 / z);
                 renderer.drawer.setPixelUsingDepthMap(x, y, z, () => {
                     const pos = cam.getOriginalCoords(
                         new Vector3(x, y, z),

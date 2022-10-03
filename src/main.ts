@@ -17,6 +17,7 @@ import FlatMaterial from "./classes/Materials/FlatMaterial";
 import WireframeMaterial from "./classes/Materials/WireframeMaterial";
 import PongMaterial from "./classes/Materials/PongMaterial";
 import TextureLoader from "./tools/TextureLoader";
+import CameraOrthographic from "./components/CameraOrthographic";
 
 class Rotate extends Component {
     v: number;
@@ -56,9 +57,9 @@ async function main() {
             {
                 name: "o",
                 transform: {
-                    position: [0, 0, 5],
-                    rotation: [1, 1, 1],
-                    scale: [1, 1, 1],
+                    position: [0, 0, 2],
+                    rotation: [1, 2, 1],
+                    scale: [0.3, 0.3, 0.3],
                 },
                 components: [
                     new MeshRenderer(cube, materialPong),
@@ -73,7 +74,7 @@ async function main() {
                     scale: [0.2, 0.2, 0.2],
                 },
                 components: [
-                    new Light(LightType.AMBIENT, 1, Color.white),
+                    new Light(LightType.AMBIENT, 0.7, Color.white),
                     new MeshRenderer(cube, wireframe),
                 ],
             },
@@ -144,11 +145,14 @@ async function main() {
     scene.addChildren(cam);
 
     const r = new Renderer(canvas);
-    r.setCamera(cam.addComponent(new Camera(90, 1, r.canvasRatio)) as Camera);
+    r.setCamera(
+        cam.addComponent(new Camera(r.canvasRatio, 90, 1, 100)) as Camera
+    );
     r.setScene(scene);
 
     const fps = new FPSCounter(document.getElementById("fps") as HTMLElement);
-    //r.render();
+    scene.start();
+    r.render();
 
     let t = 0;
     let i = 0;
