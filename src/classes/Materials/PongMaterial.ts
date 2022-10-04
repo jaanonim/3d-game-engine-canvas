@@ -1,3 +1,4 @@
+import Camera from "../../components/Camera";
 import CameraOrthographic from "../../components/CameraOrthographic";
 import Color from "../../utilities/math/Color";
 import Vector3 from "../../utilities/math/Vector3";
@@ -17,15 +18,12 @@ export default class PongMaterial extends TextureMaterial {
     renderTriangle(
         triangle: Triangle,
         _originalTriangle: Triangle,
-        renderer: Renderer
+        renderer: Renderer,
+        camera: Camera
     ) {
-        if (!renderer.scene) throw Error("No scene!");
-        if (!renderer.camera) throw Error("No camera!");
+        const ilu = camera.scene.illumination;
 
-        const cam = renderer.camera;
-        const ilu = renderer.scene.illumination;
-
-        const isOrthographic = renderer.camera instanceof CameraOrthographic;
+        const isOrthographic = camera instanceof CameraOrthographic;
 
         renderer.drawer.basicTriangle(
             [
@@ -73,23 +71,29 @@ export default class PongMaterial extends TextureMaterial {
                 const uv = isOrthographic
                     ? (v[2] as Vector3)
                     : (v[2] as Vector3).multiply(1 / z);
-                renderer.drawer.setPixelUsingDepthMap(x, y, z, () => {
-                    const pos = cam.getOriginalCoords(
-                        new Vector3(x, y, z),
-                        renderer
-                    );
-                    const [c, i] = ilu.computeLighting(
-                        pos,
-                        normal,
-                        this.specular
-                    );
-                    let color = this.color.copy();
-                    if (this.texture)
-                        color = this.texture
-                            .get(uv.x, uv.y, 0)
-                            .multiply(color.normalize());
-                    return color.multiply(c.normalize().multiply(i));
-                });
+                renderer.drawer.setPixelUsingDepthMap(
+                    x,
+                    y,
+                    z,
+                    this.isTransparent,
+                    () => {
+                        const pos = camera.getOriginalCoords(
+                            new Vector3(x, y, z),
+                            renderer
+                        );
+                        const [c, i] = ilu.computeLighting(
+                            pos,
+                            normal,
+                            this.specular
+                        );
+                        let color = this.color.copy();
+                        if (this.texture)
+                            color = this.texture
+                                .get(uv.x, uv.y, 0)
+                                .multiply(color.normalize());
+                        return color.multiply(c.normalize().multiply(i));
+                    }
+                );
             }
         );
     }

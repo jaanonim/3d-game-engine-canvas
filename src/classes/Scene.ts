@@ -1,3 +1,4 @@
+import Camera from "../components/Camera";
 import Vector3 from "../utilities/math/Vector3";
 import GameObject from "./GameObject";
 import Illumination from "./Illumination";
@@ -24,23 +25,23 @@ export default class Scene {
         return obj;
     }
 
-    render(renderer: Renderer) {
-        if (!renderer.camera) throw Error("No camera!");
+    render(renderer: Renderer, camera: Camera) {
+        if (!camera) throw Error("No camera!");
 
-        this.illumination.startFrame(renderer.camera);
-        this.children.forEach((c) => c.render(renderer));
+        this.illumination.startFrame(camera);
+        this.children.forEach((c) => c.render(renderer, camera));
     }
 
-    update() {
-        this.children.forEach((c) => c.update());
+    async update() {
+        await Promise.all(this.children.map((c) => c.update()));
     }
 
-    lateUpdate() {
-        this.children.forEach((c) => c.lateUpdate());
+    async lateUpdate() {
+        await Promise.all(this.children.map((c) => c.lateUpdate()));
     }
 
-    start() {
-        this.children.forEach((c) => c.start());
+    async start() {
+        await Promise.all(this.children.map((c) => c.start()));
     }
 
     find(name: string) {

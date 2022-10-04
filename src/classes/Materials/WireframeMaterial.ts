@@ -11,17 +11,20 @@ export default class WireframeMaterial extends Material {
         renderer.drawer.drawLine(
             triangle.vertices[0],
             triangle.vertices[1],
-            this.color
+            this.color,
+            this.isTransparent
         );
         renderer.drawer.drawLine(
             triangle.vertices[1],
             triangle.vertices[2],
-            this.color
+            this.color,
+            this.isTransparent
         );
         renderer.drawer.drawLine(
             triangle.vertices[2],
             triangle.vertices[0],
-            this.color
+            this.color,
+            this.isTransparent
         );
     }
 }

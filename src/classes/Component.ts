@@ -1,3 +1,4 @@
+import Camera from "../components/Camera";
 import GameObject from "./GameObject";
 import Renderer from "./Renderer";
 
@@ -20,8 +21,8 @@ export default class Component {
         this.gameObject = obj;
     }
 
-    start() {}
-    update() {}
-    lateUpdate() {}
-    render(_renderer: Renderer) {}
+    async start() {}
+    async update() {}
+    async lateUpdate() {}
+    render(_renderer: Renderer, _camera: Camera) {}
 }

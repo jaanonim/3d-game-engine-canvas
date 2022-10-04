@@ -30,7 +30,6 @@ export default class ClippingPlane {
 
     preClipObject(boundingSphere: Sphere): ClipResult {
         const d = this.distance(boundingSphere.center);
-        console.log(d, boundingSphere.radius);
         if (boundingSphere.radius < d) {
             return 1;
         } else if (-boundingSphere.radius > d) {

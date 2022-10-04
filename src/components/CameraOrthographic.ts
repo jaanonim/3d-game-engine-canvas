@@ -59,14 +59,15 @@ export default class CameraOrthographic extends Camera {
         );
     }
 
-    projectVertex(vertex: Vector3, renderer: Renderer) {
+    projectVertex(vertex: Vector3, renderer: Renderer): Vector3 {
         return renderer.viewportToCanvas(
-            new Vector3(vertex.x, vertex.y, 1 / vertex.z)
+            new Vector3(vertex.x, vertex.y, 1 / vertex.z),
+            this
         );
     }
 
     getOriginalCoords(_v: Vector3, renderer: Renderer) {
-        const v = renderer.getOriginalCoords(_v);
+        const v = renderer.getOriginalCoords(_v, this);
         return new Vector3(v.x, v.y, 1 / v.z);
     }
 }

@@ -1,48 +1,26 @@
-import Renderer from "../Renderer";
-import Triangle from "../../utilities/Triangle";
-import Color from "../../utilities/math/Color";
-import TextureMaterial from "./TextureMaterial";
-import Texture from "../../utilities/Texture";
-import Vector3 from "../../utilities/math/Vector3";
 import Camera from "../../components/Camera";
+import Color from "../../utilities/math/Color";
+import Vector3 from "../../utilities/math/Vector3";
+import Texture from "../../utilities/Texture";
+import Triangle from "../../utilities/Triangle";
+import Renderer from "../Renderer";
+import TextureMaterial from "./TextureMaterial";
 
-export default class GouraudMaterial extends TextureMaterial {
-    specular: number;
-
+export default class BasicMaterial extends TextureMaterial {
     constructor(
         color: Color,
-        specular: number,
         texture?: Texture,
         isTransparent: boolean = false
     ) {
         super(color, texture, isTransparent);
-        this.specular = specular;
     }
 
     renderTriangle(
         triangle: Triangle,
-        originalTriangle: Triangle,
+        _originalTriangle: Triangle,
         renderer: Renderer,
-        camera: Camera
+        _camera: Camera
     ) {
-        const [c1, i1] = camera.scene.illumination.computeLighting(
-            originalTriangle.vertices[0],
-            originalTriangle.verticesNormals[0],
-            this.specular
-        );
-
-        const [c2, i2] = camera.scene.illumination.computeLighting(
-            originalTriangle.vertices[1],
-            originalTriangle.verticesNormals[1],
-            this.specular
-        );
-
-        const [c3, i3] = camera.scene.illumination.computeLighting(
-            originalTriangle.vertices[2],
-            originalTriangle.verticesNormals[2],
-            this.specular
-        );
-
         renderer.drawer.basicTriangle(
             [
                 triangle.vertices[0].x,
@@ -57,24 +35,20 @@ export default class GouraudMaterial extends TextureMaterial {
             [
                 [
                     triangle.vertices[0].z,
-                    this.color.copy().multiply(c1.normalize().multiply(i1)),
                     triangle.verticesUvs[0].multiply(triangle.vertices[0].z),
                 ],
                 [
                     triangle.vertices[1].z,
-                    this.color.copy().multiply(c2.normalize().multiply(i2)),
                     triangle.verticesUvs[1].multiply(triangle.vertices[1].z),
                 ],
                 [
                     triangle.vertices[2].z,
-                    this.color.copy().multiply(c3.normalize().multiply(i3)),
                     triangle.verticesUvs[2].multiply(triangle.vertices[2].z),
                 ],
             ],
             (x, y, v) => {
                 const z = v[0] as number;
-                const c = v[1] as Color;
-                const uv = v[2] as Vector3;
+                const uv = v[1] as Vector3;
 
                 renderer.drawer.setPixelUsingDepthMap(
                     x,
@@ -85,8 +59,8 @@ export default class GouraudMaterial extends TextureMaterial {
                         this.texture
                             ? this.texture
                                   .get(uv.x / z, uv.y / z)
-                                  .multiply(c.normalize())
-                            : c
+                                  .multiply(this.color.copy().normalize())
+                            : this.color.copy()
                 );
             }
         );

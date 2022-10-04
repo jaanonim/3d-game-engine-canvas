@@ -1,3 +1,4 @@
+import Camera from "../components/Camera";
 import Transform from "../utilities/Transform";
 import Component from "./Component";
 import Renderer from "./Renderer";
@@ -32,31 +33,39 @@ export default class GameObject {
         return obj;
     }
 
-    start() {
-        this.transform.children.forEach((t) => t.gameObject.start());
-        this.components.forEach((c) => {
-            if (c.isActive) c.start();
-        });
+    async start() {
+        await Promise.all(
+            this.transform.children.map((t) => t.gameObject.start())
+        );
+        await Promise.all(
+            this.components.filter((c) => c.isActive).map((c) => c.start())
+        );
     }
 
-    update() {
-        this.transform.children.forEach((t) => t.gameObject.update());
-        this.components.forEach((c) => {
-            if (c.isActive) c.update();
-        });
+    async update() {
+        await Promise.all(
+            this.transform.children.map((t) => t.gameObject.update())
+        );
+        await Promise.all(
+            this.components.filter((c) => c.isActive).map((c) => c.update())
+        );
     }
 
-    lateUpdate() {
-        this.transform.children.forEach((t) => t.gameObject.lateUpdate());
-        this.components.forEach((c) => {
-            if (c.isActive) c.lateUpdate();
-        });
+    async lateUpdate() {
+        await Promise.all(
+            this.transform.children.map((t) => t.gameObject.lateUpdate())
+        );
+        await Promise.all(
+            this.components.filter((c) => c.isActive).map((c) => c.lateUpdate())
+        );
     }
 
-    render(renderer: Renderer) {
-        this.transform.children.forEach((t) => t.gameObject.render(renderer));
+    render(renderer: Renderer, camera: Camera) {
+        this.transform.children.forEach((t) =>
+            t.gameObject.render(renderer, camera)
+        );
         this.components.forEach((c) => {
-            if (c.isActive) c.render(renderer);
+            if (c.isActive) c.render(renderer, camera);
         });
     }
 

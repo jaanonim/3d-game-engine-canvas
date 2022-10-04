@@ -39,7 +39,7 @@ export default class Drawer {
         this.height = height;
     }
 
-    drawLine(p0: Vector3, p1: Vector3, color: Color) {
+    drawLine(p0: Vector3, p1: Vector3, color: Color, isTransparent: boolean) {
         if (Math.abs(p1.x - p0.x) > Math.abs(p1.y - p0.y)) {
             if (p0.x > p1.x) {
                 const ys = interpolateNumber(p1.x, p1.y, p0.x, p0.y);
@@ -48,7 +48,13 @@ export default class Drawer {
                 for (let x = p1.x; x <= p0.x; x++) {
                     const _x = Math.ceil(x);
                     const _y = Math.ceil(ys[i]);
-                    this.setPixelUsingDepthMap(_x, _y, zs[i], color);
+                    this.setPixelUsingDepthMap(
+                        _x,
+                        _y,
+                        zs[i],
+                        isTransparent,
+                        color
+                    );
                     i++;
                 }
             } else {
@@ -58,7 +64,13 @@ export default class Drawer {
                 for (let x = p0.x; x <= p1.x; x++) {
                     const _x = Math.ceil(x);
                     const _y = Math.ceil(ys[i]);
-                    this.setPixelUsingDepthMap(_x, _y, zs[i], color);
+                    this.setPixelUsingDepthMap(
+                        _x,
+                        _y,
+                        zs[i],
+                        isTransparent,
+                        color
+                    );
                     i++;
                 }
             }
@@ -70,7 +82,13 @@ export default class Drawer {
                 for (let y = p1.y; y <= p0.y; y++) {
                     const _x = Math.ceil(xs[i]);
                     const _y = Math.ceil(y);
-                    this.setPixelUsingDepthMap(_x, _y, zs[i], color);
+                    this.setPixelUsingDepthMap(
+                        _x,
+                        _y,
+                        zs[i],
+                        isTransparent,
+                        color
+                    );
 
                     i++;
                 }
@@ -81,7 +99,13 @@ export default class Drawer {
                 for (let y = p0.y; y <= p1.y; y++) {
                     const _x = Math.ceil(xs[i]);
                     const _y = Math.ceil(y);
-                    this.setPixelUsingDepthMap(_x, _y, zs[i], color);
+                    this.setPixelUsingDepthMap(
+                        _x,
+                        _y,
+                        zs[i],
+                        isTransparent,
+                        color
+                    );
                     i++;
                 }
             }
@@ -161,9 +185,13 @@ export default class Drawer {
         x: number,
         y: number,
         z: number,
+        isTransparent: boolean,
         color: Color | ColorFn
     ) {
-        if (z > this.depthBuffer[y * this.width + x]) {
+        if (isTransparent) {
+            if (color instanceof Color) this.setPixel(x, y, color);
+            else this.setPixel(x, y, color());
+        } else if (z > this.depthBuffer[y * this.width + x]) {
             if (color instanceof Color) this.setPixel(x, y, color);
             else this.setPixel(x, y, color());
             this.depthBuffer[y * this.width + x] = z;
@@ -172,16 +200,25 @@ export default class Drawer {
 
     setPixel(x: number, y: number, color: Color) {
         if (x < 0 || x >= this.width || y < 0 || y >= this.height) return;
+        const c = this.getPixel(x, y).blend(color);
 
-        this.img.data[y * (this.width * 4) + x * 4] = color.r;
-        this.img.data[y * (this.width * 4) + x * 4 + 1] = color.g;
-        this.img.data[y * (this.width * 4) + x * 4 + 2] = color.b;
-        this.img.data[y * (this.width * 4) + x * 4 + 3] = color.a;
+        this.img.data[y * (this.width * 4) + x * 4] = c.r;
+        this.img.data[y * (this.width * 4) + x * 4 + 1] = c.g;
+        this.img.data[y * (this.width * 4) + x * 4 + 2] = c.b;
+        this.img.data[y * (this.width * 4) + x * 4 + 3] = c.a;
+    }
+
+    getPixel(x: number, y: number): Color {
+        return new Color(
+            this.img.data[y * (this.width * 4) + x * 4],
+            this.img.data[y * (this.width * 4) + x * 4 + 1],
+            this.img.data[y * (this.width * 4) + x * 4 + 2],
+            this.img.data[y * (this.width * 4) + x * 4 + 3]
+        );
     }
 
     begin() {
         this.img = this.ctx.createImageData(this.width, this.height);
-
         for (let i = 0; i < this.width * this.height; i++) {
             this.depthBuffer[i] = 0;
         }

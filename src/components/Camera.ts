@@ -41,6 +41,10 @@ export default class Camera extends Component {
         this.updateFov();
     }
 
+    public get scene() {
+        return this.gameObject.getScene();
+    }
+
     clippingPlanes: [
         ClippingPlane,
         ClippingPlane,
@@ -154,12 +158,13 @@ export default class Camera extends Component {
                 (vertex.x * this.near) / vertex.z,
                 (vertex.y * this.near) / vertex.z,
                 1 / vertex.z
-            )
+            ),
+            this
         );
     }
 
     getOriginalCoords(_v: Vector3, renderer: Renderer) {
-        const v = renderer.getOriginalCoords(_v);
+        const v = renderer.getOriginalCoords(_v, this);
         return new Vector3(
             v.x / (this.near * v.z),
             v.y / (this.near * v.z),

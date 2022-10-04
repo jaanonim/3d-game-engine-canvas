@@ -22,7 +22,7 @@ export default class Light extends Component {
         this.transformedPosition = Vector3.zero;
     }
 
-    start() {
+    async start() {
         this.gameObject.getScene().illumination.registerLight(this);
     }
 }

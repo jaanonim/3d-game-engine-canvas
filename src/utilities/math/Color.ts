@@ -15,11 +15,23 @@ export default class Color {
     static get blue() {
         return new Color(0, 0, 255, 255);
     }
+    static get yellow() {
+        return new Color(255, 255, 0, 255);
+    }
+    static get magenta() {
+        return new Color(255, 0, 255, 255);
+    }
+    static get cyan() {
+        return new Color(0, 255, 255, 255);
+    }
     static get white() {
         return new Color(255, 255, 255, 255);
     }
     static get black() {
         return new Color(0, 0, 0, 255);
+    }
+    static get opaque() {
+        return new Color(0, 0, 0, 0);
     }
 
     static random() {
@@ -87,11 +99,24 @@ export default class Color {
         return this;
     }
 
+    denormalize() {
+        this.r = Math.round(this.r * 255);
+        this.g = Math.round(this.g * 255);
+        this.b = Math.round(this.b * 255);
+        this.a = Math.round(this.a * 255);
+        return this;
+    }
+
     add(v: Color) {
         this.r = clamp(this.r + v.r, 0, 255);
         this.g = clamp(this.g + v.g, 0, 255);
         this.b = clamp(this.b + v.b, 0, 255);
         this.a = clamp(this.a + v.a, 0, 255);
+        return this;
+    }
+
+    blend(v: Color) {
+        this.multiply(1 - this.a / 255).add(v.multiply(v.a / 255));
         return this;
     }
 }

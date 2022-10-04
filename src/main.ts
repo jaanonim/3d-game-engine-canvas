@@ -18,6 +18,7 @@ import WireframeMaterial from "./classes/Materials/WireframeMaterial";
 import PongMaterial from "./classes/Materials/PongMaterial";
 import TextureLoader from "./tools/TextureLoader";
 import CameraOrthographic from "./components/CameraOrthographic";
+import SpriteRenderer from "./components/SpriteRenderer";
 
 class Rotate extends Component {
     v: number;
@@ -29,7 +30,7 @@ class Rotate extends Component {
         this.rotation = rotation;
     }
 
-    update(): void {
+    async update() {
         this.gameObject.transform.rotation = Quaternion.euler(
             this.rotation.multiply(this.v)
         );
@@ -42,7 +43,7 @@ async function main() {
     const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
 
     const testTexture = new TextureLoader(
-        await FileLoader.loadImg("/test_small.png")
+        await FileLoader.loadImg("/test2.png")
     ).parse();
     //testTexture.bilinearFiltering = false;
 
@@ -51,30 +52,58 @@ async function main() {
     const materialFlat = new FlatMaterial(Color.white, 1);
     const wireframe = new WireframeMaterial(Color.red);
 
+    const uiData = {
+        name: "scene",
+        children: [
+            {
+                name: "o",
+                transform: {
+                    position: [-1, 0, 1],
+                    rotation: [0, 0, 0],
+                    scale: [1, 1, 1],
+                },
+                components: [
+                    new SpriteRenderer(testTexture, new Color(0, 255, 0, 100)),
+                ],
+            },
+            {
+                name: "o",
+                transform: {
+                    position: [0, 1, 1],
+                    rotation: [0, 0, 0],
+                    scale: [1, 1, 1],
+                },
+                components: [
+                    new SpriteRenderer(testTexture, new Color(255, 0, 0, 100)),
+                ],
+            },
+        ],
+    };
+
     const data = {
         name: "scene",
         children: [
             {
                 name: "o",
                 transform: {
-                    position: [0, 0, 2],
-                    rotation: [1, 2, 1],
+                    position: [-1, 0, 2],
+                    rotation: [-Math.PI / 2, Math.PI, 0],
                     scale: [0.3, 0.3, 0.3],
                 },
                 components: [
-                    new MeshRenderer(cube, materialPong),
+                    new MeshRenderer(teapot, materialPong),
                     new Rotate(new Vector3(0.1, 0.1, 0.1)),
                 ],
             },
             {
                 name: "light",
                 transform: {
-                    position: [1, -0.5, 5],
+                    position: [0, 0, 1],
                     rotation: [1, 1, 1],
                     scale: [0.2, 0.2, 0.2],
                 },
                 components: [
-                    new Light(LightType.AMBIENT, 0.7, Color.white),
+                    new Light(LightType.POINT, 0.7, Color.white),
                     new MeshRenderer(cube, wireframe),
                 ],
             },
@@ -136,33 +165,36 @@ async function main() {
     };
 
     const scene = Importer.scene(data);
+    const ui = Importer.scene(uiData);
 
     const canvas = document.getElementById("root") as HTMLCanvasElement;
 
     const cam = new GameObject("cam");
-    //cam.addComponent(new Rotate(new Vector3(0, 0.1, 0)));
     cam.transform.rotation = Quaternion.euler(new Vector3(0, 0, 0));
     scene.addChildren(cam);
 
+    const cam2 = new GameObject("cam2");
+    cam2.transform.rotation = Quaternion.euler(new Vector3(0, 0, 0));
+    ui.addChildren(cam2);
+
     const r = new Renderer(canvas);
     r.setCamera(
-        cam.addComponent(new Camera(r.canvasRatio, 90, 1, 100)) as Camera
+        cam.addComponent(new Camera(r.canvasRatio, 90, 1, 100)) as Camera,
+        0
     );
-    r.setScene(scene);
+    r.setCamera(
+        cam2.addComponent(
+            new CameraOrthographic(r.canvasRatio, 10, 1, 100)
+        ) as Camera,
+        1
+    );
 
     const fps = new FPSCounter(document.getElementById("fps") as HTMLElement);
-    scene.start();
-    r.render();
+    // scene.start();
+    // r.render();
 
-    let t = 0;
-    let i = 0;
-    setInterval(() => {
-        console.log(t / i);
-    }, 10000);
-    r.startGameLoop(() => {
+    await r.startGameLoop(() => {
         fps.update();
-        t += Renderer.deltaTime;
-        i++;
     });
 }
 main();

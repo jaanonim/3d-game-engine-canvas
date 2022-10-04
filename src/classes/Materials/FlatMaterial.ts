@@ -1,3 +1,4 @@
+import Camera from "../../components/Camera";
 import Color from "../../utilities/math/Color";
 import Vector3 from "../../utilities/math/Vector3";
 import Texture from "../../utilities/Texture";
@@ -16,11 +17,10 @@ export default class FlatMaterial extends TextureMaterial {
     renderTriangle(
         triangle: Triangle,
         originalTriangle: Triangle,
-        renderer: Renderer
+        renderer: Renderer,
+        camera: Camera
     ) {
-        if (!renderer.scene) throw Error("No scene!");
-        if (!renderer.camera) throw Error("No camera!");
-        const [c, i] = renderer.scene.illumination.computeLighting(
+        const [c, i] = camera.scene.illumination.computeLighting(
             originalTriangle.center(),
             originalTriangle.normal,
             this.specular
@@ -56,12 +56,17 @@ export default class FlatMaterial extends TextureMaterial {
                 const z = v[0] as number;
                 const uv = v[1] as Vector3;
 
-                renderer.drawer.setPixelUsingDepthMap(x, y, z, () =>
-                    this.texture
-                        ? this.texture
-                              .get(uv.x / z, uv.y / z)
-                              .multiply(baseColor.copy().normalize())
-                        : baseColor
+                renderer.drawer.setPixelUsingDepthMap(
+                    x,
+                    y,
+                    z,
+                    this.isTransparent,
+                    () =>
+                        this.texture
+                            ? this.texture
+                                  .get(uv.x / z, uv.y / z)
+                                  .multiply(baseColor.copy().normalize())
+                            : baseColor
                 );
             }
         );

@@ -2,7 +2,6 @@ import Mesh from "../utilities/Mesh";
 import Transform from "../utilities/Transform";
 import Vector3 from "../utilities/math/Vector3";
 import Camera from "../components/Camera";
-import Scene from "./Scene";
 import Material from "./Materials/Material";
 import Drawer from "./Drawer";
 
@@ -10,18 +9,15 @@ export default class Renderer {
     /**In milliseconds */
     static deltaTime: number = 0;
     canvas: HTMLCanvasElement;
-    camera: Camera | null;
-    scene: Scene | null;
+    cameras: Array<{ camera: Camera; layer: number }>;
     drawer: Drawer;
-
     canvasRatio: number;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.canvas.onresize = this.resize.bind(this);
         this.canvasRatio = 0;
-        this.camera = null;
-        this.scene = null;
+        this.cameras = [];
 
         let ctx = canvas.getContext("2d");
         if (ctx == null) throw Error("Cannot get context");
@@ -29,8 +25,9 @@ export default class Renderer {
         this.resize();
     }
 
-    setCamera(camera: Camera) {
-        this.camera = camera;
+    setCamera(camera: Camera, layer: number) {
+        this.cameras.push({ camera, layer });
+        this.cameras.sort((a, b) => b.layer - a.layer);
         this.resize();
         return camera;
     }
@@ -38,97 +35,72 @@ export default class Renderer {
     resize() {
         this.canvasRatio = this.canvas.width / this.canvas.height;
         this.drawer.resize(this.canvas.width, this.canvas.height);
-        if (this.camera) this.camera.resize(this.canvasRatio);
+        if (this.cameras.length)
+            this.cameras.forEach((c) => c.camera.resize(this.canvasRatio));
     }
 
-    setScene(scene: Scene) {
-        this.scene = scene;
+    async startGameLoop(update = () => {}, lateUpdate = () => {}) {
+        await Promise.all(this.cameras.map((c) => c.camera.scene.start()));
+        await this.gameLoop(update, lateUpdate);
     }
 
-    startGameLoop(update = () => {}, lateUpdate = () => {}) {
-        if (!this.scene) {
-            console.warn("No scene!");
-            return;
-        }
-
-        this.scene.start();
-        this.gameLoop(update, lateUpdate);
-    }
-
-    gameLoop(update = () => {}, lateUpdate = () => {}) {
-        if (!this.scene) {
-            console.warn("No scene!");
-            return;
-        }
+    async gameLoop(update = () => {}, lateUpdate = () => {}) {
         const start = performance.now();
 
         update();
-        this.scene.update();
+        await Promise.all(this.cameras.map((c) => c.camera.scene.update()));
 
         this.render();
 
         lateUpdate();
-        this.scene.lateUpdate();
+        await Promise.all(this.cameras.map((c) => c.camera.scene.lateUpdate()));
 
         Renderer.deltaTime = performance.now() - start;
 
-        requestAnimationFrame(() => {
-            this.gameLoop.bind(this)(update, lateUpdate);
+        requestAnimationFrame(async () => {
+            await this.gameLoop.bind(this)(update, lateUpdate);
         });
     }
 
     render() {
-        if (!this.camera) {
-            console.warn("No camera!");
-            return;
-        }
-        if (!this.scene) {
-            console.warn("No scene!");
-            return;
-        }
-
         this.drawer.begin();
-        this.scene.render(this);
+        this.cameras.forEach((c) => {
+            c.camera.scene.render(this, c.camera);
+        });
         this.drawer.end();
     }
 
-    viewportToCanvas(v: Vector3) {
-        if (!this.camera) {
-            console.warn("No camera!");
-            return Vector3.zero;
-        }
-
+    viewportToCanvas(v: Vector3, camera: Camera) {
         return new Vector3(
-            (v.x * this.canvas.width) / this.camera.viewportSize.x +
+            (v.x * this.canvas.width) / camera.viewportSize.x +
                 this.canvas.width / 2,
-            -(v.y * this.canvas.height) / this.camera.viewportSize.y +
+            -(v.y * this.canvas.height) / camera.viewportSize.y +
                 this.canvas.height / 2,
             v.z
         ).roundXYToInt();
     }
 
-    getOriginalCoords(v: Vector3) {
-        if (!this.camera) {
-            console.warn("No camera!");
-            return Vector3.zero;
-        }
+    getOriginalCoords(v: Vector3, camera: Camera) {
         return new Vector3(
-            ((v.x - this.canvas.width / 2) * this.camera.viewportSize.x) /
+            ((v.x - this.canvas.width / 2) * camera.viewportSize.x) /
                 this.canvas.width,
 
-            ((v.y - this.canvas.height / 2) * -this.camera.viewportSize.y) /
+            ((v.y - this.canvas.height / 2) * -camera.viewportSize.y) /
                 this.canvas.height,
             v.z
         );
     }
 
-    renderMesh(mesh: Mesh, material: Material, transform: Transform) {
-        if (this.camera) {
-            const transformedMesh = mesh.transform(this.camera, transform);
+    renderMesh(
+        mesh: Mesh,
+        material: Material,
+        transform: Transform,
+        camera: Camera
+    ) {
+        if (camera) {
+            const transformedMesh = mesh.transform(camera, transform);
 
-            const res = this.camera.preClipObject(
-                transformedMesh.boundingSphere
-            );
+            const res = camera.preClipObject(transformedMesh.boundingSphere);
             if (res === -1) return;
 
             transformedMesh.triangles = transformedMesh.triangles.filter(
@@ -136,15 +108,20 @@ export default class Renderer {
             );
 
             if (res === 0) {
-                transformedMesh.triangles = this.camera.clipObject(
+                transformedMesh.triangles = camera.clipObject(
                     transformedMesh.triangles
                 );
             }
 
-            const projectedMesh = transformedMesh.project(this.camera, this);
+            const projectedMesh = transformedMesh.project(camera, this);
 
             projectedMesh.triangles.forEach((t, i) => {
-                material.renderTriangle(t, transformedMesh.triangles[i], this);
+                material.renderTriangle(
+                    t,
+                    transformedMesh.triangles[i],
+                    this,
+                    camera
+                );
             });
         } else {
             console.warn("No camera!");
