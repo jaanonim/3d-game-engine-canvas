@@ -1,12 +1,12 @@
 {
   "name": "3d-game-engine-canvas",
-  "private": true,
-  "version": "0.0.0",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "publish": "npm publish"
   },
   "devDependencies": {
     "typescript": "^4.6.4",
