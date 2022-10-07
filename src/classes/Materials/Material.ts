@@ -3,7 +3,7 @@ import Color from "../../utilities/math/Color";
 import Triangle from "../../utilities/Triangle";
 import Camera from "../../components/Camera";
 
-export default class Material {
+export default abstract class Material {
     color: Color;
     isTransparent: boolean;
 

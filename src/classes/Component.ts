@@ -2,7 +2,7 @@ import Camera from "../components/Camera";
 import GameObject from "./GameObject";
 import Renderer from "./Renderer";
 
-export default class Component {
+export default abstract class Component {
     gameObject!: GameObject;
 
     private _isActive: boolean;
