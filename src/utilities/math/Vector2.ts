@@ -37,4 +37,8 @@ export default class Vector2 {
     squareLength() {
         return this.x * this.x + this.y * this.y;
     }
+
+    roundToInt() {
+        return new Vector2(Math.round(this.x), Math.round(this.y));
+    }
 }
