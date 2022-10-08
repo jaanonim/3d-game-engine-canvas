@@ -47,6 +47,7 @@ export default class Vector3 {
     }
 
     normalize() {
+        if (this.length() == 0) return Vector3.zero;
         return this.multiply(1 / this.length());
     }
 

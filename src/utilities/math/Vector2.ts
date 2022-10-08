@@ -38,6 +38,15 @@ export default class Vector2 {
         return this.x * this.x + this.y * this.y;
     }
 
+    length() {
+        return Math.sqrt(this.squareLength());
+    }
+
+    normalize() {
+        if (this.length() == 0) return Vector2.zero;
+        return this.multiply(1 / this.length());
+    }
+
     roundToInt() {
         return new Vector2(Math.round(this.x), Math.round(this.y));
     }
