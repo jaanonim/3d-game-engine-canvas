@@ -1,6 +1,6 @@
 import Camera from "../components/Camera";
 import Transform from "../utilities/Transform";
-import Component from "./Component";
+import Component from "./Components/Component";
 import Renderer from "./Renderer";
 import Scene from "./Scene";
 
@@ -89,13 +89,13 @@ export default class GameObject {
             .map((t) => t.gameObject)[0];
     }
 
-    getComponent<T>(type: Newable<any>) {
+    getComponents<T>(type: Newable<any>) {
         return this.components.filter((c) => c instanceof type) as Array<T>;
     }
 
-    getComponents<T>(type: Newable<any>) {
+    getComponent<T>(type: Newable<any>) {
         return this.components.filter((c) => c instanceof type)[0] as T;
     }
 }
 
-type Newable<T> = { new (...args: any[]): T };
+type Newable<T> = { new (...args: any[]): T } | any; //TOD Fix this

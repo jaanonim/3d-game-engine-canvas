@@ -1,5 +1,5 @@
 import Camera from "./components/Camera";
-import Component from "./classes/Component";
+import Component from "./classes/Components/Component";
 import GameObject from "./classes/GameObject";
 import Renderer from "./classes/Renderer";
 import MeshRenderer from "./components/MeshRenderer";
@@ -178,14 +178,9 @@ async function main() {
     ui.addChildren(cam2);
 
     const r = new Renderer(canvas);
+    r.setCamera(cam.addComponent(new Camera(r, 90, 1, 100)) as Camera, 0);
     r.setCamera(
-        cam.addComponent(new Camera(r.canvasRatio, 90, 1, 100)) as Camera,
-        0
-    );
-    r.setCamera(
-        cam2.addComponent(
-            new CameraOrthographic(r.canvasRatio, 10, 1, 100)
-        ) as Camera,
+        cam2.addComponent(new CameraOrthographic(r, 10, 1, 100)) as Camera,
         1
     );
 

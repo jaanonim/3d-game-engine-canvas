@@ -3,7 +3,7 @@ import { degToRad, Sphere } from "../utilities/math/Math";
 import Triangle from "../utilities/Triangle";
 import Vector2 from "../utilities/math/Vector2";
 import Vector3 from "../utilities/math/Vector3";
-import Component from "../classes/Component";
+import Component from "../classes/Components/Component";
 import Renderer from "../classes/Renderer";
 
 export default class Camera extends Component {
@@ -55,7 +55,7 @@ export default class Camera extends Component {
     ];
 
     constructor(
-        viewportRatio: number,
+        renderer: Renderer,
         fov: number = 90,
         near: number = 1,
         far: number = 10000
@@ -64,7 +64,7 @@ export default class Camera extends Component {
         this._fov = fov;
         this._near = near;
         this._far = far;
-        this._viewportRatio = viewportRatio;
+        this._viewportRatio = renderer.canvasRatio;
         this._viewportSize = Vector2.zero;
 
         this.clippingPlanes = [
@@ -76,14 +76,10 @@ export default class Camera extends Component {
             new ClippingPlane(),
         ];
 
-        this._viewportSize = Vector2.zero;
-        this._viewportRatio = viewportRatio;
-        this.resize(viewportRatio);
-    }
-
-    resize(viewportRatio: number) {
-        this._viewportRatio = viewportRatio;
-        this.updateFov();
+        renderer.onResize.addEventListener((args) => {
+            this._viewportRatio = args.canvasRatio;
+            this.updateFov();
+        });
     }
 
     updateFov() {

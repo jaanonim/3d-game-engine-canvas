@@ -1,4 +1,4 @@
-import Component from "../classes/Component";
+import Component from "../classes/Components/Component";
 import Color from "../utilities/math/Color";
 import Vector3 from "../utilities/math/Vector3";
 

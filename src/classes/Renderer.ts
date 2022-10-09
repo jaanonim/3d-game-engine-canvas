@@ -4,6 +4,13 @@ import Vector3 from "../utilities/math/Vector3";
 import Camera from "../components/Camera";
 import Material from "./Materials/Material";
 import Drawer from "./Drawer";
+import Event from "./Event";
+
+interface onResizeArgs {
+    canvasRatio: number;
+    width: number;
+    height: number;
+}
 
 export default class Renderer {
     /**In milliseconds */
@@ -12,12 +19,14 @@ export default class Renderer {
     cameras: Array<{ camera: Camera; layer: number }>;
     drawer: Drawer;
     canvasRatio: number;
+    onResize: Event<onResizeArgs>;
 
     constructor(canvas: HTMLCanvasElement) {
         this.canvas = canvas;
         this.canvas.onresize = this.resize.bind(this);
         this.canvasRatio = 0;
         this.cameras = [];
+        this.onResize = new Event<onResizeArgs>();
 
         let ctx = canvas.getContext("2d");
         if (ctx == null) throw Error("Cannot get context");
@@ -32,11 +41,19 @@ export default class Renderer {
         return camera;
     }
 
+    removeCamera(camera: Camera): void {
+        this.cameras = this.cameras.filter((c) => c.camera !== camera);
+        this.resize();
+    }
+
     resize() {
         this.canvasRatio = this.canvas.width / this.canvas.height;
         this.drawer.resize(this.canvas.width, this.canvas.height);
-        if (this.cameras.length)
-            this.cameras.forEach((c) => c.camera.resize(this.canvasRatio));
+        this.onResize.call({
+            canvasRatio: this.canvasRatio,
+            width: this.canvas.width,
+            height: this.canvas.height,
+        });
     }
 
     async startGameLoop(update = () => {}, lateUpdate = () => {}) {

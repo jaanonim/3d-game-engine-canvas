@@ -1,4 +1,4 @@
-import Component from "../classes/Component";
+import Component from "../classes/Components/Component";
 import GameObject from "../classes/GameObject";
 import Scene from "../classes/Scene";
 import Quaternion from "../utilities/Quaternion";

@@ -1,4 +1,4 @@
-import Component from "../classes/Component";
+import Component from "../classes/Components/Component";
 import Renderer from "../classes/Renderer";
 import Material from "../classes/Materials/Material";
 import Mesh from "../utilities/Mesh";

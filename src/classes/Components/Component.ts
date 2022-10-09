@@ -1,6 +1,6 @@
-import Camera from "../components/Camera";
-import GameObject from "./GameObject";
-import Renderer from "./Renderer";
+import Camera from "../../components/Camera";
+import GameObject from "../GameObject";
+import Renderer from "../Renderer";
 
 export default abstract class Component {
     gameObject!: GameObject;

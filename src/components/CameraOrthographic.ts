@@ -15,12 +15,12 @@ export default class CameraOrthographic extends Camera {
     }
 
     constructor(
-        viewportRatio: number,
+        renderer: Renderer,
         size: number,
         near: number = 1,
         far: number = 10000
     ) {
-        super(viewportRatio, 90, near, far);
+        super(renderer, 90, near, far);
         this._size = size;
     }
 
