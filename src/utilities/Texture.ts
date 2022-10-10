@@ -1,17 +1,25 @@
 import Color from "./math/Color";
 import { clamp } from "./math/Math";
+import VirtualCanvas from "./VirtualCanvas";
 
 export default class Texture {
     colorsData: Array<Uint8ClampedArray>;
     width: Array<number>;
     height: Array<number>;
     bilinearFiltering: boolean;
+    canvas: VirtualCanvas;
 
     constructor(width: number, height: number, colorsData: Uint8ClampedArray) {
         this.colorsData = [colorsData];
         this.width = [width];
         this.height = [height];
         this.bilinearFiltering = true;
+        this.canvas = new VirtualCanvas(width, height);
+        this.canvas.ctx.putImageData(
+            new ImageData(colorsData, width, height),
+            0,
+            0
+        );
         this.generateMipmap(8);
     }
 

@@ -8,6 +8,7 @@ import {
     Iterpolatable,
 } from "../utilities/math/Interpolation";
 import Vector3 from "../utilities/math/Vector3";
+import VirtualCanvas from "../utilities/VirtualCanvas";
 
 type ColorFn = () => Color;
 
@@ -247,5 +248,12 @@ export default class Drawer {
         }
 
         this.ctx.putImageData(this.img, 0, 0);
+    }
+
+    drawVirtualCanvas(canvas: VirtualCanvas) {
+        const vc = new VirtualCanvas(this.width, this.height);
+        vc.ctx.putImageData(this.img, 0, 0);
+        vc.ctx.drawImage(canvas.canvas, 0, 0);
+        this.img = vc.ctx.getImageData(0, 0, this.width, this.height);
     }
 }

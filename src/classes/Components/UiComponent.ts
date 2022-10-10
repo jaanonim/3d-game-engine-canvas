@@ -1,16 +1,21 @@
-import GameObject from "../classes/GameObject";
+import UiElement from "../../components/UiElement";
 import Component from "./Component";
-import UiElement from "../components/UiElement";
-
 export default class UiComponent extends Component {
     uiElement!: UiElement;
-    register(obj: GameObject): void {
+
+    async start() {
         this.uiElement = this.gameObject.getComponent<UiElement>(UiElement);
         if (!(this.uiElement instanceof UiElement))
             throw Error(
-                `Because game object '${obj.name}' don't have UiElement, cannot add UiComponent`
+                `Because game object '${this.gameObject.name}' don't have UiElement, cannot add UiComponent`
             );
 
-        super.register(obj);
+        super.start();
+    }
+
+    uiRender() {
+        this.gameObject.transform.children.map((t) =>
+            t.gameObject.getComponent<UiComponent>(UiComponent).uiRender()
+        );
     }
 }

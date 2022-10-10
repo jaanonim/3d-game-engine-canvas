@@ -12,13 +12,18 @@ import Quaternion from "./utilities/Quaternion";
 import Vector3 from "./utilities/math/Vector3";
 import Color from "./utilities/math/Color";
 import Light, { LightType } from "./components/Light";
-import GouraudMaterial from "./classes/Materials/GouraudMaterial";
-import FlatMaterial from "./classes/Materials/FlatMaterial";
+// import GouraudMaterial from "./classes/Materials/GouraudMaterial";
+// import FlatMaterial from "./classes/Materials/FlatMaterial";
 import WireframeMaterial from "./classes/Materials/WireframeMaterial";
 import PongMaterial from "./classes/Materials/PongMaterial";
 import TextureLoader from "./tools/TextureLoader";
 import CameraOrthographic from "./components/CameraOrthographic";
 import SpriteRenderer from "./components/SpriteRenderer";
+import UiScreen from "./components/UiScreen";
+import UiElement from "./components/UiElement";
+import Vector2 from "./utilities/math/Vector2";
+import Image from "./components/Image";
+import Text from "./components/Text";
 
 class Rotate extends Component {
     v: number;
@@ -38,47 +43,21 @@ class Rotate extends Component {
     }
 }
 
-const teapot = new ObjLoader(await FileLoader.load("/torus.obj")).parse();
 async function main() {
     const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
+    const teapot = new ObjLoader(await FileLoader.load("/torus.obj")).parse();
 
+    const canvas = document.getElementById("root") as HTMLCanvasElement;
+    const r = new Renderer(canvas);
     const testTexture = new TextureLoader(
         await FileLoader.loadImg("/test2.png")
     ).parse();
     //testTexture.bilinearFiltering = false;
 
     const materialPong = new PongMaterial(Color.white, 50, testTexture);
-    const materialGouraud = new GouraudMaterial(Color.white, 15, testTexture);
-    const materialFlat = new FlatMaterial(Color.white, 1);
+    // const materialGouraud = new GouraudMaterial(Color.white, 15, testTexture);
+    // const materialFlat = new FlatMaterial(Color.white, 1);
     const wireframe = new WireframeMaterial(Color.red);
-
-    const uiData = {
-        name: "scene",
-        children: [
-            {
-                name: "o",
-                transform: {
-                    position: [-1, 0, 1],
-                    rotation: [0, 0, 0],
-                    scale: [1, 1, 1],
-                },
-                components: [
-                    new SpriteRenderer(testTexture, new Color(0, 255, 0, 100)),
-                ],
-            },
-            {
-                name: "o",
-                transform: {
-                    position: [0, 1, 1],
-                    rotation: [0, 0, 0],
-                    scale: [1, 1, 1],
-                },
-                components: [
-                    new SpriteRenderer(testTexture, new Color(255, 0, 0, 100)),
-                ],
-            },
-        ],
-    };
 
     const data = {
         name: "scene",
@@ -104,7 +83,33 @@ async function main() {
                 },
                 components: [
                     new Light(LightType.POINT, 0.7, Color.white),
-                    new MeshRenderer(cube, wireframe),
+                    // new MeshRenderer(cube, wireframe),
+                ],
+            },
+            {
+                name: "screen",
+                components: [new UiScreen(r)],
+                children: [
+                    {
+                        name: "img",
+                        components: [
+                            new UiElement(new Vector2(100, 100)),
+                            new Image(testTexture),
+                        ],
+                    },
+                    {
+                        name: "img",
+                        transform: {
+                            position: [400, 300, 0],
+                        },
+                        components: [
+                            new UiElement(new Vector2(300, 100)),
+                            new Text("Lorem ipsum", {
+                                fontSize: 50,
+                                color: Color.blue,
+                            }),
+                        ],
+                    },
                 ],
             },
             // {
@@ -165,24 +170,10 @@ async function main() {
     };
 
     const scene = Importer.scene(data);
-    const ui = Importer.scene(uiData);
-
-    const canvas = document.getElementById("root") as HTMLCanvasElement;
-
     const cam = new GameObject("cam");
     cam.transform.rotation = Quaternion.euler(new Vector3(0, 0, 0));
     scene.addChildren(cam);
-
-    const cam2 = new GameObject("cam2");
-    cam2.transform.rotation = Quaternion.euler(new Vector3(0, 0, 0));
-    ui.addChildren(cam2);
-
-    const r = new Renderer(canvas);
     r.setCamera(cam.addComponent(new Camera(r, 90, 1, 100)) as Camera, 0);
-    r.setCamera(
-        cam2.addComponent(new CameraOrthographic(r, 10, 1, 100)) as Camera,
-        1
-    );
 
     const fps = new FPSCounter(document.getElementById("fps") as HTMLElement);
     // scene.start();
