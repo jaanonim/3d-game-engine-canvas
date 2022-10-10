@@ -5,19 +5,19 @@ import Quaternion from "../utilities/Quaternion";
 import Transform from "../utilities/Transform";
 import Vector3 from "../utilities/math/Vector3";
 
-interface SceneData {
+export interface SceneData {
     name: string;
     children: Array<GameObjectData>;
 }
 
-interface GameObjectData {
+export interface GameObjectData {
     name: string;
     transform?: TransformData;
     components?: Array<Component>;
     children?: Array<GameObjectData>;
 }
 
-interface TransformData {
+export interface TransformData {
     position?: number[];
     rotation?: number[];
     scale?: number[];

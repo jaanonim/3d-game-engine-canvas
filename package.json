@@ -6,9 +6,11 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "npm publish"
+    "deploy": "npm run doc && npm publish",
+    "doc": "typedoc --exclude ./src/main.ts --entryPointStrategy expand ./src"
   },
   "devDependencies": {
+    "typedoc": "^0.23.15",
     "typescript": "^4.6.4",
     "vite": "^3.1.0"
   }
