@@ -10,9 +10,9 @@ import {
 import Vector3 from "../utilities/math/Vector3";
 import VirtualCanvas from "../utilities/VirtualCanvas";
 
-type ColorFn = () => Color;
+export type ColorFn = () => Color;
 
-type TriangleCallback = (
+export type TriangleCallback = (
     x: number,
     y: number,
     values: Array<Iterpolatable>,

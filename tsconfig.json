@@ -24,6 +24,10 @@
     "index.ts"
   ],
   "typedocOptions": {
-    "out": "docs"
+    "out": "docs",
+    "exclude": [
+      "./src/main.ts",
+      "./src/vite-env.d.ts"
+    ]
   }
 }

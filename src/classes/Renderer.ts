@@ -6,7 +6,7 @@ import Material from "./Materials/Material";
 import Drawer from "./Drawer";
 import Event from "./Event";
 
-interface onResizeArgs {
+export interface onResizeArgs {
     canvasRatio: number;
     width: number;
     height: number;
