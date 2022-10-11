@@ -19,7 +19,7 @@
 <ul class="tsd-hierarchy">
 <li><span class="target">default</span></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L5">utilities/Texture.ts:5</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L5">utilities/Texture.ts:5</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -39,7 +39,8 @@
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Methods</h3>
-<div class="tsd-index-list"><a href="utilities_Texture.default.html#filter" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>filter</span></a>
+<div class="tsd-index-list"><a href="utilities_Texture.default.html#calculateDepth" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF4DB8" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-2048-path"></rect><path d="M9.162 16V7.24H10.578L11.514 10.072C11.602 10.328 11.674 10.584 11.73 10.84C11.794 11.088 11.842 11.28 11.874 11.416C11.906 11.28 11.954 11.088 12.018 10.84C12.082 10.584 12.154 10.324 12.234 10.06L13.122 7.24H14.538V16H13.482V12.82C13.482 12.468 13.49 12.068 13.506 11.62C13.53 11.172 13.558 10.716 13.59 10.252C13.622 9.78 13.654 9.332 13.686 8.908C13.726 8.476 13.762 8.1 13.794 7.78L12.366 12.16H11.334L9.894 7.78C9.934 8.092 9.97 8.456 10.002 8.872C10.042 9.28 10.078 9.716 10.11 10.18C10.142 10.636 10.166 11.092 10.182 11.548C10.206 12.004 10.218 12.428 10.218 12.82V16H9.162Z" fill="var(--color-text)" id="icon-2048-text"></path></svg><span>calculate<wbr/>Depth</span></a>
+<a href="utilities_Texture.default.html#filter" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>filter</span></a>
 <a href="utilities_Texture.default.html#generateMipmap" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>generate<wbr/>Mipmap</span></a>
 <a href="utilities_Texture.default.html#get" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get</span></a>
 <a href="utilities_Texture.default.html#getColor" class="tsd-index-link tsd-kind-method tsd-parent-kind-class"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg><span>get<wbr/>Color</span></a>
@@ -49,7 +50,7 @@
 <section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_default">new default<span class="tsd-signature-symbol">(</span>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, colorsData<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Uint8ClampedArray</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utilities_Texture.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a><a href="#constructor.new_default" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_default">new default<span class="tsd-signature-symbol">(</span>width<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, height<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, canvas<span class="tsd-signature-symbol">: </span><a href="utilities_VirtualCanvas.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="utilities_Texture.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a><a href="#constructor.new_default" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -59,39 +60,51 @@
 <li>
 <h5>height: <span class="tsd-signature-type">number</span></h5></li>
 <li>
-<h5>colorsData: <span class="tsd-signature-type">Uint8ClampedArray</span></h5></li></ul></div>
+<h5>canvas: <a href="utilities_VirtualCanvas.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_Texture.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L12">utilities/Texture.ts:12</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L12">utilities/Texture.ts:12</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="bilinearFiltering" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>bilinear<wbr/>Filtering</span><a href="#bilinearFiltering" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">bilinear<wbr/>Filtering<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L9">utilities/Texture.ts:9</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L9">utilities/Texture.ts:9</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="canvas" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>canvas</span><a href="#canvas" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">canvas<span class="tsd-signature-symbol">:</span> <a href="utilities_VirtualCanvas.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L10">utilities/Texture.ts:10</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L10">utilities/Texture.ts:10</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="colorsData" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>colors<wbr/>Data</span><a href="#colorsData" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">colors<wbr/>Data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Uint8ClampedArray</span><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L6">utilities/Texture.ts:6</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L6">utilities/Texture.ts:6</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="height" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>height</span><a href="#height" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L8">utilities/Texture.ts:8</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L8">utilities/Texture.ts:8</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="width" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>width</span><a href="#width" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">width<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">[]</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L7">utilities/Texture.ts:7</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L7">utilities/Texture.ts:7</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
+<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="calculateDepth" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><span>calculate<wbr/>Depth</span><a href="#calculateDepth" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+<li class="tsd-signature tsd-anchor-link" id="calculateDepth.calculateDepth-1">calculate<wbr/>Depth<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><a href="#calculateDepth.calculateDepth-1" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-description">
+<div class="tsd-comment tsd-typography"><p>Calculate depth for mipmap creation.</p>
+
+<h3>Returns</h3><p>depth number</p>
+</div>
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L67">utilities/Texture.ts:67</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="filter" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>filter</span><a href="#filter" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -108,7 +121,7 @@
 <h5>textureId: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Color.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L32">utilities/Texture.ts:32</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L30">utilities/Texture.ts:30</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="generateMipmap" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>generate<wbr/>Mipmap</span><a href="#generateMipmap" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -121,7 +134,7 @@
 <h5>depth: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L65">utilities/Texture.ts:65</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L78">utilities/Texture.ts:78</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="get" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get</span><a href="#get" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -138,7 +151,7 @@
 <h5>textureId: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Color.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L26">utilities/Texture.ts:26</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L24">utilities/Texture.ts:24</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getColor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Color</span><a href="#getColor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -155,7 +168,7 @@
 <h5>textureId: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Color.default.html" class="tsd-signature-type" data-tsd-kind="Class">default</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/068b760/src/utilities/Texture.ts#L51">utilities/Texture.ts:51</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/5c26ead/src/utilities/Texture.ts#L49">utilities/Texture.ts:49</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -232,6 +245,7 @@
 <li class="tsd-kind-property tsd-parent-kind-class"><a href="utilities_Texture.default.html#colorsData" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>colors<wbr/>Data</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class"><a href="utilities_Texture.default.html#height" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>height</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class"><a href="utilities_Texture.default.html#width" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>width</a></li>
+<li class="tsd-kind-method tsd-parent-kind-class"><a href="utilities_Texture.default.html#calculateDepth" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>calculate<wbr/>Depth</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="utilities_Texture.default.html#filter" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>filter</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="utilities_Texture.default.html#generateMipmap" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>generate<wbr/>Mipmap</a></li>
 <li class="tsd-kind-method tsd-parent-kind-class"><a href="utilities_Texture.default.html#get" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-2048-path"></use><use href="#icon-2048-text"></use></svg>get</a></li>

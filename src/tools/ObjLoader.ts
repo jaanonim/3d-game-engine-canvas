@@ -15,7 +15,7 @@ export default class ObjLoader {
         }
     }
 
-    parse() {
+    parse(hide = false) {
         const lines = this.raw.split("\n");
         let vertices: Array<Vector3> = [];
         let normals: Array<Vector3> = [];
@@ -117,30 +117,52 @@ export default class ObjLoader {
                 const resNormals = tNormals.map((i) => normals[i - 1]);
                 const resVertexes = tVertexes.map((i) => vertices[i - 1]);
 
-                for (let j = 2; j < resVertexes.length; j++) {
+                if (resVertexes.length === 3) {
                     triangles.push(
                         new Triangle(
-                            [
-                                resVertexes[0],
-                                resVertexes[j - 1],
-                                resVertexes[j],
-                            ],
+                            [resVertexes[0], resVertexes[1], resVertexes[2]],
                             resUvs[0] == undefined
                                 ? undefined
-                                : [resUvs[0], resUvs[j - 1], resUvs[j]],
+                                : [resUvs[0], resUvs[1], resUvs[2]],
                             resNormals[0] == undefined
                                 ? undefined
-                                : [
-                                      resNormals[0],
-                                      resNormals[j - 1],
-                                      resNormals[j],
-                                  ]
+                                : [resNormals[0], resNormals[1], resNormals[2]],
+                            undefined,
+                            [false, false, false]
                         )
                     );
-                }
+                } else
+                    for (let j = 2; j < resVertexes.length; j++) {
+                        triangles.push(
+                            new Triangle(
+                                [
+                                    resVertexes[0],
+                                    resVertexes[j - 1],
+                                    resVertexes[j],
+                                ],
+                                resUvs[0] == undefined
+                                    ? undefined
+                                    : [resUvs[0], resUvs[j - 1], resUvs[j]],
+                                resNormals[0] == undefined
+                                    ? undefined
+                                    : [
+                                          resNormals[0],
+                                          resNormals[j - 1],
+                                          resNormals[j],
+                                      ],
+                                undefined,
+                                hide
+                                    ? [
+                                          j !== 2,
+                                          false,
+                                          j < resVertexes.length - 1,
+                                      ]
+                                    : [false, false, false]
+                            )
+                        );
+                    }
             }
         }
-
         return new Mesh(triangles);
     }
 }

@@ -8,12 +8,14 @@ export default class Triangle {
     verticesUvs: [Vector3, Vector3, Vector3];
     verticesNormals: [Vector3, Vector3, Vector3];
     normal: Vector3;
+    hidden: [boolean, boolean, boolean];
 
     constructor(
         vertices: [Vector3, Vector3, Vector3],
         verticesUvs?: [Vector3, Vector3, Vector3],
         verticesNormals?: [Vector3, Vector3, Vector3],
-        normal?: Vector3
+        normal?: Vector3,
+        hidden?: [boolean, boolean, boolean]
     ) {
         this.vertices = vertices;
 
@@ -26,6 +28,9 @@ export default class Triangle {
 
         if (verticesUvs) this.verticesUvs = verticesUvs;
         else this.verticesUvs = [Vector3.zero, Vector3.zero, Vector3.zero];
+
+        if (hidden) this.hidden = hidden;
+        else this.hidden = [false, false, false];
     }
 
     center() {
@@ -39,7 +44,8 @@ export default class Triangle {
             this.vertices.map((v) => v.copy()) as [Vector3, Vector3, Vector3],
             this.verticesUvs,
             this.verticesNormals,
-            this.normal
+            this.normal,
+            this.hidden
         );
     }
 

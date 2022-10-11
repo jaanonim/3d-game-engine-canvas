@@ -12,13 +12,14 @@ import Quaternion from "./utilities/Quaternion";
 import Vector3 from "./utilities/math/Vector3";
 import Color from "./utilities/math/Color";
 import Light, { LightType } from "./components/Light";
-import PongMaterial from "./classes/Materials/PongMaterial";
+//import PongMaterial from "./classes/Materials/PongMaterial";
 import TextureLoader from "./tools/TextureLoader";
 import UiScreen from "./components/UiScreen";
 import UiElement from "./components/UiElement";
 import Vector2 from "./utilities/math/Vector2";
 import Image from "./components/Image";
 import Text from "./components/Text";
+import WireframeMaterial from "./classes/Materials/WireframeMaterial";
 
 class Rotate extends Component {
     v: number;
@@ -39,8 +40,10 @@ class Rotate extends Component {
 }
 
 async function main() {
-    const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
-    //const teapot = new ObjLoader(await FileLoader.load("/torus.obj")).parse();
+    //const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
+    const teapot = new ObjLoader(await FileLoader.load("/torus.obj")).parse(
+        true
+    );
 
     const canvas = document.getElementById("root") as HTMLCanvasElement;
     const r = new Renderer(canvas);
@@ -49,10 +52,10 @@ async function main() {
     ).parse();
     //testTexture.bilinearFiltering = false;
 
-    const materialPong = new PongMaterial(Color.white, 50, testTexture);
+    //const materialPong = new PongMaterial(Color.white, 50, testTexture);
     // const materialGouraud = new GouraudMaterial(Color.white, 15, testTexture);
     // const materialFlat = new FlatMaterial(Color.white, 1);
-    //const wireframe = new WireframeMaterial(Color.red);
+    const wireframe = new WireframeMaterial(Color.red);
 
     const data = {
         name: "scene",
@@ -65,7 +68,7 @@ async function main() {
                     scale: [0.3, 0.3, 0.3],
                 },
                 components: [
-                    new MeshRenderer(cube, materialPong),
+                    new MeshRenderer(teapot, wireframe),
                     new Rotate(new Vector3(0.1, 0.1, 0.1)),
                 ],
             },
