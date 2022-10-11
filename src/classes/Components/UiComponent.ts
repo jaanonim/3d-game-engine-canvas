@@ -14,8 +14,6 @@ export default class UiComponent extends Component {
     }
 
     uiRender() {
-        this.gameObject.transform.children.map((t) =>
-            t.gameObject.getComponent<UiComponent>(UiComponent).uiRender()
-        );
+        this.uiElement.canvas.clear();
     }
 }

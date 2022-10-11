@@ -39,8 +39,8 @@ class Rotate extends Component {
 }
 
 async function main() {
-    //const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
-    const teapot = new ObjLoader(await FileLoader.load("/torus.obj")).parse();
+    const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
+    //const teapot = new ObjLoader(await FileLoader.load("/torus.obj")).parse();
 
     const canvas = document.getElementById("root") as HTMLCanvasElement;
     const r = new Renderer(canvas);
@@ -65,7 +65,7 @@ async function main() {
                     scale: [0.3, 0.3, 0.3],
                 },
                 components: [
-                    new MeshRenderer(teapot, materialPong),
+                    new MeshRenderer(cube, materialPong),
                     new Rotate(new Vector3(0.1, 0.1, 0.1)),
                 ],
             },

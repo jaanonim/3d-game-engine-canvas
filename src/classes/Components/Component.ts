@@ -1,4 +1,5 @@
 import Camera from "../../components/Camera";
+import VirtualCanvas from "../../utilities/VirtualCanvas";
 import GameObject from "../GameObject";
 import Renderer from "../Renderer";
 
@@ -25,4 +26,5 @@ export default abstract class Component {
     async update() {}
     async lateUpdate() {}
     render(_renderer: Renderer, _camera: Camera) {}
+    uiRender(_canvas: VirtualCanvas) {}
 }

@@ -9,18 +9,16 @@ export default class Texture {
     bilinearFiltering: boolean;
     canvas: VirtualCanvas;
 
-    constructor(width: number, height: number, colorsData: Uint8ClampedArray) {
-        this.colorsData = [colorsData];
+    constructor(width: number, height: number, canvas: VirtualCanvas) {
         this.width = [width];
         this.height = [height];
         this.bilinearFiltering = true;
-        this.canvas = new VirtualCanvas(width, height);
-        this.canvas.ctx.putImageData(
-            new ImageData(colorsData, width, height),
-            0,
-            0
-        );
-        this.generateMipmap(8);
+        this.canvas = canvas;
+        this.colorsData = [
+            this.canvas.ctx.getImageData(0, 0, this.width[0], this.height[0])
+                .data,
+        ];
+        this.generateMipmap(this.calculateDepth());
     }
 
     get(x: number, y: number, textureId: number = 0): Color {
@@ -60,6 +58,21 @@ export default class Texture {
             this.colorsData[textureId][start + 2],
             this.colorsData[textureId][start + 3]
         );
+    }
+
+    /**
+     * Calculate depth for mipmap creation.
+     * @returns depth number
+     */
+    calculateDepth() {
+        let size = Math.min(this.width[0], this.height[0]);
+        let depth = 0;
+        while (size > 1) {
+            size = Math.round(size / 2);
+            depth++;
+        }
+        depth--;
+        return depth;
     }
 
     generateMipmap(depth: number) {

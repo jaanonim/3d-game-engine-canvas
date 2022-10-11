@@ -199,6 +199,13 @@ export default class Drawer {
         }
     }
 
+    drawVirtualCanvas(canvas: VirtualCanvas) {
+        const vc = new VirtualCanvas(this.width, this.height);
+        vc.ctx.putImageData(this.img, 0, 0);
+        vc.ctx.drawImage(canvas.canvas, 0, 0);
+        this.img = vc.ctx.getImageData(0, 0, this.width, this.height);
+    }
+
     setPixel(x: number, y: number, color: Color) {
         if (x < 0 || x >= this.width || y < 0 || y >= this.height) return;
         const c = this.getPixel(x, y).blend(color);
@@ -248,12 +255,5 @@ export default class Drawer {
         }
 
         this.ctx.putImageData(this.img, 0, 0);
-    }
-
-    drawVirtualCanvas(canvas: VirtualCanvas) {
-        const vc = new VirtualCanvas(this.width, this.height);
-        vc.ctx.putImageData(this.img, 0, 0);
-        vc.ctx.drawImage(canvas.canvas, 0, 0);
-        this.img = vc.ctx.getImageData(0, 0, this.width, this.height);
     }
 }

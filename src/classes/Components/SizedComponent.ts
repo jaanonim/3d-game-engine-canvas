@@ -18,6 +18,7 @@ export default abstract class SizedComponent extends Component {
                 .getComponent<SizedComponent>(SizedComponent)
                 .uiRender(this.canvas)
         );
+
         canvas.ctx.drawImage(
             this.canvas.canvas,
             this.gameObject.transform.position.x,

@@ -11,7 +11,11 @@ export default class VirtualCanvas {
         this.canvas.width = this.width;
         this.canvas.height = this.height;
         const ctx = this.canvas.getContext("2d");
-        if (ctx == null) throw Error("Something went wrong in VirtualCanvas");
+        if (ctx == null) throw Error("Cannot get ctx in VirtualCanvas");
         this.ctx = ctx;
+    }
+
+    clear() {
+        this.ctx.clearRect(0, 0, this.width, this.height);
     }
 }
