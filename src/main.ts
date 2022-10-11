@@ -44,6 +44,7 @@ async function main() {
     const teapot = new ObjLoader(await FileLoader.load("/torus.obj")).parse(
         true
     );
+    teapot.doubleSided = true;
 
     const canvas = document.getElementById("root") as HTMLCanvasElement;
     const r = new Renderer(canvas);

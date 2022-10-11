@@ -120,9 +120,10 @@ export default class Renderer {
             const res = camera.preClipObject(transformedMesh.boundingSphere);
             if (res === -1) return;
 
-            transformedMesh.triangles = transformedMesh.triangles.filter(
-                (t) => t.normal.dotProduct(t.vertices[0].invert()) > 0
-            );
+            if (!mesh.doubleSided)
+                transformedMesh.triangles = transformedMesh.triangles.filter(
+                    (t) => t.normal.dotProduct(t.vertices[0].invert()) > 0
+                );
 
             if (res === 0) {
                 transformedMesh.triangles = camera.clipObject(

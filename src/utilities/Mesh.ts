@@ -8,9 +8,11 @@ import Renderer from "../classes/Renderer";
 export default class Mesh {
     triangles: Array<Triangle>;
     boundingSphere!: Sphere;
+    doubleSided: boolean;
 
-    constructor(triangles: Array<Triangle>) {
+    constructor(triangles: Array<Triangle>, doubleSided: boolean = false) {
         this.triangles = triangles;
+        this.doubleSided = doubleSided;
     }
 
     getVertices() {
