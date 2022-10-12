@@ -23,12 +23,6 @@ export default class SpriteRenderer extends Component {
     }
 
     render(renderer: Renderer, camera: Camera) {
-        if (this.mesh)
-            renderer.renderMesh(
-                this.mesh,
-                this.material,
-                this.gameObject.transform,
-                camera
-            );
+        if (this.mesh) renderer.renderMesh(this.mesh, this.material, camera);
     }
 }
