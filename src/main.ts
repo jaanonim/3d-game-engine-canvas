@@ -20,6 +20,8 @@ import Vector2 from "./utilities/math/Vector2";
 import Image from "./components/Image";
 import Text from "./components/Text";
 import WireframeMaterial from "./classes/Materials/WireframeMaterial";
+import Mesh from "./utilities/Mesh";
+import SimpleRaycast from "./tools/SimpleRaycast";
 
 class Rotate extends Component {
     v: number;
@@ -40,7 +42,7 @@ class Rotate extends Component {
 }
 
 async function main() {
-    //const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
+    const cube = new ObjLoader(await FileLoader.load("/cube.obj")).parse();
     const teapot = new ObjLoader(await FileLoader.load("/torus.obj")).parse(
         true
     );
@@ -64,12 +66,24 @@ async function main() {
             {
                 name: "o",
                 transform: {
-                    position: [-1, 0, 2],
+                    position: [0, 0, 2],
                     rotation: [-Math.PI / 2, Math.PI, 0],
                     scale: [0.3, 0.3, 0.3],
                 },
                 components: [
-                    new MeshRenderer(teapot, wireframe),
+                    new MeshRenderer(cube, wireframe),
+                    new Rotate(new Vector3(0.1, 0.1, 0.1)),
+                ],
+            },
+            {
+                name: "o",
+                transform: {
+                    position: [1, 0, 2],
+                    rotation: [-Math.PI / 2, Math.PI, 0],
+                    scale: [0.3, 0.3, 0.3],
+                },
+                components: [
+                    new MeshRenderer(cube, wireframe),
                     new Rotate(new Vector3(0.1, 0.1, 0.1)),
                 ],
             },
@@ -180,6 +194,12 @@ async function main() {
 
     await r.startGameLoop(() => {
         fps.update();
+        const col = new SimpleRaycast(
+            Vector3.zero,
+            Vector3.forward,
+            100
+        ).getCollisions(scene);
+        console.log(col);
     });
 }
 main();

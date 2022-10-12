@@ -2,9 +2,14 @@ import GameObject from "../classes/GameObject";
 import Scene from "../classes/Scene";
 import Quaternion from "./Quaternion";
 import Vector3 from "./math/Vector3";
+import Event from "../classes/Event";
 
 export default class Transform {
     gameObject: GameObject;
+    onGlobalPositionUpdates: Event<Transform>;
+    onGlobalRotationUpdates: Event<Transform>;
+    onGlobalScaleUpdates: Event<Transform>;
+    onSomeGlobalUpdates: Event<Transform>;
 
     private _parent: Transform | Scene | undefined;
     private _children: Array<Transform>;
@@ -21,7 +26,7 @@ export default class Transform {
     }
     public set scale(value: Vector3) {
         this._scale = value;
-        this.updateGlobalScale();
+        this.onGlobalScaleUpdates.call(this);
     }
 
     private _position: Vector3;
@@ -30,7 +35,7 @@ export default class Transform {
     }
     public set position(value: Vector3) {
         this._position = value;
-        this.updateGlobalPosition();
+        this.onGlobalPositionUpdates.call(this);
     }
 
     private _rotation: Quaternion;
@@ -39,7 +44,7 @@ export default class Transform {
     }
     public set rotation(value: Quaternion) {
         this._rotation = value;
-        this.updateGlobalRotation();
+        this.onGlobalRotationUpdates.call(this);
     }
 
     private _globalRotation!: Quaternion;
@@ -69,6 +74,27 @@ export default class Transform {
         this._position = position;
         this._parent = undefined;
         this._children = [];
+        this.onGlobalPositionUpdates = new Event<Transform>();
+        this.onGlobalRotationUpdates = new Event<Transform>();
+        this.onGlobalScaleUpdates = new Event<Transform>();
+        this.onSomeGlobalUpdates = new Event<Transform>();
+
+        this.updateGlobalScale();
+        this.updateGlobalRotation();
+        this.updateGlobalPosition();
+
+        this.onGlobalPositionUpdates.addEventListener(
+            this.updateGlobalRotation.bind(this),
+            this.onSomeGlobalUpdates.call.bind(this.onSomeGlobalUpdates)
+        );
+        this.onGlobalRotationUpdates.addEventListener(
+            this.updateGlobalRotation.bind(this),
+            this.onSomeGlobalUpdates.call.bind(this.onSomeGlobalUpdates)
+        );
+        this.onGlobalScaleUpdates.addEventListener(
+            this.updateGlobalScale.bind(this),
+            this.onSomeGlobalUpdates.call.bind(this.onSomeGlobalUpdates)
+        );
         this.updateAll();
     }
 
@@ -112,9 +138,9 @@ export default class Transform {
     }
 
     updateAll() {
-        this.updateGlobalScale();
-        this.updateGlobalRotation();
-        this.updateGlobalPosition();
+        this.onGlobalScaleUpdates.call(this);
+        this.onGlobalRotationUpdates.call(this);
+        this.onGlobalPositionUpdates.call(this);
     }
 
     updateGlobalRotation(): void {

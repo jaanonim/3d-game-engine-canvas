@@ -1,12 +1,12 @@
 export default class Event<T> {
-    callbacks: Array<(args: T) => void>;
+    private callbacks: Array<(args: T) => void>;
 
     constructor() {
         this.callbacks = [];
     }
 
-    addEventListener(callback: (args: T) => void) {
-        this.callbacks.push(callback);
+    addEventListener(...callback: Array<(args: T) => void>) {
+        this.callbacks.push(...callback);
     }
 
     removeEventListener(callback: (args: T) => void) {

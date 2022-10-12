@@ -1,5 +1,6 @@
 import Camera from "../components/Camera";
 import Vector3 from "../utilities/math/Vector3";
+import { Newable } from "../utilities/Types";
 import GameObject from "./GameObject";
 import Illumination from "./Illumination";
 import Renderer from "./Renderer";
@@ -46,5 +47,14 @@ export default class Scene {
 
     find(name: string) {
         return this.children.filter((c) => c.name == name);
+    }
+
+    getAllComponents<T>(type: Newable<any>): Array<T> {
+        const res: Array<T> = [];
+
+        this.children.forEach((o) => {
+            res.push(...o.getAllComponents<T>(type));
+        });
+        return res;
     }
 }

@@ -55,17 +55,30 @@ export default class Triangle {
         this.normal = v1.crossProduct(v2).normalize();
     }
 
-    transform(camera: Camera, transform: Transform) {
+    transformToWorld(transform: Transform) {
+        const copy = this.copy();
+        copy.vertices = copy.vertices.map((v) => transform.apply(v)) as [
+            Vector3,
+            Vector3,
+            Vector3
+        ];
+        copy.verticesNormals = copy.verticesNormals.map((vn) =>
+            transform.rotateVector(vn)
+        ) as [Vector3, Vector3, Vector3];
+        copy.normal = transform.rotateVector(copy.normal);
+
+        return copy;
+    }
+
+    transformToCamera(camera: Camera) {
         const copy = this.copy();
         copy.vertices = copy.vertices.map((v) =>
-            camera.transformToCamera(transform.apply(v))
+            camera.transformToCamera(v)
         ) as [Vector3, Vector3, Vector3];
         copy.verticesNormals = copy.verticesNormals.map((vn) =>
-            camera.transformNormalToCamera(transform.rotateVector(vn))
+            camera.transformNormalToCamera(vn)
         ) as [Vector3, Vector3, Vector3];
-        copy.normal = camera.transformNormalToCamera(
-            transform.rotateVector(copy.normal)
-        );
+        copy.normal = camera.transformNormalToCamera(copy.normal);
         return copy;
     }
 

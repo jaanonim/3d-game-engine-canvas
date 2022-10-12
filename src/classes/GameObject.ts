@@ -1,5 +1,6 @@
 import Camera from "../components/Camera";
 import Transform from "../utilities/Transform";
+import { Newable } from "../utilities/Types";
 import Component from "./Components/Component";
 import Renderer from "./Renderer";
 import Scene from "./Scene";
@@ -96,6 +97,13 @@ export default class GameObject {
     getComponent<T>(type: Newable<any>) {
         return this.components.filter((c) => c instanceof type)[0] as T;
     }
-}
 
-type Newable<T> = { new (...args: any[]): T } | any; //TOD Fix this
+    getAllComponents<T>(type: Newable<any>): Array<T> {
+        const res: Array<T> = [];
+        this.transform.children.forEach((t) => {
+            res.push(...t.gameObject.getAllComponents<T>(type));
+        });
+        res.push(...this.getComponents<T>(type));
+        return res;
+    }
+}

@@ -108,14 +108,9 @@ export default class Renderer {
         );
     }
 
-    renderMesh(
-        mesh: Mesh,
-        material: Material,
-        transform: Transform,
-        camera: Camera
-    ) {
+    renderMesh(mesh: Mesh, material: Material, camera: Camera) {
         if (camera) {
-            const transformedMesh = mesh.transform(camera, transform);
+            const transformedMesh = mesh.transformToCamera(camera);
 
             const res = camera.preClipObject(transformedMesh.boundingSphere);
             if (res === -1) return;

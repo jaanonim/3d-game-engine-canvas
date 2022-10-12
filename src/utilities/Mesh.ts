@@ -27,7 +27,7 @@ export default class Mesh {
         const vertices = this.getVertices();
         const center = vertices
             .reduce((pV: Vector3, cV: Vector3) => cV.add(pV))
-            .multiply(1 / vertices.length);
+            .divide(vertices.length);
         let radius = 0;
         vertices.forEach((v) => {
             const x = center.subtract(v).squareLength();
@@ -40,14 +40,24 @@ export default class Mesh {
     }
 
     copy() {
-        return new Mesh(this.triangles.map((t) => t.copy()));
+        return new Mesh(
+            this.triangles.map((t) => t.copy()),
+            this.doubleSided
+        );
     }
 
-    transform(camera: Camera, transform: Transform) {
+    transformToWorld(transform: Transform) {
         const copy = this.copy();
         copy.triangles = copy.triangles.map((t) =>
-            t.transform(camera, transform)
+            t.transformToWorld(transform)
         );
+        copy.calculateBoundingSphere();
+        return copy;
+    }
+
+    transformToCamera(camera: Camera) {
+        const copy = this.copy();
+        copy.triangles = copy.triangles.map((t) => t.transformToCamera(camera));
         copy.calculateBoundingSphere();
         return copy;
     }

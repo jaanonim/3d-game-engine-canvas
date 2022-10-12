@@ -42,6 +42,10 @@ export default class Vector3 {
         }
     }
 
+    divide(v: number) {
+        return new Vector3(this.x / v, this.y / v, this.z / v);
+    }
+
     invert() {
         return this.multiply(-1);
     }
