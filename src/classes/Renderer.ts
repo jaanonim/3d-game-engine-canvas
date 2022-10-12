@@ -1,5 +1,4 @@
 import Mesh from "../utilities/Mesh";
-import Transform from "../utilities/Transform";
 import Vector3 from "../utilities/math/Vector3";
 import Camera from "../components/Camera";
 import Material from "./Materials/Material";
@@ -10,6 +9,7 @@ export interface onResizeArgs {
     canvasRatio: number;
     width: number;
     height: number;
+    scale: number;
 }
 
 export default class Renderer {
@@ -20,16 +20,30 @@ export default class Renderer {
     drawer: Drawer;
     canvasRatio: number;
     onResize: Event<onResizeArgs>;
+    scale: number;
 
-    constructor(canvas: HTMLCanvasElement) {
+    get width(): number {
+        return Math.round(this.canvas.width * this.scale);
+    }
+    get height(): number {
+        return Math.round(this.canvas.height * this.scale);
+    }
+
+    constructor(
+        canvas: HTMLCanvasElement,
+        scale: number = 1,
+        smoothing: boolean = true
+    ) {
         this.canvas = canvas;
         this.canvas.onresize = this.resize.bind(this);
         this.canvasRatio = 0;
         this.cameras = [];
+        this.scale = scale;
         this.onResize = new Event<onResizeArgs>();
 
         let ctx = canvas.getContext("2d");
         if (ctx == null) throw Error("Cannot get context");
+        ctx.imageSmoothingEnabled = smoothing;
         this.drawer = new Drawer(ctx, this.canvas.width, this.canvas.height);
         this.resize();
     }
@@ -48,11 +62,12 @@ export default class Renderer {
 
     resize() {
         this.canvasRatio = this.canvas.width / this.canvas.height;
-        this.drawer.resize(this.canvas.width, this.canvas.height);
+        this.drawer.resize(this.width, this.height);
         this.onResize.call({
             canvasRatio: this.canvasRatio,
-            width: this.canvas.width,
-            height: this.canvas.height,
+            width: this.width,
+            height: this.height,
+            scale: this.scale,
         });
     }
 
@@ -89,21 +104,21 @@ export default class Renderer {
 
     viewportToCanvas(v: Vector3, camera: Camera) {
         return new Vector3(
-            (v.x * this.canvas.width) / camera.viewportSize.x +
-                this.canvas.width / 2,
-            -(v.y * this.canvas.height) / camera.viewportSize.y +
-                this.canvas.height / 2,
+            (v.x * this.drawer.width) / camera.viewportSize.x +
+                this.drawer.width / 2,
+            -(v.y * this.drawer.height) / camera.viewportSize.y +
+                this.drawer.height / 2,
             v.z
         ).roundXYToInt();
     }
 
     getOriginalCoords(v: Vector3, camera: Camera) {
         return new Vector3(
-            ((v.x - this.canvas.width / 2) * camera.viewportSize.x) /
-                this.canvas.width,
+            ((v.x - this.drawer.width / 2) * camera.viewportSize.x) /
+                this.drawer.width,
 
-            ((v.y - this.canvas.height / 2) * -camera.viewportSize.y) /
-                this.canvas.height,
+            ((v.y - this.drawer.height / 2) * -camera.viewportSize.y) /
+                this.drawer.height,
             v.z
         );
     }

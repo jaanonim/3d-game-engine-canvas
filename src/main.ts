@@ -20,7 +20,6 @@ import Vector2 from "./utilities/math/Vector2";
 import Image from "./components/Image";
 import Text from "./components/Text";
 import WireframeMaterial from "./classes/Materials/WireframeMaterial";
-import Mesh from "./utilities/Mesh";
 import SimpleRaycast from "./tools/SimpleRaycast";
 
 class Rotate extends Component {
@@ -49,7 +48,7 @@ async function main() {
     teapot.doubleSided = true;
 
     const canvas = document.getElementById("root") as HTMLCanvasElement;
-    const r = new Renderer(canvas);
+    const r = new Renderer(canvas, 0.2, false);
     const testTexture = new TextureLoader(
         await FileLoader.loadImg("/test2.png")
     ).parse();
@@ -101,24 +100,24 @@ async function main() {
             },
             {
                 name: "screen",
-                components: [new UiScreen(r)],
+                components: [new UiScreen(r, 1)],
                 children: [
                     {
                         name: "img",
                         components: [
-                            new UiElement(new Vector2(100, 100)),
+                            new UiElement(new Vector2(10, 10)),
                             new Image(testTexture),
                         ],
                     },
                     {
                         name: "img",
                         transform: {
-                            position: [400, 300, 0],
+                            position: [20, 30, 0],
                         },
                         components: [
-                            new UiElement(new Vector2(300, 100)),
+                            new UiElement(new Vector2(50, 20)),
                             new Text("Lorem ipsum", {
-                                fontSize: 50,
+                                fontSize: 8,
                                 color: Color.blue,
                             }),
                         ],

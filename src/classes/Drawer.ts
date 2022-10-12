@@ -22,22 +22,35 @@ export type TriangleCallback = (
 
 export default class Drawer {
     ctx: CanvasRenderingContext2D;
+    virtualCanvas: Array<VirtualCanvas>;
     width: number;
     height: number;
     img: ImageData;
     depthBuffer: Float32Array;
 
-    constructor(ctx: CanvasRenderingContext2D, width: number, height: number) {
+    constructor(
+        ctx: CanvasRenderingContext2D,
+        width: number,
+        height: number,
+        layers: number = 2
+    ) {
         this.ctx = ctx;
         this.width = width;
         this.height = height;
         this.img = this.ctx.createImageData(width, height);
         this.depthBuffer = new Float32Array(this.width * this.height);
+        this.virtualCanvas = [];
+        for (let i = 0; i < layers; i++) {
+            this.virtualCanvas.push(new VirtualCanvas(width, height));
+        }
     }
 
     resize(width: number, height: number) {
         this.width = width;
         this.height = height;
+        this.virtualCanvas = this.virtualCanvas.map(
+            () => new VirtualCanvas(width, height)
+        );
     }
 
     drawLine(p0: Vector3, p1: Vector3, color: Color, isTransparent: boolean) {
@@ -199,11 +212,8 @@ export default class Drawer {
         }
     }
 
-    drawVirtualCanvas(canvas: VirtualCanvas) {
-        const vc = new VirtualCanvas(this.width, this.height);
-        vc.ctx.putImageData(this.img, 0, 0);
-        vc.ctx.drawImage(canvas.canvas, 0, 0);
-        this.img = vc.ctx.getImageData(0, 0, this.width, this.height);
+    drawVirtualCanvas(canvas: VirtualCanvas, layer: number) {
+        this.virtualCanvas[layer].ctx.drawImage(canvas.canvas, 0, 0);
     }
 
     setPixel(x: number, y: number, color: Color) {
@@ -226,6 +236,8 @@ export default class Drawer {
     }
 
     begin() {
+        this.virtualCanvas.forEach((c) => c.clear());
+        this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         this.img = this.ctx.createImageData(this.width, this.height);
         for (let i = 0; i < this.width * this.height; i++) {
             this.depthBuffer[i] = 0;
@@ -254,6 +266,18 @@ export default class Drawer {
             }
         }
 
-        this.ctx.putImageData(this.img, 0, 0);
+        const mainVC = this.virtualCanvas[0];
+        mainVC.ctx.putImageData(this.img, 0, 0);
+        for (let i = 1; i < this.virtualCanvas.length; i++) {
+            const element = this.virtualCanvas[i];
+            mainVC.ctx.drawImage(element.canvas, 0, 0);
+        }
+        this.ctx.drawImage(
+            mainVC.canvas,
+            0,
+            0,
+            this.ctx.canvas.width,
+            this.ctx.canvas.height
+        );
     }
 }
