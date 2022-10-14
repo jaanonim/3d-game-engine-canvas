@@ -159,6 +159,11 @@ export default class Camera extends Component {
         );
     }
 
+    screenPointToVector(v: Vector2, renderer: Renderer): Vector3 {
+        const vec2 = renderer.canvasToViewport(v, this);
+        return new Vector3(vec2.x, vec2.y, this._near);
+    }
+
     getOriginalCoords(_v: Vector3, renderer: Renderer) {
         const v = renderer.getOriginalCoords(_v, this);
         return new Vector3(

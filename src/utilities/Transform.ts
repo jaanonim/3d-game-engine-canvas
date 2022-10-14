@@ -84,7 +84,7 @@ export default class Transform {
         this.updateGlobalPosition();
 
         this.onGlobalPositionUpdates.addEventListener(
-            this.updateGlobalRotation.bind(this),
+            this.updateGlobalPosition.bind(this),
             this.onSomeGlobalUpdates.call.bind(this.onSomeGlobalUpdates)
         );
         this.onGlobalRotationUpdates.addEventListener(
@@ -167,6 +167,7 @@ export default class Transform {
         if (!(this.parent instanceof Transform))
             this._globalPosition = this.position;
         else this._globalPosition = this.parent.apply(this.position);
+
         this._children.forEach((t) => {
             t.updateAll();
         });

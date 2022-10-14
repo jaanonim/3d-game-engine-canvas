@@ -20,7 +20,7 @@ import Vector2 from "./utilities/math/Vector2";
 import Image from "./components/Image";
 import Text from "./components/Text";
 import WireframeMaterial from "./classes/Materials/WireframeMaterial";
-import SimpleRaycast from "./tools/SimpleRaycast";
+import SimpleRaycast from "./tools/Raycasts/SimpleRaycast";
 
 class Rotate extends Component {
     v: number;
@@ -191,13 +191,18 @@ async function main() {
     // scene.start();
     // r.render();
 
+    const v = cam
+        .getComponent<Camera>(Camera)
+        .screenPointToVector(new Vector2(10, 10), r);
+    console.log(v);
+
     await r.startGameLoop(() => {
         fps.update();
-        const col = new SimpleRaycast(
+        const col = new SimpleRaycast(scene).getCollisions(
             Vector3.zero,
             Vector3.forward,
             100
-        ).getCollisions(scene);
+        );
         console.log(col);
     });
 }

@@ -4,6 +4,7 @@ import Camera from "../components/Camera";
 import Material from "./Materials/Material";
 import Drawer from "./Drawer";
 import Event from "./Event";
+import Vector2 from "../utilities/math/Vector2";
 
 export interface onResizeArgs {
     canvasRatio: number;
@@ -102,6 +103,10 @@ export default class Renderer {
         this.drawer.end();
     }
 
+    scaleCanvasVector(v: Vector2) {
+        return v.multiply(this.scale);
+    }
+
     viewportToCanvas(v: Vector3, camera: Camera) {
         return new Vector3(
             (v.x * this.drawer.width) / camera.viewportSize.x +
@@ -110,6 +115,15 @@ export default class Renderer {
                 this.drawer.height / 2,
             v.z
         ).roundXYToInt();
+    }
+
+    canvasToViewport(v: Vector2, camera: Camera) {
+        return new Vector2(
+            ((v.x - this.drawer.width / 2) * camera.viewportSize.x) /
+                this.drawer.width,
+            -((v.y - this.drawer.height / 2) * camera.viewportSize.y) /
+                this.drawer.height
+        );
     }
 
     getOriginalCoords(v: Vector3, camera: Camera) {
