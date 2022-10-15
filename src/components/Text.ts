@@ -30,8 +30,8 @@ export default class Text extends UiComponent {
         ctx.textAlign = "center";
         ctx.fillText(
             this._text,
-            this.uiElement.size.x / 2,
-            this.uiElement.size.y / 2
+            this.uiElement.realSize.x / 2,
+            this.uiElement.realSize.y / 2
         );
     }
 }

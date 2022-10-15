@@ -15,8 +15,8 @@ export default class Image extends UiComponent {
             this.texture.canvas.canvas,
             0,
             0,
-            this.uiElement.size.x,
-            this.uiElement.size.y
+            this.uiElement.realSize.x,
+            this.uiElement.realSize.y
         );
     }
 }

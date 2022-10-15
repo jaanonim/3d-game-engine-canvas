@@ -20,7 +20,7 @@ import Vector2 from "./utilities/math/Vector2";
 import Image from "./components/Image";
 import Text from "./components/Text";
 import WireframeMaterial from "./classes/Materials/WireframeMaterial";
-import SimpleRaycast from "./tools/Raycasts/SimpleRaycast";
+import { PositionType, SizeType } from "./classes/Components/SizedComponent";
 
 class Rotate extends Component {
     v: number;
@@ -48,8 +48,11 @@ async function main() {
     teapot.doubleSided = true;
 
     const canvas = document.getElementById("root") as HTMLCanvasElement;
-    const r = new Renderer(canvas, 0.2, false);
+    const r = new Renderer(canvas);
     const testTexture = new TextureLoader(
+        await FileLoader.loadImg("/test.png")
+    ).parse();
+    const testTexture2 = new TextureLoader(
         await FileLoader.loadImg("/test2.png")
     ).parse();
     //testTexture.bilinearFiltering = false;
@@ -102,24 +105,44 @@ async function main() {
                 name: "screen",
                 components: [new UiScreen(r, 1)],
                 children: [
+                    // {
+                    //     name: "img",
+                    //     components: [
+                    //         new UiElement(new Vector2(100, 100)),
+                    //         new Image(testTexture),
+                    //     ],
+                    // },
                     {
-                        name: "img",
+                        name: "t",
                         components: [
-                            new UiElement(new Vector2(10, 10)),
+                            new UiElement(
+                                new Vector2(50, 50),
+                                undefined,
+                                SizeType.PERCENTAGE,
+                                PositionType.CENTER_CENTER
+                            ),
                             new Image(testTexture),
                         ],
-                    },
-                    {
-                        name: "img",
-                        transform: {
-                            position: [20, 30, 0],
-                        },
-                        components: [
-                            new UiElement(new Vector2(50, 20)),
-                            new Text("Lorem ipsum", {
-                                fontSize: 8,
-                                color: Color.blue,
-                            }),
+                        children: [
+                            {
+                                name: "text",
+                                transform: {
+                                    position: [0, 0, 0],
+                                },
+                                components: [
+                                    new UiElement(
+                                        new Vector2(30, 30),
+                                        1,
+                                        SizeType.PERCENTAGE,
+                                        PositionType.CENTER_CENTER
+                                    ),
+                                    new Image(testTexture2),
+                                    new Text("Lorem ipsum", {
+                                        fontSize: 40,
+                                        color: Color.blue,
+                                    }),
+                                ],
+                            },
                         ],
                     },
                 ],
@@ -190,20 +213,8 @@ async function main() {
     const fps = new FPSCounter(document.getElementById("fps") as HTMLElement);
     // scene.start();
     // r.render();
-
-    const v = cam
-        .getComponent<Camera>(Camera)
-        .screenPointToVector(new Vector2(10, 10), r);
-    console.log(v);
-
     await r.startGameLoop(() => {
         fps.update();
-        const col = new SimpleRaycast(scene).getCollisions(
-            Vector3.zero,
-            Vector3.forward,
-            100
-        );
-        console.log(col);
     });
 }
 main();

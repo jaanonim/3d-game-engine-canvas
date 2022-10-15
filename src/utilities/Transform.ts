@@ -10,6 +10,7 @@ export default class Transform {
     onGlobalRotationUpdates: Event<Transform>;
     onGlobalScaleUpdates: Event<Transform>;
     onSomeGlobalUpdates: Event<Transform>;
+    onPositionUpdates: Event<Transform>;
 
     private _parent: Transform | Scene | undefined;
     private _children: Array<Transform>;
@@ -35,6 +36,7 @@ export default class Transform {
     }
     public set position(value: Vector3) {
         this._position = value;
+        this.onPositionUpdates.call(this);
         this.onGlobalPositionUpdates.call(this);
     }
 
@@ -78,6 +80,7 @@ export default class Transform {
         this.onGlobalRotationUpdates = new Event<Transform>();
         this.onGlobalScaleUpdates = new Event<Transform>();
         this.onSomeGlobalUpdates = new Event<Transform>();
+        this.onPositionUpdates = new Event<Transform>();
 
         this.updateGlobalScale();
         this.updateGlobalRotation();

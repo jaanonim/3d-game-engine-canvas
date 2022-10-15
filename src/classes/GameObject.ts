@@ -2,6 +2,8 @@ import Camera from "../components/Camera";
 import Transform from "../utilities/Transform";
 import { Newable } from "../utilities/Types";
 import Component from "./Components/Component";
+import SizedComponent from "./Components/SizedComponent";
+import UiComponent from "./Components/UiComponent";
 import Renderer from "./Renderer";
 import Scene from "./Scene";
 
@@ -36,38 +38,38 @@ export default class GameObject {
 
     async start() {
         await Promise.all(
-            this.transform.children.map((t) => t.gameObject.start())
+            this.components.filter((c) => c.isActive).map((c) => c.start())
         );
         await Promise.all(
-            this.components.filter((c) => c.isActive).map((c) => c.start())
+            this.transform.children.map((t) => t.gameObject.start())
         );
     }
 
     async update() {
         await Promise.all(
-            this.transform.children.map((t) => t.gameObject.update())
+            this.components.filter((c) => c.isActive).map((c) => c.update())
         );
         await Promise.all(
-            this.components.filter((c) => c.isActive).map((c) => c.update())
+            this.transform.children.map((t) => t.gameObject.update())
         );
     }
 
     async lateUpdate() {
         await Promise.all(
-            this.transform.children.map((t) => t.gameObject.lateUpdate())
+            this.components.filter((c) => c.isActive).map((c) => c.lateUpdate())
         );
         await Promise.all(
-            this.components.filter((c) => c.isActive).map((c) => c.lateUpdate())
+            this.transform.children.map((t) => t.gameObject.lateUpdate())
         );
     }
 
     render(renderer: Renderer, camera: Camera) {
-        this.transform.children.forEach((t) =>
-            t.gameObject.render(renderer, camera)
-        );
         this.components.forEach((c) => {
             if (c.isActive) c.render(renderer, camera);
         });
+        this.transform.children.forEach((t) =>
+            t.gameObject.render(renderer, camera)
+        );
     }
 
     getScene(): Scene {
@@ -94,7 +96,7 @@ export default class GameObject {
         return this.components.filter((c) => c instanceof type) as Array<T>;
     }
 
-    getComponent<T>(type: Newable<any>) {
+    getComponent<T>(type: Newable<any>): T | undefined {
         return this.components.filter((c) => c instanceof type)[0] as T;
     }
 
@@ -105,5 +107,17 @@ export default class GameObject {
         });
         res.push(...this.getComponents<T>(type));
         return res;
+    }
+
+    getUiComponents(): Array<UiComponent> {
+        return this.components.filter(
+            (c) => c instanceof UiComponent
+        ) as Array<UiComponent>;
+    }
+
+    getSizedComponent(): SizedComponent | undefined {
+        return this.components.filter(
+            (c) => c instanceof SizedComponent
+        )[0] as SizedComponent;
     }
 }

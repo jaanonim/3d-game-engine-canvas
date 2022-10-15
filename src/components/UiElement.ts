@@ -7,12 +7,12 @@ export default class UiElement extends SizedComponent {
     async start() {
         const parent = this.gameObject.transform.parent;
         if (parent instanceof Transform) {
-            this.sizedParent =
-                parent.gameObject.getComponent<SizedComponent>(SizedComponent);
-            if (!(this.sizedParent instanceof SizedComponent))
+            const c = parent.gameObject.getSizedComponent();
+            if (!(c instanceof SizedComponent))
                 throw Error(
                     `Because game object '${this.gameObject.name}' parent don't have component that have size, cannot add UiElement`
                 );
+            this.sizedParent = c;
         } else
             throw Error(
                 `Because game object '${this.gameObject.name}' don't have parent or parent is Scene, cannot add UiElement`

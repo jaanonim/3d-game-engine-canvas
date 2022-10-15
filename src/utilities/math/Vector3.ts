@@ -1,3 +1,5 @@
+import Vector2 from "./Vector2";
+
 export default class Vector3 {
     x: number;
     y: number;
@@ -77,5 +79,9 @@ export default class Vector3 {
 
     roundXYToInt() {
         return new Vector3(Math.round(this.x), Math.round(this.y), this.z);
+    }
+
+    toVector2() {
+        return new Vector2(this.x, this.y);
     }
 }

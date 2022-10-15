@@ -34,6 +34,14 @@ export default class Vector2 {
         }
     }
 
+    divide(v: Vector2 | number) {
+        if (v instanceof Vector2) {
+            return new Vector2(this.x / v.x, this.y / v.y);
+        } else {
+            return new Vector2(this.x / v, this.y / v);
+        }
+    }
+
     squareLength() {
         return this.x * this.x + this.y * this.y;
     }
