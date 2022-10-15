@@ -77,7 +77,8 @@ export default abstract class SizedComponent extends Component {
         size: Vector2 = Vector2.one.multiply(100),
         rotation: number = 0,
         sizeType: SizeType = SizeType.PIXEL,
-        positionType: PositionType = PositionType.TOP_LEFT
+        positionType: PositionType = PositionType.TOP_LEFT,
+        anchor: Vector2 = new Vector2(0.5, 0.5)
     ) {
         super();
         this._size = size;
@@ -85,7 +86,7 @@ export default abstract class SizedComponent extends Component {
         this._realPosition = Vector2.zero;
         this._sizeType = sizeType;
         this._positionType = positionType;
-        this._anchor = new Vector2(0.5, 0.5);
+        this._anchor = anchor;
         this.rotation = rotation;
         this.onSizeUpdate = new Event<SizedComponent>();
         this.onPositionUpdate = new Event<SizedComponent>();

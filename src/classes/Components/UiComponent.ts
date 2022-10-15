@@ -14,6 +14,7 @@ export default abstract class UiComponent extends Component {
     }
 
     uiRender() {
+        // TODO: Move it so one game obj can renderer text and img
         this.uiElement.canvas.clear();
     }
 }
