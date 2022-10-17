@@ -1,4 +1,4 @@
-import { clamp, map } from "./Math";
+import { clamp } from "./Math";
 
 export default class Color {
     r: number;
@@ -78,10 +78,10 @@ export default class Color {
 
     multiply(v: number | Color) {
         if (v instanceof Color) {
-            this.r = map(this.r * v.r, 0, 255, 0, 255);
-            this.g = map(this.g * v.g, 0, 255, 0, 255);
-            this.b = map(this.b * v.b, 0, 255, 0, 255);
-            this.a = map(this.a * v.a, 0, 255, 0, 255);
+            this.r = this.r * v.r;
+            this.g = this.g * v.g;
+            this.b = this.b * v.b;
+            this.a = this.a * v.a;
             return this;
         } else {
             this.r *= v;

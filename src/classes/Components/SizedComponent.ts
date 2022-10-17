@@ -23,7 +23,15 @@ export enum PositionType {
 
 export default abstract class SizedComponent extends Component {
     canvas: VirtualCanvas;
-    rotation: number;
+
+    private _rotation: number;
+    public get rotation(): number {
+        return this._rotation;
+    }
+    public set rotation(value: number) {
+        this._rotation = value;
+        this.onRotationUpdate.call(this);
+    }
 
     private _size: Vector2;
     public get size(): Vector2 {
@@ -40,6 +48,7 @@ export default abstract class SizedComponent extends Component {
     }
     public set anchor(value: Vector2) {
         this._anchor = value.normalize();
+        this.onAnchorUpdate.call(this);
     }
 
     private _realSize: Vector2;
@@ -72,6 +81,9 @@ export default abstract class SizedComponent extends Component {
 
     onSizeUpdate: Event<SizedComponent>;
     onPositionUpdate: Event<SizedComponent>;
+    onRotationUpdate: Event<SizedComponent>;
+    onAnchorUpdate: Event<SizedComponent>;
+    onSomeUpdate: Event<SizedComponent>;
 
     constructor(
         size: Vector2 = Vector2.one.multiply(100),
@@ -87,25 +99,43 @@ export default abstract class SizedComponent extends Component {
         this._sizeType = sizeType;
         this._positionType = positionType;
         this._anchor = anchor;
-        this.rotation = rotation;
+        this._rotation = rotation;
         this.onSizeUpdate = new Event<SizedComponent>();
         this.onPositionUpdate = new Event<SizedComponent>();
+        this.onRotationUpdate = new Event<SizedComponent>();
+        this.onAnchorUpdate = new Event<SizedComponent>();
+        this.onSomeUpdate = new Event<SizedComponent>();
         this.canvas = new VirtualCanvas(size.x, size.y);
     }
 
     async start() {
-        this.onSizeUpdate.addEventListener(this.updateSize.bind(this));
+        this.onSizeUpdate.addEventListener(
+            this.updateSize.bind(this),
+            this.onSomeUpdate.call.bind(this.onSomeUpdate, this)
+        );
         this.transform.onGlobalScaleUpdates.addEventListener(
             this.onSizeUpdate.call.bind(this.onSizeUpdate, this)
         );
 
-        this.onPositionUpdate.addEventListener(this.updatePosition.bind(this));
+        this.onPositionUpdate.addEventListener(
+            this.updatePosition.bind(this),
+            this.onSomeUpdate.call.bind(this.onSomeUpdate, this)
+        );
         this.transform.onPositionUpdates.addEventListener(
             this.onPositionUpdate.call.bind(this.onPositionUpdate, this)
         );
 
+        this.onAnchorUpdate.addEventListener(
+            this.onSomeUpdate.call.bind(this.onSomeUpdate, this)
+        );
+        this.onRotationUpdate.addEventListener(
+            this.onSomeUpdate.call.bind(this.onSomeUpdate, this)
+        );
+
         this.onSizeUpdate.call(this);
         this.onPositionUpdate.call(this);
+        this.onRotationUpdate.call(this);
+        this.onAnchorUpdate.call(this);
     }
 
     updatePosition() {
@@ -211,7 +241,7 @@ export default abstract class SizedComponent extends Component {
 
         canvas.ctx.save();
         canvas.ctx.translate(p.x + s.x, p.y + s.y);
-        canvas.ctx.rotate(this.rotation);
+        canvas.ctx.rotate(this._rotation);
         canvas.ctx.translate(-p.x - s.x, -p.y - s.y);
 
         canvas.ctx.drawImage(

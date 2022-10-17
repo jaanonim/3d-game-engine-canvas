@@ -48,7 +48,7 @@ async function main() {
     teapot.doubleSided = true;
 
     const canvas = document.getElementById("root") as HTMLCanvasElement;
-    const r = new Renderer(canvas);
+    const r = new Renderer(canvas, 0.7, false);
     const testTexture = new TextureLoader(
         await FileLoader.loadImg("/test.png")
     ).parse();
@@ -131,7 +131,7 @@ async function main() {
                                 },
                                 components: [
                                     new UiElement(
-                                        new Vector2(30, 30),
+                                        new Vector2(50, 50),
                                         1,
                                         SizeType.PERCENTAGE,
                                         PositionType.CENTER_CENTER
