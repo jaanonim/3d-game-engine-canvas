@@ -7,14 +7,15 @@ import Vector3 from "../utilities/math/Vector3";
 
 export interface SceneData {
     name: string;
-    children: Array<GameObjectData>;
+    children: Array<GameObjectType>;
 }
 
+export type GameObjectType = GameObjectData | GameObject;
 export interface GameObjectData {
     name: string;
     transform?: TransformData;
     components?: Array<Component>;
-    children?: Array<GameObjectData>;
+    children?: Array<GameObjectType>;
 }
 
 export interface TransformData {
@@ -32,7 +33,8 @@ export default class Importer {
         return scene;
     }
 
-    static object(data: GameObjectData): GameObject {
+    static object(data: GameObjectType): GameObject {
+        if (data instanceof GameObject) return data;
         const obj = new GameObject(data.name);
         if (data.transform)
             obj.transform = Importer.transform(data.transform, obj);
