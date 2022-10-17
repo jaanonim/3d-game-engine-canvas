@@ -150,8 +150,8 @@ export default class Transform {
         if (!(this.parent instanceof Transform))
             this._globalRotation = this.rotation;
         else
-            this._globalRotation = this.rotation.multiply(
-                this.parent.globalRotation
+            this._globalRotation = this.parent.globalRotation.multiply(
+                this.rotation
             ) as Quaternion;
         this._children.forEach((t) => {
             t.updateAll();
