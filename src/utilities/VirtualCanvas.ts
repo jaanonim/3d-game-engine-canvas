@@ -18,4 +18,18 @@ export default class VirtualCanvas {
     clear() {
         this.ctx.clearRect(0, 0, this.width, this.height);
     }
+
+    drawVirtualCanvas(canvas: VirtualCanvas) {
+        this.ctx.drawImage(
+            canvas.canvas,
+            0,
+            0,
+            canvas.width,
+            canvas.height,
+            0,
+            0,
+            this.width,
+            this.height
+        );
+    }
 }

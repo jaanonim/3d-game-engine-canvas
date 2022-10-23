@@ -213,7 +213,7 @@ export default class Drawer {
     }
 
     drawVirtualCanvas(canvas: VirtualCanvas, layer: number) {
-        this.virtualCanvas[layer].ctx.drawImage(canvas.canvas, 0, 0);
+        this.virtualCanvas[layer].drawVirtualCanvas(canvas);
     }
 
     setPixel(x: number, y: number, color: Color) {
@@ -270,8 +270,9 @@ export default class Drawer {
         mainVC.ctx.putImageData(this.img, 0, 0);
         for (let i = 1; i < this.virtualCanvas.length; i++) {
             const element = this.virtualCanvas[i];
-            mainVC.ctx.drawImage(element.canvas, 0, 0);
+            mainVC.drawVirtualCanvas(element);
         }
+
         this.ctx.drawImage(
             mainVC.canvas,
             0,
