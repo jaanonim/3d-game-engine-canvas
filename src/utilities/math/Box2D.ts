@@ -24,4 +24,8 @@ export default class Box2D {
             )
         );
     }
+
+    size() {
+        return this.b.subtract(this.a);
+    }
 }

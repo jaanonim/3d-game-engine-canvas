@@ -84,4 +84,8 @@ export default class Vector3 {
     toVector2() {
         return new Vector2(this.x, this.y);
     }
+
+    equals(v: Vector3) {
+        return this.x === v.x && this.y === v.y && this.z === v.z;
+    }
 }

@@ -16,7 +16,7 @@ export function map(
     minOut: number,
     maxOut: number
 ): number {
-    return ((v - minIn) * (maxOut - minOut)) / (maxIn - minIn) + minIn;
+    return ((v - minIn) * (maxOut - minOut)) / (maxIn - minIn) + minOut;
 }
 
 export function clamp(v: number, min: number = 0, max: number = 1) {

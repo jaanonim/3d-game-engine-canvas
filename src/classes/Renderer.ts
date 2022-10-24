@@ -88,9 +88,8 @@ export default class Renderer {
         lateUpdate();
         await Promise.all(this.cameras.map((c) => c.camera.scene.lateUpdate()));
 
-        Renderer.deltaTime = performance.now() - start;
-
         requestAnimationFrame(async () => {
+            Renderer.deltaTime = performance.now() - start;
             await this.gameLoop.bind(this)(update, lateUpdate);
         });
     }
