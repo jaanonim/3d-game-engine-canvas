@@ -14,6 +14,10 @@ export default class Illumination {
         this.lights.push(light);
     }
 
+    removeLight(light: Light) {
+        this.lights.splice(this.lights.indexOf(light), 1);
+    }
+
     startFrame(camera: Camera) {
         this.lights.forEach((l) => {
             l.transformedPosition = camera.transformToCamera(

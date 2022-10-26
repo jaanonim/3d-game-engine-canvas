@@ -26,6 +26,12 @@ export default class Scene {
         return obj;
     }
 
+    removeChildren(obj: GameObject) {
+        this.children.splice(this.children.indexOf(obj), 1);
+        obj.transform.setParent(undefined);
+        return obj;
+    }
+
     render(renderer: Renderer, camera: Camera) {
         if (!camera) throw Error("No camera!");
 

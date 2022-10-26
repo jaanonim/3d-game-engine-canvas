@@ -136,7 +136,13 @@ export default class Transform {
         return transform;
     }
 
-    setParent(scene: Scene) {
+    removeChildren(transform: Transform) {
+        this._children.splice(this._children.indexOf(transform), 1);
+        transform._parent = undefined;
+        return transform;
+    }
+
+    setParent(scene: Scene | undefined) {
         this._parent = scene;
     }
 

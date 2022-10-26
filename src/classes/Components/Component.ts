@@ -26,9 +26,16 @@ export default abstract class Component {
         this.gameObject = obj;
     }
 
+    destroy() {
+        this.gameObject.removeComponent(this);
+        //this.gameObject = null; //! I hate TypeScript
+        this.onDestroy();
+    }
+
     async start() {}
     async update() {}
     async lateUpdate() {}
+    async onDestroy() {}
     render(_renderer: Renderer, _camera: Camera) {}
     uiRender(_canvas: VirtualCanvas) {}
 }

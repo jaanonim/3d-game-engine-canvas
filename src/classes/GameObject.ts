@@ -30,10 +30,19 @@ export default class GameObject {
         return obj;
     }
 
+    removeChildren(obj: GameObject) {
+        this.transform.removeChildren(obj.transform);
+    }
+
     addComponent(obj: Component) {
         this.components.push(obj);
         obj.register(this);
         return obj;
+    }
+
+    removeComponent(obj: Component) {
+        this.components.slice(this.components.indexOf(obj), 1);
+        obj.onDestroy();
     }
 
     async start() {
@@ -119,5 +128,23 @@ export default class GameObject {
         return this.components.filter(
             (c) => c instanceof SizedComponent
         )[0] as SizedComponent;
+    }
+
+    destroy() {
+        if (!this.transform.parent) throw new Error("No parent");
+        (this.transform.parent instanceof Scene
+            ? this.transform.parent
+            : this.transform.parent.gameObject
+        ).removeChildren(this);
+        this.onDestroy();
+    }
+
+    async onDestroy() {
+        await Promise.all(
+            this.components.filter((c) => c.isActive).map((c) => c.onDestroy())
+        );
+        await Promise.all(
+            this.transform.children.map((t) => t.gameObject.onDestroy())
+        );
     }
 }

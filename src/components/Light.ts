@@ -25,4 +25,8 @@ export default class Light extends Component {
     async start() {
         this.gameObject.getScene().illumination.registerLight(this);
     }
+
+    async onDestroy(): Promise<void> {
+        this.gameObject.getScene().illumination.removeLight(this);
+    }
 }
