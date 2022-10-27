@@ -24,3 +24,7 @@ export function clamp(v: number, min: number = 0, max: number = 1) {
     if (v > max) v = max;
     return v;
 }
+
+export function sigmoid(v: number) {
+    return (1 / (1 + Math.exp(-v))) * 2 - 1;
+}

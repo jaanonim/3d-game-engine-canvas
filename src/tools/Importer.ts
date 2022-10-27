@@ -19,9 +19,9 @@ export interface GameObjectData {
 }
 
 export interface TransformData {
-    position?: number[];
-    rotation?: number[];
-    scale?: number[];
+    position?: number[] | Vector3;
+    rotation?: number[] | Vector3;
+    scale?: number[] | Vector3;
 }
 
 export default class Importer {
@@ -72,7 +72,8 @@ export default class Importer {
         return t;
     }
 
-    static vector3(data: number[]): Vector3 {
+    static vector3(data: number[] | Vector3): Vector3 {
+        if (data instanceof Vector3) return data;
         if (data.length !== 3) throw Error("Invalid Vector3");
         return new Vector3(data[0], data[1], data[2]);
     }
