@@ -76,6 +76,8 @@ export default class Color {
         return new Color(this.r, this.g, this.b, this.a);
     }
 
+    multiply(v: number): Color;
+    multiply(v: Color): Color;
     multiply(v: number | Color) {
         if (v instanceof Color) {
             this.r = this.r * v.r;

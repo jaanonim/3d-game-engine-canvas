@@ -32,6 +32,7 @@ export default abstract class Component {
         this.onDestroy();
     }
 
+    async awake() {}
     async start() {}
     async update() {}
     async lateUpdate() {}

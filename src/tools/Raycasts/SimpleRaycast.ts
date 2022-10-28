@@ -23,9 +23,8 @@ export default class SimpleRaycast implements Raycasts {
         length: number = Infinity
     ) {
         direction = direction.normalize();
-        const meshes = this.scene
-            .getAllComponents<MeshRenderer>(MeshRenderer)
-            .map((m) => m);
+        const meshes = this.scene.getAllComponents<MeshRenderer>(MeshRenderer);
+
         const res: Array<RaycastResult> = [];
         meshes.forEach((m) => {
             const d = this.distanceToCollisionWithSphere(
@@ -39,7 +38,7 @@ export default class SimpleRaycast implements Raycasts {
                     distance: d,
                 });
         });
-        return res;
+        return res.sort((a, b) => a.distance - b.distance);
     }
 
     private distanceToCollisionWithSphere(

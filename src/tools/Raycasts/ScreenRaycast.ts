@@ -29,7 +29,7 @@ export default class ScreenRaycast implements Raycasts {
         );
         return this.raycast.getCollisions(
             this.camera.transform.globalPosition,
-            this.camera.transform.globalRotation.multiply(v) as Vector3,
+            this.camera.transform.globalRotation.multiply(v),
             length
         );
     }

@@ -28,6 +28,8 @@ export default class Vector2 {
         return new Vector2(this.x - vector.x, this.y - vector.y);
     }
 
+    multiply(v: number): Vector2;
+    multiply(v: Vector2): Vector2;
     multiply(v: Vector2 | number) {
         if (v instanceof Vector2) {
             return new Vector2(this.x * v.x, this.y * v.y);
@@ -36,6 +38,8 @@ export default class Vector2 {
         }
     }
 
+    divide(v: number): Vector2;
+    divide(v: Vector2): Vector2;
     divide(v: Vector2 | number) {
         if (v instanceof Vector2) {
             return new Vector2(this.x / v.x, this.y / v.y);

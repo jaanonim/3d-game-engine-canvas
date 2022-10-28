@@ -6,9 +6,18 @@ export default class Vector3 {
     z: number;
 
     static zero: Vector3 = new Vector3(0, 0, 0);
-    static up: Vector3 = new Vector3(0, 1, 0);
-    static forward: Vector3 = new Vector3(0, 0, 1);
     static one: Vector3 = new Vector3(1, 1, 1);
+
+    static up: Vector3 = new Vector3(0, 1, 0);
+    static down: Vector3 = new Vector3(0, -1, 0);
+    static right: Vector3 = new Vector3(1, 0, 0);
+    static left: Vector3 = new Vector3(-1, 0, 0);
+    static forward: Vector3 = new Vector3(0, 0, 1);
+    static backward: Vector3 = new Vector3(0, 0, -1);
+
+    static get random(): Vector3 {
+        return new Vector3(Math.random(), Math.random(), Math.random());
+    }
 
     constructor(x: number, y: number, z: number) {
         this.x = x;
@@ -36,6 +45,8 @@ export default class Vector3 {
         );
     }
 
+    multiply(v: number): Vector3;
+    multiply(v: Vector3): Vector3;
     multiply(v: Vector3 | number) {
         if (v instanceof Vector3) {
             return new Vector3(this.x * v.x, this.y * v.y, this.z * v.z);

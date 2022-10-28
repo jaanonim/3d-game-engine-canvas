@@ -30,4 +30,15 @@ export default class MeshRenderer extends Component {
     render(renderer: Renderer, camera: Camera) {
         renderer.renderMesh(this.transformedMesh, this.material, camera);
     }
+
+    /**
+     * Check if bounding box of mesh is outside camera clipping zone
+     * @param camera
+     * @returns boolean
+     */
+    isOnCamera(camera: Camera): boolean {
+        const transformedMesh = this.transformedMesh.transformToCamera(camera);
+        const res = camera.preClipObject(transformedMesh.boundingSphere);
+        return res !== -1;
+    }
 }

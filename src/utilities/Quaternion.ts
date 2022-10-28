@@ -34,6 +34,8 @@ export default class Quaternion {
         return new Quaternion(this.x, this.y, this.z, this.w);
     }
 
+    multiply(v: Vector3): Vector3;
+    multiply(v: Quaternion): Quaternion;
     multiply(v: Vector3 | Quaternion) {
         if (v instanceof Vector3) {
             const ix = this.w * v.x + this.y * v.z - this.z * v.y;

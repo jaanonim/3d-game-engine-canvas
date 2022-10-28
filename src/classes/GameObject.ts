@@ -72,6 +72,15 @@ export default class GameObject {
         );
     }
 
+    async awake() {
+        await Promise.all(
+            this.components.filter((c) => c.isActive).map((c) => c.awake())
+        );
+        await Promise.all(
+            this.transform.children.map((t) => t.gameObject.awake())
+        );
+    }
+
     render(renderer: Renderer, camera: Camera) {
         this.components.forEach((c) => {
             if (c.isActive) c.render(renderer, camera);

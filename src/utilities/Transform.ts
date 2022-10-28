@@ -122,7 +122,7 @@ export default class Transform {
     }
 
     rotateVector(vector: Vector3) {
-        return this.globalRotation.multiply(vector) as Vector3;
+        return this.globalRotation.multiply(vector);
     }
 
     moveVector(vector: Vector3) {
@@ -158,7 +158,7 @@ export default class Transform {
         else
             this._globalRotation = this.parent.globalRotation.multiply(
                 this.rotation
-            ) as Quaternion;
+            );
         this._children.forEach((t) => {
             t.updateAll();
         });

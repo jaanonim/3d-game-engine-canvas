@@ -73,7 +73,7 @@ export default class Renderer {
     }
 
     async startGameLoop(update = () => {}, lateUpdate = () => {}) {
-        await Promise.all(this.cameras.map((c) => c.camera.scene.start()));
+        await Promise.all(this.cameras.map((c) => c.camera.scene.awake()));
         await this.gameLoop(update, lateUpdate);
     }
 

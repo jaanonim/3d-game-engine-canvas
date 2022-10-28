@@ -23,6 +23,7 @@ export default class Scene {
     addChildren(obj: GameObject) {
         this.children.push(obj);
         obj.transform.setParent(this);
+        obj.start();
         return obj;
     }
 
@@ -49,6 +50,10 @@ export default class Scene {
 
     async start() {
         await Promise.all(this.children.map((c) => c.start()));
+    }
+
+    async awake() {
+        await Promise.all(this.children.map((c) => c.awake()));
     }
 
     find(name: string) {
