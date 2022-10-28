@@ -1,7 +1,6 @@
 import Renderer from "../../classes/Renderer";
 import Camera from "../../components/Camera";
 import Vector2 from "../../utilities/math/Vector2";
-import Vector3 from "../../utilities/math/Vector3";
 import Raycasts from "./Raycast";
 import SimpleRaycast from "./SimpleRaycast";
 
