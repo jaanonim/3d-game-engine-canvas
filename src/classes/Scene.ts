@@ -1,6 +1,7 @@
 import Camera from "../components/Camera";
 import Vector3 from "../utilities/math/Vector3";
 import { Newable } from "../utilities/Types";
+import Colliders from "./Colliders";
 import GameObject from "./GameObject";
 import Illumination from "./Illumination";
 import Renderer from "./Renderer";
@@ -8,12 +9,14 @@ import Renderer from "./Renderer";
 export default class Scene {
     name: string;
     children: Array<GameObject>;
-    illumination: Illumination;
+    readonly illumination: Illumination;
+    readonly colliders: Colliders;
 
     constructor(name: string) {
         this.name = name;
         this.children = [];
         this.illumination = new Illumination();
+        this.colliders = new Colliders();
     }
 
     getWordPosition() {

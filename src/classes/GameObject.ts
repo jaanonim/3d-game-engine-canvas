@@ -27,7 +27,10 @@ export default class GameObject {
 
     addChildren(obj: GameObject) {
         this.transform.addChildren(obj.transform);
-        obj.start();
+        try {
+            this.getScene();
+            obj.start();
+        } catch (e) {}
         return obj;
     }
 

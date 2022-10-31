@@ -12,6 +12,7 @@ export default class VirtualCanvas {
         this.canvas.height = this.height;
         const ctx = this.canvas.getContext("2d");
         if (ctx == null) throw Error("Cannot get ctx in VirtualCanvas");
+        //ctx.imageSmoothingEnabled = false; //TODO: Implement it somehow
         this.ctx = ctx;
     }
 
