@@ -39,4 +39,43 @@ export default abstract class Component {
     async onDestroy() {}
     render(_renderer: Renderer, _camera: Camera) {}
     uiRender(_canvas: VirtualCanvas) {}
+
+    /**
+     * Utility function for logging.
+     * Logs using console.log and appends info about gameObject and component
+     * @param obj thing to log
+     */
+    log(...obj: any) {
+        console.log(
+            `%c${this.gameObject.name}<${this.constructor.name}>:`,
+            "color:green; font-weight:bold;",
+            ...obj
+        );
+    }
+
+    /**
+     * Utility function for logging.
+     * Logs using console.error and appends info about gameObject and component
+     * @param obj thing to log
+     */
+    error(...obj: any) {
+        console.error(
+            `%c${this.gameObject.name}<${this.constructor.name}>:`,
+            "color:red; font-weight:bold;",
+            ...obj
+        );
+    }
+
+    /**
+     * Utility function for logging.
+     * Logs using console.warn and appends info about gameObject and component
+     * @param obj thing to log
+     */
+    warn(...obj: any) {
+        console.warn(
+            `%c${this.gameObject.name}<${this.constructor.name}>:`,
+            "color:orange; font-weight:bold;",
+            ...obj
+        );
+    }
 }

@@ -57,6 +57,11 @@ export default class Scene {
     }
 
     find(name: string) {
+        return this.children.filter((c) => c.name == name)[0];
+        //TODO: add possible return type as undefined
+    }
+
+    findMany(name: string) {
         return this.children.filter((c) => c.name == name);
     }
 

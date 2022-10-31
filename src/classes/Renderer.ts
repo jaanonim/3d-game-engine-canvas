@@ -15,7 +15,7 @@ export interface onResizeArgs {
 
 export default class Renderer {
     /**In milliseconds */
-    static deltaTime: number = 0;
+    static deltaTime: number = 1;
     canvas: HTMLCanvasElement;
     cameras: Array<{ camera: Camera; layer: number }>;
     drawer: Drawer;
@@ -102,8 +102,8 @@ export default class Renderer {
         this.drawer.end();
     }
 
-    scaleCanvasVector(v: Vector2) {
-        return v.multiply(this.scale);
+    scaleCanvasVector(v: Vector2, inverse: boolean = false) {
+        return v.multiply(inverse ? 1 / this.scale : this.scale);
     }
 
     viewportToCanvas(v: Vector3, camera: Camera) {

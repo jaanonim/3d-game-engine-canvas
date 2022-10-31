@@ -1,7 +1,10 @@
 import UiElement from "../../components/UiElement";
 import Component from "./Component";
 export default abstract class UiComponent extends Component {
-    uiElement!: UiElement;
+    private _uiElement!: UiElement;
+    public get uiElement(): UiElement {
+        return this._uiElement;
+    }
 
     async start() {
         const c = this.gameObject.getComponent<UiElement>(UiElement);
@@ -9,7 +12,7 @@ export default abstract class UiComponent extends Component {
             throw Error(
                 `Because game object '${this.gameObject.name}' don't have UiElement, cannot add UiComponent`
             );
-        this.uiElement = c;
+        this._uiElement = c;
         super.start();
     }
 

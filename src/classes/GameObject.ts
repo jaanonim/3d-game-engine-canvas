@@ -27,6 +27,7 @@ export default class GameObject {
 
     addChildren(obj: GameObject) {
         this.transform.addChildren(obj.transform);
+        obj.start();
         return obj;
     }
 
@@ -108,6 +109,7 @@ export default class GameObject {
         return this.transform.children
             .filter((t) => t.gameObject.name == name)
             .map((t) => t.gameObject)[0];
+        //TODO: add possible return type as undefined
     }
 
     getComponents<T>(type: Newable<any>) {

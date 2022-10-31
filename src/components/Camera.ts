@@ -164,6 +164,19 @@ export default class Camera extends Component {
         return new Vector3(vec2.x, vec2.y, this._near);
     }
 
+    /**
+     * Transforms word global vector to spot where it's will be rendered
+     * @param v word global vector
+     * @param renderer
+     * @returns Vector2 on screen
+     */
+    worldToScreenPoint(v: Vector3, renderer: Renderer): Vector2 {
+        return renderer.scaleCanvasVector(
+            this.projectVertex(this.transformToCamera(v), renderer).toVector2(),
+            true
+        );
+    }
+
     getOriginalCoords(_v: Vector3, renderer: Renderer) {
         const v = renderer.getOriginalCoords(_v, this);
         return new Vector3(
