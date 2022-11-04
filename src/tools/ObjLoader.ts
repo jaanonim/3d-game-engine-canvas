@@ -3,9 +3,13 @@ import Vector3 from "../utilities/math/Vector3";
 import Triangle from "../utilities/Triangle";
 
 export default class ObjLoader {
-    raw: String;
+    raw: string;
+    useCache: boolean;
+    static cache: { [key: string]: Mesh } = {};
 
-    constructor(text: String) {
+    constructor(text: string, useCache = true) {
+        this.useCache = useCache;
+
         this.raw = text;
         if (this.raw.indexOf("\r\n") !== -1) {
             this.raw = this.raw.replace(/\r\n/g, "\n");
@@ -16,6 +20,11 @@ export default class ObjLoader {
     }
 
     parse(hide = false) {
+        if (this.useCache) {
+            const c = ObjLoader.cache[this.raw];
+            if (c) return c;
+        }
+
         const lines = this.raw.split("\n");
         let vertices: Array<Vector3> = [];
         let normals: Array<Vector3> = [];
@@ -163,6 +172,10 @@ export default class ObjLoader {
                     }
             }
         }
-        return new Mesh(triangles);
+        const res = new Mesh(triangles);
+        if (this.useCache) {
+            ObjLoader.cache[this.raw] = res;
+        }
+        return res;
     }
 }
