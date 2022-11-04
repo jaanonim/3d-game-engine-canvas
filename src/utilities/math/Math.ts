@@ -28,3 +28,12 @@ export function clamp(v: number, min: number = 0, max: number = 1) {
 export function sigmoid(v: number) {
     return (1 / (1 + Math.exp(-v))) * 2 - 1;
 }
+
+/**
+ * Return random element from table
+ * @param array table
+ * @returns random element from table
+ */
+export function getRandomElement(array: Array<any>) {
+    return array[Math.floor(Math.random() * array.length)];
+}
