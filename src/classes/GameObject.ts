@@ -146,11 +146,11 @@ export default class GameObject {
 
     destroy() {
         if (!this.transform.parent) throw new Error("No parent");
+        this.onDestroy();
         (this.transform.parent instanceof Scene
             ? this.transform.parent
             : this.transform.parent.gameObject
         ).removeChildren(this);
-        this.onDestroy();
     }
 
     async onDestroy() {

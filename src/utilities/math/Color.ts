@@ -118,6 +118,8 @@ export default class Color {
     }
 
     blend(v: Color) {
+        //! Important TODO
+        if (v.a == 0) return this; //TODO: This is quick fix and it need to be replaced.
         this.multiply(1 - this.a / 255).add(v.multiply(v.a / 255));
         return this;
     }

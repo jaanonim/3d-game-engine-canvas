@@ -137,36 +137,31 @@ export default class Renderer {
     }
 
     renderMesh(mesh: Mesh, material: Material, camera: Camera) {
-        if (camera) {
-            const transformedMesh = mesh.transformToCamera(camera);
+        const transformedMesh = mesh.transformToCamera(camera);
 
-            const res = camera.preClipObject(transformedMesh.boundingSphere);
-            if (res === -1) return;
+        const res = camera.preClipObject(transformedMesh.boundingSphere);
+        if (res === -1) return;
 
-            if (!mesh.doubleSided)
-                transformedMesh.triangles = transformedMesh.triangles.filter(
-                    (t) => t.normal.dotProduct(t.vertices[0].invert()) > 0
-                );
+        if (!mesh.doubleSided)
+            transformedMesh.triangles = transformedMesh.triangles.filter(
+                (t) => t.normal.dotProduct(t.vertices[0].invert()) > 0
+            );
 
-            if (res === 0) {
-                transformedMesh.triangles = camera.clipObject(
-                    transformedMesh.triangles
-                );
-            }
-
-            const projectedMesh = transformedMesh.project(camera, this);
-
-            projectedMesh.triangles.forEach((t, i) => {
-                material.renderTriangle(
-                    t,
-                    transformedMesh.triangles[i],
-                    this,
-                    camera
-                );
-            });
-        } else {
-            console.warn("No camera!");
-            return;
+        if (res === 0) {
+            transformedMesh.triangles = camera.clipObject(
+                transformedMesh.triangles
+            );
         }
+
+        const projectedMesh = transformedMesh.project(camera, this);
+
+        projectedMesh.triangles.forEach((t, i) => {
+            material.renderTriangle(
+                t,
+                transformedMesh.triangles[i],
+                this,
+                camera
+            );
+        });
     }
 }

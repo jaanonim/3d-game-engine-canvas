@@ -27,6 +27,12 @@ export default class MeshRenderer extends Component {
         this.transformedMesh = this.mesh.transformToWorld(this.transform);
     }
 
+    async onDestroy() {
+        this.transform.onSomeGlobalUpdates.removeEventListener(
+            this.updateTransform.bind(this)
+        );
+    }
+
     render(renderer: Renderer, camera: Camera) {
         renderer.renderMesh(this.transformedMesh, this.material, camera);
     }
