@@ -211,14 +211,14 @@ export default class ClippingPlane {
                     [t.verticesUvs[0], t.verticesUvs[1], u02],
                     [t.verticesNormals[0], t.verticesNormals[1], n02],
                     t.normal,
-                    t.hidden
+                    [t.hidden[0], true, t.hidden[2]]
                 ),
                 new Triangle(
                     [t.vertices[1], v02, v12],
                     [t.verticesUvs[1], u02, u12],
                     [t.verticesNormals[1], n02, n12],
                     t.normal,
-                    t.hidden
+                    [true, t.hidden[1], t.hidden[1]]
                 ),
             ];
         } else if (d0 >= 0 && d1 < 0 && d2 >= 0) {
@@ -253,14 +253,14 @@ export default class ClippingPlane {
                     [t.verticesUvs[0], t.verticesUvs[2], u01],
                     [t.verticesNormals[0], t.verticesNormals[2], n01],
                     t.normal,
-                    t.hidden
+                    [t.hidden[2], true, t.hidden[0]]
                 ),
                 new Triangle(
                     [t.vertices[2], v01, v12],
                     [t.verticesUvs[2], u01, u12],
                     [t.verticesNormals[2], n01, n12],
                     t.normal,
-                    t.hidden
+                    [true, t.hidden[1], t.hidden[1]]
                 ),
             ];
         } else if (d0 < 0 && d1 >= 0 && d2 >= 0) {
@@ -295,14 +295,14 @@ export default class ClippingPlane {
                     [t.verticesUvs[1], t.verticesUvs[2], u01],
                     [t.verticesNormals[1], t.verticesNormals[2], n01],
                     t.normal,
-                    t.hidden
+                    [t.hidden[1], true, t.hidden[0]]
                 ),
                 new Triangle(
                     [t.vertices[2], v01, v02],
                     [t.verticesUvs[2], u01, u02],
                     [t.verticesNormals[2], n01, n02],
                     t.normal,
-                    t.hidden
+                    [true, t.hidden[2], t.hidden[2]]
                 ),
             ];
         } else {

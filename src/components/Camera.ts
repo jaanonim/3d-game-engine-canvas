@@ -45,6 +45,8 @@ export default class Camera extends Component {
         return this.gameObject.getScene();
     }
 
+    private _clip: boolean;
+
     clippingPlanes: [
         ClippingPlane,
         ClippingPlane,
@@ -58,10 +60,12 @@ export default class Camera extends Component {
         renderer: Renderer,
         fov: number = 90,
         near: number = 1,
-        far: number = 10000
+        far: number = 10000,
+        clip: boolean = true
     ) {
         super();
         this._fov = fov;
+        this._clip = clip;
         this._near = near;
         this._far = far;
         this._viewportRatio = renderer.canvasRatio;
@@ -129,12 +133,14 @@ export default class Camera extends Component {
 
     clipObject(triangles: Array<Triangle>) {
         let resTriangles: Array<Triangle> | null = triangles;
-        for (let i = 0; i < this.clippingPlanes.length; i++) {
-            resTriangles = this.clippingPlanes[i].clipTriangles(resTriangles);
-            if (resTriangles == null) {
-                break;
+        if (this._clip)
+            for (let i = 0; i < this.clippingPlanes.length; i++) {
+                resTriangles =
+                    this.clippingPlanes[i].clipTriangles(resTriangles);
+                if (resTriangles == null) {
+                    break;
+                }
             }
-        }
         return resTriangles;
     }
 
