@@ -23,7 +23,7 @@
 <ul class="tsd-hierarchy">
 <li><a href="components_CameraOrthographic.CameraOrthographic.html" class="tsd-signature-type" data-tsd-kind="Class">CameraOrthographic</a></li></ul></li></ul></li></ul></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L9">components/Camera.ts:9</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L9">components/Camera.ts:9</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-index-accordion" open><summary class="tsd-accordion-summary tsd-index-summary">
@@ -35,7 +35,8 @@
 </div></section>
 <section class="tsd-index-section">
 <h3 class="tsd-index-heading">Properties</h3>
-<div class="tsd-index-list"><a href="components_Camera.Camera.html#_far" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF984D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-1024-path"></rect><path d="M9.354 16V7.24H12.174C12.99 7.24 13.638 7.476 14.118 7.948C14.606 8.412 14.85 9.036 14.85 9.82C14.85 10.604 14.606 11.232 14.118 11.704C13.638 12.168 12.99 12.4 12.174 12.4H10.434V16H9.354ZM10.434 11.428H12.174C12.646 11.428 13.022 11.284 13.302 10.996C13.59 10.7 13.734 10.308 13.734 9.82C13.734 9.324 13.59 8.932 13.302 8.644C13.022 8.356 12.646 8.212 12.174 8.212H10.434V11.428Z" fill="var(--color-text)" id="icon-1024-text"></path></svg><span>_far</span></a>
+<div class="tsd-index-list"><a href="components_Camera.Camera.html#_clip" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-private"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="#FF984D" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="12" id="icon-1024-path"></rect><path d="M9.354 16V7.24H12.174C12.99 7.24 13.638 7.476 14.118 7.948C14.606 8.412 14.85 9.036 14.85 9.82C14.85 10.604 14.606 11.232 14.118 11.704C13.638 12.168 12.99 12.4 12.174 12.4H10.434V16H9.354ZM10.434 11.428H12.174C12.646 11.428 13.022 11.284 13.302 10.996C13.59 10.7 13.734 10.308 13.734 9.82C13.734 9.324 13.59 8.932 13.302 8.644C13.022 8.356 12.646 8.212 12.174 8.212H10.434V11.428Z" fill="var(--color-text)" id="icon-1024-text"></path></svg><span>_clip</span></a>
+<a href="components_Camera.Camera.html#_far" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_far</span></a>
 <a href="components_Camera.Camera.html#_fov" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_fov</span></a>
 <a href="components_Camera.Camera.html#_near" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_near</span></a>
 <a href="components_Camera.Camera.html#_viewportRatio" class="tsd-index-link tsd-kind-property tsd-parent-kind-class tsd-is-protected"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg><span>_viewport<wbr/>Ratio</span></a>
@@ -83,7 +84,7 @@
 <section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class"><a id="constructor" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>constructor</span><a href="#constructor" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-<li class="tsd-signature tsd-anchor-link" id="constructor.new_Camera">new <wbr/>Camera<span class="tsd-signature-symbol">(</span>renderer<span class="tsd-signature-symbol">: </span><a href="classes_Renderer.Renderer.html" class="tsd-signature-type" data-tsd-kind="Class">Renderer</a>, fov<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, near<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, far<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="components_Camera.Camera.html" class="tsd-signature-type" data-tsd-kind="Class">Camera</a><a href="#constructor.new_Camera" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="constructor.new_Camera">new <wbr/>Camera<span class="tsd-signature-symbol">(</span>renderer<span class="tsd-signature-symbol">: </span><a href="classes_Renderer.Renderer.html" class="tsd-signature-type" data-tsd-kind="Class">Renderer</a>, fov<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, near<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, far<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, clip<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="components_Camera.Camera.html" class="tsd-signature-type" data-tsd-kind="Class">Camera</a><a href="#constructor.new_Camera" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -95,49 +96,56 @@
 <li>
 <h5>near: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 1</span></h5></li>
 <li>
-<h5>far: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 10000</span></h5></li></ul></div>
+<h5>far: <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 10000</span></h5></li>
+<li>
+<h5>clip: <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="components_Camera.Camera.html" class="tsd-signature-type" data-tsd-kind="Class">Camera</a></h4><aside class="tsd-sources">
 <p>Overrides <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#constructor">constructor</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L57">components/Camera.ts:57</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L59">components/Camera.ts:59</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Properties</h2>
+<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private"><a id="_clip" class="tsd-anchor"></a>
+<h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagPrivate">Private</code> <span>_clip</span><a href="#_clip" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
+<div class="tsd-signature">_clip<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div><aside class="tsd-sources">
+<ul>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L48">components/Camera.ts:48</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="_far" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_far</span><a href="#_far" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">_far<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L21">components/Camera.ts:21</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L21">components/Camera.ts:21</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="_fov" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_fov</span><a href="#_fov" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">_fov<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L35">components/Camera.ts:35</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L35">components/Camera.ts:35</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="_near" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_near</span><a href="#_near" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">_near<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L12">components/Camera.ts:12</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L12">components/Camera.ts:12</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="_viewportRatio" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_viewport<wbr/>Ratio</span><a href="#_viewportRatio" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">_viewport<wbr/>Ratio<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L10">components/Camera.ts:10</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L10">components/Camera.ts:10</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a id="_viewportSize" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><code class="tsd-tag ts-flagProtected">Protected</code> <span>_viewport<wbr/>Size</span><a href="#_viewportSize" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">_viewport<wbr/>Size<span class="tsd-signature-symbol">:</span> <a href="utilities_math_Vector2.Vector2.html" class="tsd-signature-type" data-tsd-kind="Class">Vector2</a></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L30">components/Camera.ts:30</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L30">components/Camera.ts:30</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class"><a id="clippingPlanes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>clipping<wbr/>Planes</span><a href="#clippingPlanes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">clipping<wbr/>Planes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><a href="utilities_ClippingPlane.ClippingPlane.html" class="tsd-signature-type" data-tsd-kind="Class">ClippingPlane</a><span class="tsd-signature-symbol">, </span><a href="utilities_ClippingPlane.ClippingPlane.html" class="tsd-signature-type" data-tsd-kind="Class">ClippingPlane</a><span class="tsd-signature-symbol">, </span><a href="utilities_ClippingPlane.ClippingPlane.html" class="tsd-signature-type" data-tsd-kind="Class">ClippingPlane</a><span class="tsd-signature-symbol">, </span><a href="utilities_ClippingPlane.ClippingPlane.html" class="tsd-signature-type" data-tsd-kind="Class">ClippingPlane</a><span class="tsd-signature-symbol">, </span><a href="utilities_ClippingPlane.ClippingPlane.html" class="tsd-signature-type" data-tsd-kind="Class">ClippingPlane</a><span class="tsd-signature-symbol">, </span><a href="utilities_ClippingPlane.ClippingPlane.html" class="tsd-signature-type" data-tsd-kind="Class">ClippingPlane</a><span class="tsd-signature-symbol">]</span></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L48">components/Camera.ts:48</a></li></ul></aside></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L50">components/Camera.ts:50</a></li></ul></aside></section>
 <section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a id="gameObject" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>game<wbr/>Object</span><a href="#gameObject" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <div class="tsd-signature">game<wbr/>Object<span class="tsd-signature-symbol">:</span> <a href="classes_GameObject.GameObject.html" class="tsd-signature-type" data-tsd-kind="Class">GameObject</a></div><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#gameObject">gameObject</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L8">classes/Components/Component.ts:8</a></li></ul></aside></section></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L8">classes/Components/Component.ts:8</a></li></ul></aside></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Accessors</h2>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="far" class="tsd-anchor"></a>
@@ -147,7 +155,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L22">components/Camera.ts:22</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L22">components/Camera.ts:22</a></li></ul></aside></li>
 <li class="tsd-signature" id="far.far-2"><span class="tsd-signature-symbol">set</span> far<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
@@ -157,7 +165,7 @@
 <h5>value: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L25">components/Camera.ts:25</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L25">components/Camera.ts:25</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="fov" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>fov</span><a href="#fov" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -165,7 +173,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L36">components/Camera.ts:36</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L36">components/Camera.ts:36</a></li></ul></aside></li>
 <li class="tsd-signature" id="fov.fov-2"><span class="tsd-signature-symbol">set</span> fov<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
@@ -175,7 +183,7 @@
 <h5>value: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L39">components/Camera.ts:39</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L39">components/Camera.ts:39</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="isActive" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>is<wbr/>Active</span><a href="#isActive" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
@@ -184,7 +192,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <p>Inherited from Component.isActive</p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L14">classes/Components/Component.ts:14</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L14">classes/Components/Component.ts:14</a></li></ul></aside></li>
 <li class="tsd-signature" id="isActive.isActive-2"><span class="tsd-signature-symbol">set</span> isActive<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
@@ -195,7 +203,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Inherited from Component.isActive</p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L17">classes/Components/Component.ts:17</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L17">classes/Components/Component.ts:17</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="near" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>near</span><a href="#near" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -203,7 +211,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L13">components/Camera.ts:13</a></li></ul></aside></li>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L13">components/Camera.ts:13</a></li></ul></aside></li>
 <li class="tsd-signature" id="near.near-2"><span class="tsd-signature-symbol">set</span> near<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 <li class="tsd-description">
 <div class="tsd-parameters">
@@ -213,7 +221,7 @@
 <h5>value: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L16">components/Camera.ts:16</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L16">components/Camera.ts:16</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="scene" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>scene</span><a href="#scene" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -221,7 +229,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <a href="classes_Scene.Scene.html" class="tsd-signature-type" data-tsd-kind="Class">Scene</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L44">components/Camera.ts:44</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L44">components/Camera.ts:44</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><a id="transform" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>transform</span><a href="#transform" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited">
@@ -230,7 +238,7 @@
 <h4 class="tsd-returns-title">Returns <a href="utilities_Transform.Transform.html" class="tsd-signature-type" data-tsd-kind="Class">Transform</a></h4><aside class="tsd-sources">
 <p>Inherited from Component.transform</p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L9">classes/Components/Component.ts:9</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L9">classes/Components/Component.ts:9</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class"><a id="viewportSize" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>viewport<wbr/>Size</span><a href="#viewportSize" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
@@ -238,7 +246,7 @@
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Vector2.Vector2.html" class="tsd-signature-type" data-tsd-kind="Class">Vector2</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L31">components/Camera.ts:31</a></li></ul></aside></li></ul></section></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L31">components/Camera.ts:31</a></li></ul></aside></li></ul></section></section>
 <section class="tsd-panel-group tsd-member-group">
 <h2>Methods</h2>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="awake" class="tsd-anchor"></a>
@@ -249,7 +257,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#awake">awake</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L35">classes/Components/Component.ts:35</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L35">classes/Components/Component.ts:35</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="clipObject" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>clip<wbr/>Object</span><a href="#clipObject" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -262,7 +270,7 @@
 <h5>triangles: <a href="utilities_Triangle.Triangle.html" class="tsd-signature-type" data-tsd-kind="Class">Triangle</a><span class="tsd-signature-symbol">[]</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_Triangle.Triangle.html" class="tsd-signature-type" data-tsd-kind="Class">Triangle</a><span class="tsd-signature-symbol">[]</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L130">components/Camera.ts:130</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L134">components/Camera.ts:134</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="destroy" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>destroy</span><a href="#destroy" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -271,7 +279,7 @@
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#destroy">destroy</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L29">classes/Components/Component.ts:29</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L29">classes/Components/Component.ts:29</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="error" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>error</span><a href="#error" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -290,7 +298,7 @@ Logs using console.error and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#error">error</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L61">classes/Components/Component.ts:61</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L61">classes/Components/Component.ts:61</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="getOriginalCoords" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>get<wbr/>Original<wbr/>Coords</span><a href="#getOriginalCoords" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -305,7 +313,7 @@ Logs using console.error and appends info about gameObject and component</p>
 <h5>renderer: <a href="classes_Renderer.Renderer.html" class="tsd-signature-type" data-tsd-kind="Class">Renderer</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Vector3.Vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L180">components/Camera.ts:180</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L186">components/Camera.ts:186</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="lateUpdate" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>late<wbr/>Update</span><a href="#lateUpdate" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -314,7 +322,7 @@ Logs using console.error and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#lateUpdate">lateUpdate</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L38">classes/Components/Component.ts:38</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L38">classes/Components/Component.ts:38</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="log" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>log</span><a href="#log" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -333,7 +341,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#log">log</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L48">classes/Components/Component.ts:48</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L48">classes/Components/Component.ts:48</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="onDestroy" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>on<wbr/>Destroy</span><a href="#onDestroy" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -342,7 +350,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#onDestroy">onDestroy</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L39">classes/Components/Component.ts:39</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L39">classes/Components/Component.ts:39</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="preClipObject" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>pre<wbr/>Clip<wbr/>Object</span><a href="#preClipObject" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -355,7 +363,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h5>boundingSphere: <a href="../interfaces/utilities_math_Math.Sphere.html" class="tsd-signature-type" data-tsd-kind="Interface">Sphere</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L115">components/Camera.ts:115</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L119">components/Camera.ts:119</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="projectVertex" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>project<wbr/>Vertex</span><a href="#projectVertex" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -370,7 +378,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h5>renderer: <a href="classes_Renderer.Renderer.html" class="tsd-signature-type" data-tsd-kind="Class">Renderer</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Vector3.Vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L151">components/Camera.ts:151</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L157">components/Camera.ts:157</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="register" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>register</span><a href="#register" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -384,7 +392,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#register">register</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L25">classes/Components/Component.ts:25</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L25">classes/Components/Component.ts:25</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="render" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>render</span><a href="#render" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -400,7 +408,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#render">render</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L40">classes/Components/Component.ts:40</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L40">classes/Components/Component.ts:40</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="screenPointToVector" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>screen<wbr/>Point<wbr/>To<wbr/>Vector</span><a href="#screenPointToVector" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -415,7 +423,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h5>renderer: <a href="classes_Renderer.Renderer.html" class="tsd-signature-type" data-tsd-kind="Class">Renderer</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Vector3.Vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L162">components/Camera.ts:162</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L168">components/Camera.ts:168</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="start" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>start</span><a href="#start" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -424,7 +432,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#start">start</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L36">classes/Components/Component.ts:36</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L36">classes/Components/Component.ts:36</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="transformNormalToCamera" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>transform<wbr/>Normal<wbr/>To<wbr/>Camera</span><a href="#transformNormalToCamera" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -437,7 +445,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h5>vertex: <a href="utilities_math_Vector3.Vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Vector3.Vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L146">components/Camera.ts:146</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L152">components/Camera.ts:152</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="transformToCamera" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>transform<wbr/>To<wbr/>Camera</span><a href="#transformToCamera" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -450,7 +458,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h5>vertex: <a href="utilities_math_Vector3.Vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Vector3.Vector3.html" class="tsd-signature-type" data-tsd-kind="Class">Vector3</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L141">components/Camera.ts:141</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L147">components/Camera.ts:147</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="uiRender" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>ui<wbr/>Render</span><a href="#uiRender" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -464,7 +472,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#uiRender">uiRender</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L41">classes/Components/Component.ts:41</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L41">classes/Components/Component.ts:41</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="update" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update</span><a href="#update" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -473,7 +481,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#update">update</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L37">classes/Components/Component.ts:37</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L37">classes/Components/Component.ts:37</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateClippingPlanes" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Clipping<wbr/>Planes</span><a href="#updateClippingPlanes" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -486,7 +494,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <h5>angle: <span class="tsd-signature-type">number</span></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L93">components/Camera.ts:93</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L97">components/Camera.ts:97</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="updateFov" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>update<wbr/>Fov</span><a href="#updateFov" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -494,7 +502,7 @@ Logs using console.log and appends info about gameObject and component</p>
 <li class="tsd-description">
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L85">components/Camera.ts:85</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L89">components/Camera.ts:89</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a id="warn" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>warn</span><a href="#warn" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -513,7 +521,7 @@ Logs using console.warn and appends info about gameObject and component</p>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
 <p>Inherited from <a href="classes_Components_Component.Component.html">Component</a>.<a href="classes_Components_Component.Component.html#warn">warn</a></p>
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/classes/Components/Component.ts#L74">classes/Components/Component.ts:74</a></li></ul></aside></li></ul></section>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/classes/Components/Component.ts#L74">classes/Components/Component.ts:74</a></li></ul></aside></li></ul></section>
 <section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class"><a id="worldToScreenPoint" class="tsd-anchor"></a>
 <h3 class="tsd-anchor-link"><span>world<wbr/>To<wbr/>Screen<wbr/>Point</span><a href="#worldToScreenPoint" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><use href="#icon-anchor-a"></use><use href="#icon-anchor-b"></use><use href="#icon-anchor-c"></use></svg></a></h3>
 <ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -534,7 +542,7 @@ Logs using console.warn and appends info about gameObject and component</p>
 <h5>renderer: <a href="classes_Renderer.Renderer.html" class="tsd-signature-type" data-tsd-kind="Class">Renderer</a></h5></li></ul></div>
 <h4 class="tsd-returns-title">Returns <a href="utilities_math_Vector2.Vector2.html" class="tsd-signature-type" data-tsd-kind="Class">Vector2</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/4775483/src/components/Camera.ts#L173">components/Camera.ts:173</a></li></ul></aside></li></ul></section></section></div>
+<li>Defined in <a href="https://github.com/jaanonim/3d-game-engine-canvas/blob/6895a08/src/components/Camera.ts#L179">components/Camera.ts:179</a></li></ul></aside></li></ul></section></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
@@ -593,6 +601,7 @@ Logs using console.warn and appends info about gameObject and component</p>
 <li class="tsd-kind-module"><a href="../modules/tools_Raycasts_Raycast.html">tools/<wbr/>Raycasts/<wbr/>Raycast</a></li>
 <li class="tsd-kind-module"><a href="../modules/tools_Raycasts_ScreenRaycast.html">tools/<wbr/>Raycasts/<wbr/>Screen<wbr/>Raycast</a></li>
 <li class="tsd-kind-module"><a href="../modules/tools_Raycasts_SimpleRaycast.html">tools/<wbr/>Raycasts/<wbr/>Simple<wbr/>Raycast</a></li>
+<li class="tsd-kind-module"><a href="../modules/tools_Rotate.html">tools/<wbr/>Rotate</a></li>
 <li class="tsd-kind-module"><a href="../modules/tools_TextureLoader.html">tools/<wbr/>Texture<wbr/>Loader</a></li>
 <li class="tsd-kind-module"><a href="../modules/utilities_ClippingPlane.html">utilities/<wbr/>Clipping<wbr/>Plane</a></li>
 <li class="tsd-kind-module"><a href="../modules/utilities_Mesh.html">utilities/<wbr/>Mesh</a></li>
@@ -614,6 +623,7 @@ Logs using console.warn and appends info about gameObject and component</p>
 <li class="current tsd-kind-class tsd-parent-kind-module"><a href="components_Camera.Camera.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-class)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-128-path"></rect><path d="M11.898 16.1201C11.098 16.1201 10.466 15.8961 10.002 15.4481C9.53803 15.0001 9.30603 14.3841 9.30603 13.6001V9.64012C9.30603 8.85612 9.53803 8.24012 10.002 7.79212C10.466 7.34412 11.098 7.12012 11.898 7.12012C12.682 7.12012 13.306 7.34812 13.77 7.80412C14.234 8.25212 14.466 8.86412 14.466 9.64012H13.386C13.386 9.14412 13.254 8.76412 12.99 8.50012C12.734 8.22812 12.37 8.09212 11.898 8.09212C11.426 8.09212 11.054 8.22412 10.782 8.48812C10.518 8.75212 10.386 9.13212 10.386 9.62812V13.6001C10.386 14.0961 10.518 14.4801 10.782 14.7521C11.054 15.0161 11.426 15.1481 11.898 15.1481C12.37 15.1481 12.734 15.0161 12.99 14.7521C13.254 14.4801 13.386 14.0961 13.386 13.6001H14.466C14.466 14.3761 14.234 14.9921 13.77 15.4481C13.306 15.8961 12.682 16.1201 11.898 16.1201Z" fill="var(--color-text)" id="icon-128-text"></path></svg><span>Camera</span></a>
 <ul>
 <li class="tsd-kind-constructor tsd-parent-kind-class"><a href="components_Camera.Camera.html#constructor" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-512-path"></use><use href="#icon-512-text"></use></svg>constructor</a></li>
+<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="components_Camera.Camera.html#_clip" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_clip</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="components_Camera.Camera.html#_far" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_far</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="components_Camera.Camera.html#_fov" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_fov</a></li>
 <li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="components_Camera.Camera.html#_near" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-1024-path"></use><use href="#icon-1024-text"></use></svg>_near</a></li>
