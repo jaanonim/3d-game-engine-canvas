@@ -14,6 +14,7 @@ export default class UiScreen extends SizedComponent {
             undefined,
             undefined,
             undefined,
+            undefined,
             smoothing
         );
         this.renderer = renderer;

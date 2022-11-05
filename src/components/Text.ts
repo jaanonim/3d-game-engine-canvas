@@ -9,7 +9,20 @@ export interface TextOptions {
 
 export default class Text extends UiComponent {
     private _text: string;
+    public get text(): string {
+        return this._text;
+    }
+    public set text(value: string) {
+        this._text = value;
+    }
+
     private _options: TextOptions;
+    public get options(): TextOptions {
+        return this._options;
+    }
+    public set options(value: TextOptions) {
+        this._options = value;
+    }
 
     constructor(text: string, options?: TextOptions) {
         super();

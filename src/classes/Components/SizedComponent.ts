@@ -80,11 +80,21 @@ export default abstract class SizedComponent extends Component {
         this.onPositionUpdate.call(this);
     }
 
+    private _flip: [boolean, boolean];
+    public get flip(): [boolean, boolean] {
+        return this._flip;
+    }
+    public set flip(value: [boolean, boolean]) {
+        this._flip = value;
+        this.onFlipUpdate.call(this);
+    }
+
     onSizeUpdate: Event<SizedComponent>;
     onPositionUpdate: Event<SizedComponent>;
     onRotationUpdate: Event<SizedComponent>;
     onAnchorUpdate: Event<SizedComponent>;
     onSomeUpdate: Event<SizedComponent>;
+    onFlipUpdate: Event<SizedComponent>;
 
     constructor(
         size: Vector2 = Vector2.one.multiply(100),
@@ -92,6 +102,7 @@ export default abstract class SizedComponent extends Component {
         sizeType: SizeType = SizeType.PIXEL,
         positionType: PositionType = PositionType.TOP_LEFT,
         anchor: Vector2 = new Vector2(0.5, 0.5),
+        flip: [boolean, boolean] = [false, false],
         smoothing: boolean = true
     ) {
         super();
@@ -102,12 +113,14 @@ export default abstract class SizedComponent extends Component {
         this._positionType = positionType;
         this._anchor = anchor;
         this._rotation = rotation;
+        this._flip = flip;
         this.smoothing = smoothing;
         this.onSizeUpdate = new Event<SizedComponent>();
         this.onPositionUpdate = new Event<SizedComponent>();
         this.onRotationUpdate = new Event<SizedComponent>();
         this.onAnchorUpdate = new Event<SizedComponent>();
         this.onSomeUpdate = new Event<SizedComponent>();
+        this.onFlipUpdate = new Event<SizedComponent>();
         this.canvas = new VirtualCanvas(size.x, size.y, this.smoothing);
     }
 
@@ -134,11 +147,15 @@ export default abstract class SizedComponent extends Component {
         this.onRotationUpdate.addEventListener(
             this.onSomeUpdate.call.bind(this.onSomeUpdate, this)
         );
+        this.onFlipUpdate.addEventListener(
+            this.onSomeUpdate.call.bind(this.onSomeUpdate, this)
+        );
 
         this.onSizeUpdate.call(this);
         this.onPositionUpdate.call(this);
         this.onRotationUpdate.call(this);
         this.onAnchorUpdate.call(this);
+        this.onFlipUpdate.call(this);
     }
 
     updatePosition() {
@@ -234,9 +251,11 @@ export default abstract class SizedComponent extends Component {
     }
 
     uiRender(canvas: VirtualCanvas) {
-        this.transform.gameObject
-            .getUiComponents()
-            .forEach((c) => c.uiRender());
+        this.canvas.clear();
+
+        this.transform.gameObject.getUiComponents().forEach((c) => {
+            if (c.isActive) c.uiRender();
+        });
         this.transform.children.map((t) =>
             t.gameObject.getSizedComponent()?.uiRender(this.canvas)
         );
@@ -249,6 +268,7 @@ export default abstract class SizedComponent extends Component {
         canvas.ctx.save();
         canvas.ctx.translate(p.x + s.x, p.y + s.y);
         canvas.ctx.rotate(this._rotation);
+        canvas.ctx.scale(this._flip[0] ? -1 : 1, this._flip[1] ? -1 : 1);
         canvas.ctx.translate(-p.x - s.x, -p.y - s.y);
 
         canvas.ctx.drawImage(

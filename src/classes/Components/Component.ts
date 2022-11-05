@@ -1,11 +1,13 @@
 import Camera from "../../components/Camera";
 import Transform from "../../utilities/Transform";
 import VirtualCanvas from "../../utilities/VirtualCanvas";
+import Event from "../Event";
 import GameObject from "../GameObject";
 import Renderer from "../Renderer";
 
 export default abstract class Component {
     gameObject!: GameObject;
+    onActiveChanges: Event<Component>;
     get transform(): Transform {
         return this.gameObject.transform;
     }
@@ -16,10 +18,12 @@ export default abstract class Component {
     }
     public set isActive(value: boolean) {
         this._isActive = value;
+        this.onActiveChanges.call(this);
     }
 
     constructor() {
         this._isActive = true;
+        this.onActiveChanges = new Event<Component>();
     }
 
     register(obj: GameObject) {

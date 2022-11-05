@@ -14,6 +14,15 @@ export default abstract class UiComponent extends Component {
             );
         this._uiElement = c;
         super.start();
+        this.onActiveChanges.addEventListener(this.activeChanges.bind(this));
+    }
+
+    async onDestroy() {
+        this.onActiveChanges.removeEventListener(this.activeChanges.bind(this));
+    }
+
+    activeChanges() {
+        this.uiElement.canvas.clear();
     }
 
     uiRender() {
