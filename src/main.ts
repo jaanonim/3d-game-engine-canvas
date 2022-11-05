@@ -57,7 +57,7 @@ async function main() {
     teapot.doubleSided = true;
 
     const canvas = document.getElementById("root") as HTMLCanvasElement;
-    const r = new Renderer(canvas, 0.6, false);
+    const r = new Renderer(canvas, 0.6, 2, false);
     // const testTexture = new TextureLoader(
     //     await FileLoader.loadImg("/test.png")
     // ).parse();
