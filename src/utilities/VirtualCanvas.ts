@@ -4,7 +4,7 @@ export default class VirtualCanvas {
     ctx: CanvasRenderingContext2D;
     canvas: HTMLCanvasElement;
 
-    constructor(width: number, height: number) {
+    constructor(width: number, height: number, smoothing: boolean = true) {
         this.width = width;
         this.height = height;
         this.canvas = document.createElement("canvas");
@@ -12,7 +12,7 @@ export default class VirtualCanvas {
         this.canvas.height = this.height;
         const ctx = this.canvas.getContext("2d");
         if (ctx == null) throw Error("Cannot get ctx in VirtualCanvas");
-        //ctx.imageSmoothingEnabled = false; //TODO: Implement it somehow
+        ctx.imageSmoothingEnabled = smoothing;
         this.ctx = ctx;
     }
 

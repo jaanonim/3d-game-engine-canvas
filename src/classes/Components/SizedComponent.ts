@@ -23,6 +23,7 @@ export enum PositionType {
 
 export default abstract class SizedComponent extends Component {
     canvas: VirtualCanvas;
+    smoothing: boolean;
 
     private _rotation: number;
     public get rotation(): number {
@@ -90,7 +91,8 @@ export default abstract class SizedComponent extends Component {
         rotation: number = 0,
         sizeType: SizeType = SizeType.PIXEL,
         positionType: PositionType = PositionType.TOP_LEFT,
-        anchor: Vector2 = new Vector2(0.5, 0.5)
+        anchor: Vector2 = new Vector2(0.5, 0.5),
+        smoothing: boolean = true
     ) {
         super();
         this._size = size;
@@ -100,12 +102,13 @@ export default abstract class SizedComponent extends Component {
         this._positionType = positionType;
         this._anchor = anchor;
         this._rotation = rotation;
+        this.smoothing = smoothing;
         this.onSizeUpdate = new Event<SizedComponent>();
         this.onPositionUpdate = new Event<SizedComponent>();
         this.onRotationUpdate = new Event<SizedComponent>();
         this.onAnchorUpdate = new Event<SizedComponent>();
         this.onSomeUpdate = new Event<SizedComponent>();
-        this.canvas = new VirtualCanvas(size.x, size.y);
+        this.canvas = new VirtualCanvas(size.x, size.y, this.smoothing);
     }
 
     async start() {
@@ -223,7 +226,11 @@ export default abstract class SizedComponent extends Component {
                     .multiply(this.transform.globalScale.toVector2());
             }
         }
-        this.canvas = new VirtualCanvas(this.realSize.x, this.realSize.y);
+        this.canvas = new VirtualCanvas(
+            this.realSize.x,
+            this.realSize.y,
+            this.smoothing
+        );
     }
 
     uiRender(canvas: VirtualCanvas) {

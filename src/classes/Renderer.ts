@@ -33,6 +33,7 @@ export default class Renderer {
     constructor(
         canvas: HTMLCanvasElement,
         scale: number = 1,
+        layers: number = 2,
         smoothing: boolean = true
     ) {
         this.canvas = canvas;
@@ -45,7 +46,13 @@ export default class Renderer {
         let ctx = canvas.getContext("2d");
         if (ctx == null) throw Error("Cannot get context");
         ctx.imageSmoothingEnabled = smoothing;
-        this.drawer = new Drawer(ctx, this.canvas.width, this.canvas.height);
+        this.drawer = new Drawer(
+            ctx,
+            this.canvas.width,
+            this.canvas.height,
+            layers,
+            smoothing
+        );
         this.resize();
     }
 

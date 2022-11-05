@@ -27,21 +27,26 @@ export default class Drawer {
     height: number;
     img: ImageData;
     depthBuffer: Float32Array;
+    smoothing: boolean;
 
     constructor(
         ctx: CanvasRenderingContext2D,
         width: number,
         height: number,
-        layers: number = 2
+        layers: number = 2,
+        smoothing: boolean = true
     ) {
         this.ctx = ctx;
         this.width = width;
         this.height = height;
+        this.smoothing = smoothing;
         this.img = this.ctx.createImageData(width, height);
         this.depthBuffer = new Float32Array(this.width * this.height);
         this.virtualCanvas = [];
         for (let i = 0; i < layers; i++) {
-            this.virtualCanvas.push(new VirtualCanvas(width, height));
+            this.virtualCanvas.push(
+                new VirtualCanvas(width, height, this.smoothing)
+            );
         }
     }
 
@@ -49,7 +54,7 @@ export default class Drawer {
         this.width = width;
         this.height = height;
         this.virtualCanvas = this.virtualCanvas.map(
-            () => new VirtualCanvas(width, height)
+            () => new VirtualCanvas(width, height, this.smoothing)
         );
     }
 
