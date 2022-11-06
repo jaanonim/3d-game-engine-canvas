@@ -8,15 +8,10 @@ export default class UiScreen extends SizedComponent {
     renderer: Renderer;
 
     constructor(renderer: Renderer, layer: number, smoothing: boolean = true) {
-        super(
-            new Vector2(renderer.canvas.width, renderer.canvas.height),
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            undefined,
-            smoothing
-        );
+        super({
+            size: new Vector2(renderer.canvas.width, renderer.canvas.height),
+            smoothing: smoothing,
+        });
         this.renderer = renderer;
         renderer.onResize.addEventListener(this.onResize.bind(this));
         this.layer = layer;

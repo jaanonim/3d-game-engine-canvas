@@ -21,6 +21,16 @@ export enum PositionType {
     BOTTOM_RIGHT,
 }
 
+export interface sizedComponentOptions {
+    size?: Vector2;
+    rotation?: number;
+    sizeType?: SizeType;
+    positionType?: PositionType;
+    anchor?: Vector2;
+    flip?: [boolean, boolean];
+    smoothing?: boolean;
+}
+
 export default abstract class SizedComponent extends Component {
     canvas: VirtualCanvas;
     smoothing: boolean;
@@ -96,32 +106,28 @@ export default abstract class SizedComponent extends Component {
     onSomeUpdate: Event<SizedComponent>;
     onFlipUpdate: Event<SizedComponent>;
 
-    constructor(
-        size: Vector2 = Vector2.one.multiply(100),
-        rotation: number = 0,
-        sizeType: SizeType = SizeType.PIXEL,
-        positionType: PositionType = PositionType.TOP_LEFT,
-        anchor: Vector2 = new Vector2(0.5, 0.5),
-        flip: [boolean, boolean] = [false, false],
-        smoothing: boolean = true
-    ) {
+    constructor(options: sizedComponentOptions) {
         super();
-        this._size = size;
-        this._realSize = size;
+        this._size = options.size || Vector2.one.multiply(100);
+        this._realSize = this.size;
         this._realPosition = Vector2.zero;
-        this._sizeType = sizeType;
-        this._positionType = positionType;
-        this._anchor = anchor;
-        this._rotation = rotation;
-        this._flip = flip;
-        this.smoothing = smoothing;
+        this._sizeType = options.sizeType || SizeType.PIXEL;
+        this._positionType = options.positionType || PositionType.TOP_LEFT;
+        this._anchor = options.anchor || new Vector2(0.5, 0.5);
+        this._rotation = options.rotation || 0;
+        this._flip = options.flip || [false, false];
+        this.smoothing = options.smoothing || true;
         this.onSizeUpdate = new Event<SizedComponent>();
         this.onPositionUpdate = new Event<SizedComponent>();
         this.onRotationUpdate = new Event<SizedComponent>();
         this.onAnchorUpdate = new Event<SizedComponent>();
         this.onSomeUpdate = new Event<SizedComponent>();
         this.onFlipUpdate = new Event<SizedComponent>();
-        this.canvas = new VirtualCanvas(size.x, size.y, this.smoothing);
+        this.canvas = new VirtualCanvas(
+            this.size.x,
+            this.size.y,
+            this.smoothing
+        );
     }
 
     async start() {
