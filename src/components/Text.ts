@@ -5,6 +5,7 @@ export interface TextOptions {
     color?: Color;
     font?: string;
     fontSize?: number;
+    textAlign?: "center" | "left" | "right";
 }
 
 export default class Text extends UiComponent {
@@ -31,6 +32,7 @@ export default class Text extends UiComponent {
             color: Color.black,
             font: "Arial",
             fontSize: 12,
+            textAlign: "center",
             ...options,
         };
     }
@@ -40,11 +42,26 @@ export default class Text extends UiComponent {
         const ctx = this.uiElement.canvas.ctx;
         ctx.font = `${this._options.fontSize}px ${this._options.font}`;
         ctx.fillStyle = this._options.color?.getStringRGBA() || "";
-        ctx.textAlign = "center";
-        ctx.fillText(
-            this._text,
-            this.uiElement.realSize.x / 2,
-            this.uiElement.realSize.y / 2
-        );
+        ctx.textAlign = this._options.textAlign || "center";
+
+        switch (this._options.textAlign) {
+            case "center":
+                ctx.fillText(
+                    this._text,
+                    this.uiElement.realSize.x / 2,
+                    this.uiElement.realSize.y / 2
+                );
+                break;
+            case "left":
+                ctx.fillText(this._text, 0, this.uiElement.realSize.y / 2);
+                break;
+            case "right":
+                ctx.fillText(
+                    this._text,
+                    this.uiElement.realSize.x,
+                    this.uiElement.realSize.y / 2
+                );
+                break;
+        }
     }
 }

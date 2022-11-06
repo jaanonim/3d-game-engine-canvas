@@ -123,6 +123,12 @@ export default class GameObject {
         return this.components.filter((c) => c instanceof type)[0] as T;
     }
 
+    getComponentError<T>(type: Newable<any>): T {
+        const c = this.components.filter((c) => c instanceof type)[0] as T;
+        if (!c) throw Error(`Component ${type} not found on ${this.name}`);
+        return c;
+    }
+
     getAllComponents<T>(type: Newable<any>): Array<T> {
         const res: Array<T> = [];
         this.transform.children.forEach((t) => {
