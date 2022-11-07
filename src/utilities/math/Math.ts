@@ -19,6 +19,13 @@ export function map(
     return ((v - minIn) * (maxOut - minOut)) / (maxIn - minIn) + minOut;
 }
 
+/**
+ * Clamp value between min and max values
+ * @param v number value
+ * @param min number min value
+ * @param max number max value
+ * @returns number
+ */
 export function clamp(v: number, min: number = 0, max: number = 1) {
     if (v < min) v = min;
     if (v > max) v = max;
