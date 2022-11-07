@@ -10,6 +10,11 @@ export default class Box {
         this.b = b;
     }
 
+    /**
+     * Clamps given Vector3 to be inside box
+     * @param v Vector3
+     * @returns
+     */
     clamp(v: Vector3) {
         return new Vector3(
             clamp(
