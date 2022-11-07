@@ -266,9 +266,9 @@ export default abstract class SizedComponent extends Component {
             t.gameObject.getSizedComponent()?.uiRender(this.canvas)
         );
 
-        const s = this._anchor.multiply(
-            new Vector2(this.canvas.width, this.canvas.height)
-        );
+        const s = this._anchor
+            .multiply(new Vector2(this.canvas.width, this.canvas.height))
+            .roundToInt();
         const p = this.realPosition.subtract(s);
 
         canvas.ctx.save();
