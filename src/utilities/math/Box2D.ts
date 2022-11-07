@@ -10,6 +10,11 @@ export default class Box2D {
         this.b = b;
     }
 
+    /**
+     * Clamps given Vector2 to be inside box
+     * @param v Vector2
+     * @returns Vector2
+     */
     clamp(v: Vector2) {
         return new Vector2(
             clamp(
@@ -25,6 +30,11 @@ export default class Box2D {
         );
     }
 
+    /**
+     * Check if given Vector2 is inside box
+     * @param v Vector2
+     * @returns boolean
+     */
     contains(v: Vector2): boolean {
         return (
             v.x >= Math.min(this.a.x, this.b.x) &&

@@ -13,7 +13,7 @@ export default class Box {
     /**
      * Clamps given Vector3 to be inside box
      * @param v Vector3
-     * @returns
+     * @returns Vector3
      */
     clamp(v: Vector3) {
         return new Vector3(
