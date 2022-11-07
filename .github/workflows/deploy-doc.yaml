@@ -1,29 +1,41 @@
-name: Build and Deploy Doc
+name: Deploy static docs content to Pages
+
 on:
     push:
-        branches:
-            - master
+        branches: ["master"]
+    workflow_dispatch:
+
 permissions:
-    contents: write
+    contents: read
+    pages: write
+    id-token: write
+
+concurrency:
+    group: "pages"
+    cancel-in-progress: true
+
 jobs:
-    build-and-deploy:
-        concurrency: ci-${{ github.ref }}
+    build:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout 🛎️
+            - name: Checkout
               uses: actions/checkout@v3
-
-            - name: Install and Build 🔧
+            - name: Build docs
               run: |
                   npm ci
                   npm run doc
-
-            - name: NPM publish 🚚
-              uses: JS-DevTools/npm-publish@v1
+    deploy:
+        environment:
+            name: github-pages
+            url: ${{ steps.deployment.outputs.page_url }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: Setup Pages
+              uses: actions/configure-pages@v2
+            - name: Upload artifact
+              uses: actions/upload-pages-artifact@v1
               with:
-                  token: ${{ secrets.NPM_TOKEN }}
-
-            - name: Deploy 🚀
-              uses: JamesIves/github-pages-deploy-action@v4
-              with:
-                  folder: docs
+                  path: "./docs"
+            - name: Deploy to GitHub Pages
+              id: deployment
+              uses: actions/deploy-pages@v1
