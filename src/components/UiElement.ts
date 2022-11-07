@@ -22,6 +22,11 @@ export default class UiElement extends SizedComponent {
         super.start();
     }
 
+    /**
+     * Check if given vector is inside UiElement global box
+     * @param v vector to check
+     * @returns boolean
+     */
     contains(v: Vector2): boolean {
         const s = this.realSize.divide(2);
         return new Box2D(

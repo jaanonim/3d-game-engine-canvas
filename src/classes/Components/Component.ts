@@ -26,22 +26,59 @@ export default abstract class Component {
         this.onActiveChanges = new Event<Component>();
     }
 
+    /**
+     * Called when component added to GameObject
+     * @param obj GameObject
+     */
     register(obj: GameObject) {
         this.gameObject = obj;
     }
 
+    /**
+     * Destroy component
+     */
     destroy() {
         this.gameObject.removeComponent(this);
         //this.gameObject = null; //! I hate TypeScript
         this.onDestroy();
     }
 
+    /**
+     * Called on scene load
+     */
     async awake() {}
+
+    /**
+     * Called when object is created
+     */
     async start() {}
+
+    /**
+     * Called every frame before render
+     */
     async update() {}
+
+    /**
+     * Called every frame after render
+     */
     async lateUpdate() {}
+
+    /**
+     * Called when component is destroyed
+     */
     async onDestroy() {}
+
+    /**
+     * Used for rendering
+     * @param _renderer
+     * @param _camera
+     */
     render(_renderer: Renderer, _camera: Camera) {}
+
+    /**
+     * Used for rendering UI
+     * @param _canvas
+     */
     uiRender(_canvas: VirtualCanvas) {}
 
     /**
