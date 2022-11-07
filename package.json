@@ -1,12 +1,13 @@
 {
   "name": "3d-game-engine-canvas",
-  "version": "0.1.23",
+  "version": "0.1.24",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "deploy": "npm version --no-git-tag-version patch && npm run doc && npm publish",
+    "patch": "npm version --no-git-tag-version patch",
     "doc": "typedoc --entryPointStrategy expand ./src"
   },
   "devDependencies": {
