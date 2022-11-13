@@ -150,9 +150,9 @@ export default class GameObject {
         )[0] as SizedComponent;
     }
 
-    destroy() {
+    async destroy() {
         if (!this.transform.parent) throw new Error("No parent");
-        this.onDestroy();
+        await this.onDestroy();
         (this.transform.parent instanceof Scene
             ? this.transform.parent
             : this.transform.parent.gameObject
