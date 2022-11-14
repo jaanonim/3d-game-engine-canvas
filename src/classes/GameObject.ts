@@ -49,6 +49,10 @@ export default class GameObject {
         obj.onDestroy();
     }
 
+    getChildren() {
+        return this.transform.children.map((t) => t.gameObject);
+    }
+
     async start() {
         await Promise.all(
             this.components.filter((c) => c.isActive).map((c) => c.start())
