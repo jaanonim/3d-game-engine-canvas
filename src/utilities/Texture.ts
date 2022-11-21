@@ -21,6 +21,14 @@ export default class Texture {
         this.generateMipmap(this.calculateDepth());
     }
 
+    updateColorsDataAndMipmap() {
+        this.colorsData = [
+            this.canvas.ctx.getImageData(0, 0, this.width[0], this.height[0])
+                .data,
+        ];
+        this.generateMipmap(this.calculateDepth());
+    }
+
     get(x: number, y: number, textureId: number = 0): Color {
         const realX = (this.width[textureId] - 1) * x;
         const realY = (this.height[textureId] - 1) * y;
