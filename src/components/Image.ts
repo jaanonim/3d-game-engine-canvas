@@ -5,9 +5,9 @@ import VirtualCanvas from "../utilities/VirtualCanvas";
 
 export default class Image extends UiComponent {
     texture: Texture;
-    color: Color;
+    color: Color | null;
 
-    constructor(texture: Texture, color: Color = Color.white) {
+    constructor(texture: Texture, color: Color | null = null) {
         super();
         this.texture = texture;
         this.color = color;
@@ -21,13 +21,15 @@ export default class Image extends UiComponent {
             this.texture.canvas.height
         );
 
-        c.ctx.fillStyle = this.color.getStringRGBA();
-        c.ctx.fillRect(
-            0,
-            0,
-            this.texture.canvas.width,
-            this.texture.canvas.height
-        );
+        if (this.color) {
+            c.ctx.fillStyle = this.color.getStringRGBA();
+            c.ctx.fillRect(
+                0,
+                0,
+                this.texture.canvas.width,
+                this.texture.canvas.height
+            );
+        }
         c.ctx.stroke();
         c.ctx.globalCompositeOperation = "destination-atop"; //? Hope it will work. It's randomly selected.
         c.ctx.drawImage(

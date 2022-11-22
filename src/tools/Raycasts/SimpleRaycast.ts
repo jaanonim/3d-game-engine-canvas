@@ -46,6 +46,7 @@ export default class SimpleRaycast implements Raycasts {
         direction: Vector3,
         sphere: Sphere
     ) {
+        if (!sphere) return -1;
         const e = sphere.center.subtract(position);
         const a = e.dotProduct(direction);
 

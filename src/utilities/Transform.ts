@@ -129,8 +129,10 @@ export default class Transform {
         return vector.add(this.globalPosition);
     }
 
-    addChildren(transform: Transform) {
-        this._children.push(transform);
+    addChildren(transform: Transform, atStart = false) {
+        if (atStart) this._children = [transform, ...this._children];
+        else this._children.push(transform);
+
         transform._parent = this;
         transform.updateAll();
         return transform;

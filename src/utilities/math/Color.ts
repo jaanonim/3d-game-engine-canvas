@@ -43,6 +43,17 @@ export default class Color {
         );
     }
 
+    static fromHex(hex: string) {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        if (!result) throw Error("Invalid hex value for color");
+        return new Color(
+            parseInt(result[1], 16),
+            parseInt(result[2], 16),
+            parseInt(result[3], 16),
+            255
+        );
+    }
+
     constructor(r: number = 0, g: number = 0, b: number = 0, a: number = 255) {
         this.r = clamp(r, 0, 255);
         this.g = clamp(g, 0, 255);

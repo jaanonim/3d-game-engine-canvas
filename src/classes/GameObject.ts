@@ -25,8 +25,8 @@ export default class GameObject {
         GameObject._register[name] = this;
     }
 
-    addChildren(obj: GameObject) {
-        this.transform.addChildren(obj.transform);
+    addChildren(obj: GameObject, atStart = false) {
+        this.transform.addChildren(obj.transform, atStart);
         try {
             this.getScene();
             obj.start();
