@@ -32,9 +32,13 @@ export default class Importer {
         });
         return scene;
     }
-
-    static object(data: GameObjectType): GameObject {
+    static object(data: GameObjectType): GameObject;
+    static object(data: Array<GameObjectType>): Array<GameObject>;
+    static object(
+        data: GameObjectType | Array<GameObjectType>
+    ): Array<GameObject> | GameObject {
         if (data instanceof GameObject) return data;
+        if (Array.isArray(data)) return data.map((o) => Importer.object(o));
         const obj = new GameObject(data.name);
         if (data.transform)
             obj.transform = Importer.transform(data.transform, obj);
