@@ -1,3 +1,4 @@
+import { clamp } from "./Math";
 import Vector2 from "./Vector2";
 
 export default class Vector3 {
@@ -98,5 +99,13 @@ export default class Vector3 {
 
     equals(v: Vector3) {
         return this.x === v.x && this.y === v.y && this.z === v.z;
+    }
+
+    clamp(min: Vector3, max: Vector3) {
+        return new Vector3(
+            clamp(this.x, min.x, max.x),
+            clamp(this.y, min.y, max.y),
+            clamp(this.z, min.z, max.z)
+        );
     }
 }
