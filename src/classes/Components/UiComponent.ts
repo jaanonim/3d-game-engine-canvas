@@ -27,6 +27,8 @@ export default abstract class UiComponent extends Component {
 
     uiRender() {
         // TODO: Move it so one game obj can renderer text and img
+        if (!this.uiElement)
+            throw Error(`Missing start call on ${this.gameObject.name}`);
         this.uiElement.canvas.clear();
     }
 }

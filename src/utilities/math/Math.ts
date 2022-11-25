@@ -41,6 +41,6 @@ export function sigmoid(v: number) {
  * @param array table
  * @returns random element from table
  */
-export function getRandomElement(array: Array<any>) {
+export function getRandomElement<T>(array: Array<T>): T {
     return array[Math.floor(Math.random() * array.length)];
 }
