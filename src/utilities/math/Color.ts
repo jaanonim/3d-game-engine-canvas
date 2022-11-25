@@ -128,6 +128,14 @@ export default class Color {
         return this;
     }
 
+    subtract(v: Color) {
+        this.r = clamp(this.r - v.r, 0, 255);
+        this.g = clamp(this.g - v.g, 0, 255);
+        this.b = clamp(this.b - v.b, 0, 255);
+        this.a = clamp(this.a - v.a, 0, 255);
+        return this;
+    }
+
     blend(v: Color) {
         //! Important TODO
         if (v.a == 0) return this; //TODO: This is quick fix and it need to be replaced.
