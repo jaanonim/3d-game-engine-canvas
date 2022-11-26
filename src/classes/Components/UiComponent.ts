@@ -13,7 +13,7 @@ export default abstract class UiComponent extends Component {
                 `Because game object '${this.gameObject.name}' don't have UiElement, cannot add UiComponent`
             );
         this._uiElement = c;
-        super.start();
+        await super.start();
         this.onActiveChanges.addEventListener(this.activeChanges.bind(this));
     }
 

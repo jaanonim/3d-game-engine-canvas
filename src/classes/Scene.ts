@@ -23,10 +23,10 @@ export default class Scene {
         return Vector3.zero;
     }
 
-    addChildren(obj: GameObject) {
+    async addChildren(obj: GameObject) {
         this.children.push(obj);
         obj.transform.setParent(this);
-        obj.start();
+        await obj.start();
         return obj;
     }
 

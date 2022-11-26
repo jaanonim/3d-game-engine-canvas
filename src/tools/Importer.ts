@@ -25,31 +25,48 @@ export interface TransformData {
 }
 
 export default class Importer {
-    static scene(data: SceneData): Scene {
+    static async scene(data: SceneData): Promise<Scene> {
         const scene = new Scene(data.name);
-        data.children.forEach((o) => {
-            scene.addChildren(Importer.object(o));
-        });
+        const objs = await Promise.all(
+            data.children.map((o) => Importer.object(o))
+        );
+        await Promise.all(
+            objs.map((o) => {
+                scene.addChildren(o);
+            })
+        );
         return scene;
     }
-    static object(data: GameObjectType): GameObject;
-    static object(data: Array<GameObjectType>): Array<GameObject>;
-    static object(
-        data: GameObjectType | Array<GameObjectType>
-    ): Array<GameObject> | GameObject {
+
+    static async object(data: GameObjectType): Promise<GameObject>;
+    static async object(
+        data: Array<GameObjectType>
+    ): Promise<Array<GameObject>>;
+    static async object(data: GameObjectType | Array<GameObjectType>) {
         if (data instanceof GameObject) return data;
-        if (Array.isArray(data)) return data.map((o) => Importer.object(o));
+        if (Array.isArray(data))
+            return Promise.all(data.map((o) => Importer.object(o)));
+
         const obj = new GameObject(data.name);
+
         if (data.transform)
             obj.transform = Importer.transform(data.transform, obj);
+
         if (data.components)
             data.components.forEach((c) => {
                 obj.addComponent(c);
             });
-        if (data.children)
-            data.children.forEach((o) => {
-                obj.addChildren(Importer.object(o));
-            });
+
+        if (data.children) {
+            const objs = await Promise.all(
+                data.children.map((o) => Importer.object(o))
+            );
+            await Promise.all(
+                objs.map((o) => {
+                    obj.addChildren(o);
+                })
+            );
+        }
 
         return obj;
     }

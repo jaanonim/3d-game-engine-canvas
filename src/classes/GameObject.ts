@@ -25,11 +25,11 @@ export default class GameObject {
         GameObject._register[name] = this;
     }
 
-    addChildren(obj: GameObject, atStart = false) {
+    async addChildren(obj: GameObject, atStart = false) {
         this.transform.addChildren(obj.transform, atStart);
         try {
             this.getScene();
-            obj.start();
+            await obj.start();
         } catch (e) {}
         return obj;
     }
