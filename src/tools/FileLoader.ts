@@ -1,6 +1,7 @@
 export default class FileLoader {
     static fileCache: { [key: string]: string } = {};
     static imageCache: { [key: string]: HTMLImageElement } = {};
+    static audioCache: { [key: string]: HTMLAudioElement } = {};
 
     static async load(url: string, useCache = true) {
         if (useCache) {
@@ -29,6 +30,23 @@ export default class FileLoader {
             img.onload = () => {
                 if (useCache) this.imageCache[url] = img;
                 res(img);
+            };
+        });
+    }
+
+    static loadAudio(url: string, useCache = true): Promise<HTMLAudioElement> {
+        if (useCache) {
+            const c = this.audioCache[url];
+            if (c)
+                return new Promise((res, _rej) => {
+                    res(c);
+                });
+        }
+
+        const audio = new Audio(url);
+        return new Promise((res, _rej) => {
+            audio.oncanplaythrough = async (_event) => {
+                res(audio);
             };
         });
     }

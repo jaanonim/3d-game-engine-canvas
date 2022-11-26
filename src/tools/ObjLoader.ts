@@ -6,6 +6,7 @@ export default class ObjLoader {
     raw: string;
     useCache: boolean;
     static cache: { [key: string]: Mesh } = {};
+    static cacheHide: { [key: string]: Mesh } = {};
 
     constructor(text: string, useCache = true) {
         this.useCache = useCache;
@@ -21,7 +22,9 @@ export default class ObjLoader {
 
     parse(hide = false) {
         if (this.useCache) {
-            const c = ObjLoader.cache[this.raw];
+            const c = hide
+                ? ObjLoader.cacheHide[this.raw]
+                : ObjLoader.cache[this.raw];
             if (c) return c;
         }
 
