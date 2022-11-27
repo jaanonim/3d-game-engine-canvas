@@ -257,12 +257,13 @@ export default abstract class SizedComponent extends Component {
     }
 
     uiRender(canvas: VirtualCanvas) {
+        if (!this.gameObject.isStarted) return;
         this.canvas.clear();
 
         this.transform.gameObject.getUiComponents().forEach((c) => {
             if (c.isActive) c.uiRender();
         });
-        this.transform.children.map((t) =>
+        this.transform.children.forEach((t) =>
             t.gameObject.getSizedComponent()?.uiRender(this.canvas)
         );
 

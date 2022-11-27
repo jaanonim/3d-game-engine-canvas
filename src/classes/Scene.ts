@@ -23,10 +23,9 @@ export default class Scene {
         return Vector3.zero;
     }
 
-    async addChildren(obj: GameObject) {
+    addChildren(obj: GameObject) {
         this.children.push(obj);
         obj.transform.setParent(this);
-        await obj.start();
         return obj;
     }
 
@@ -49,10 +48,6 @@ export default class Scene {
 
     async lateUpdate() {
         await Promise.all(this.children.map((c) => c.lateUpdate()));
-    }
-
-    async start() {
-        await Promise.all(this.children.map((c) => c.start()));
     }
 
     async awake() {

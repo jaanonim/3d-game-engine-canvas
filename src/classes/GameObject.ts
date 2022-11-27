@@ -8,29 +8,24 @@ import Renderer from "./Renderer";
 import Scene from "./Scene";
 
 export default class GameObject {
-    name: string;
-    transform: Transform;
-    components: Array<Component>;
-
-    private static _register: { [name: string]: GameObject } = {};
-
-    static get(name: string) {
-        return this._register[name];
+    public name: string;
+    public transform: Transform;
+    private components: Array<Component>;
+    private _isStarted: boolean = false;
+    public get isStarted(): boolean {
+        return this._isStarted;
     }
 
     constructor(name: string) {
         this.name = name;
         this.transform = new Transform(this);
         this.components = [];
-        GameObject._register[name] = this;
+        this._isStarted = false;
     }
 
-    async addChildren(obj: GameObject, atStart = false) {
+    addChildren(obj: GameObject, atStart = false) {
         this.transform.addChildren(obj.transform, atStart);
-        try {
-            this.getScene();
-            await obj.start();
-        } catch (e) {}
+        obj._isStarted = false;
         return obj;
     }
 
@@ -45,7 +40,7 @@ export default class GameObject {
     }
 
     removeComponent(obj: Component) {
-        this.components.slice(this.components.indexOf(obj), 1);
+        this.components.splice(this.components.indexOf(obj), 1);
         obj.onDestroy();
     }
 
@@ -60,9 +55,11 @@ export default class GameObject {
         await Promise.all(
             this.transform.children.map((t) => t.gameObject.start())
         );
+        this._isStarted = true;
     }
 
     async update() {
+        if (!this.isStarted) await this.start();
         await Promise.all(
             this.components.filter((c) => c.isActive).map((c) => c.update())
         );
@@ -72,6 +69,7 @@ export default class GameObject {
     }
 
     async lateUpdate() {
+        if (!this.isStarted) return;
         await Promise.all(
             this.components.filter((c) => c.isActive).map((c) => c.lateUpdate())
         );
@@ -90,6 +88,7 @@ export default class GameObject {
     }
 
     render(renderer: Renderer, camera: Camera) {
+        if (!this.isStarted) return;
         this.components.forEach((c) => {
             if (c.isActive) c.render(renderer, camera);
         });
