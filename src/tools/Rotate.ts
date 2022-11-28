@@ -1,7 +1,7 @@
 import Component from "../classes/Components/Component";
 import Renderer from "../classes/Renderer";
 import Vector3 from "../utilities/math/Vector3";
-import Quaternion from "../utilities/Quaternion";
+import Quaternion from "../utilities/math/Quaternion";
 
 export default class Rotate extends Component {
     v: number;

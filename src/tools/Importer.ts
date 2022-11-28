@@ -1,7 +1,7 @@
 import Component from "../classes/Components/Component";
 import GameObject from "../classes/GameObject";
 import Scene from "../classes/Scene";
-import Quaternion from "../utilities/Quaternion";
+import Quaternion from "../utilities/math/Quaternion";
 import Transform from "../utilities/Transform";
 import Vector3 from "../utilities/math/Vector3";
 

@@ -8,7 +8,7 @@ import FileLoader from "./tools/FileLoader";
 import FPSCounter from "./tools/FPSCounter";
 import Importer from "./tools/Importer";
 import ObjLoader from "./tools/ObjLoader";
-import Quaternion from "./utilities/Quaternion";
+import Quaternion from "./utilities/math/Quaternion";
 import Vector3 from "./utilities/math/Vector3";
 import Color from "./utilities/math/Color";
 // import Light, { LightType } from "./components/Light";
